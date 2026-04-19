@@ -1,0 +1,2563 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>YOMIKATA V10.6 (Final Consistent UI)</title>
+<style>
+
+:root {
+  --bg-main: radial-gradient(circle at top, #0f172a, #020617); --card-bg: rgba(30, 41, 59, 0.9);
+  --primary: #38bdf8; --success: #22c55e; --danger: #ef4444; --warning: #eab308; --gold: #fbbf24;
+  --text-main: #f8fafc; --text-sub: #94a3b8;
+}
+
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg-main); color: var(--text-main); margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 10px; overflow-x: hidden; }
+.container { width: 100%; max-width: 700px; position: relative; }
+button, .btn, .tab-btn, ruby, .multi-blank { touch-action: manipulation; }
+.hidden { display: none !important; }
+
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes floatUp { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-40px) scale(1.2); } }
+@keyframes pulseGold { 0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.7); } 70% { box-shadow: 0 0 15px 10px rgba(251, 191, 36, 0); } 100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); } }
+@keyframes shakeHard { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-15px) rotate(-2deg); } 20%, 40%, 60%, 80% { transform: translateX(15px) rotate(2deg); } }
+@keyframes hpBleed { 0% { transform: scale(1.8); color: #fff; text-shadow: 0 0 20px var(--danger); opacity: 1; filter: grayscale(0%); } 100% { transform: scale(1); filter: grayscale(100%); opacity: 0.2; } }
+
+.animate-slide { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.floating-text { position: absolute; font-weight: bold; font-size: 20px; pointer-events: none; animation: floatUp 1s ease-out forwards; z-index: 100; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+
+.shake-hard { animation: shakeHard 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+.card.shake-hard { border: 2px solid var(--danger); box-shadow: 0 0 40px rgba(239, 68, 68, 0.6); }
+.heart { display: inline-block; transition: 0.3s; }
+.heart.lost { opacity: 0.2; filter: grayscale(100%); }
+.heart.bleed { animation: hpBleed 0.8s forwards; }
+
+#jumpscare-overlay { position: fixed; inset: 0; background: rgba(220, 38, 38, 0.95); z-index: 9999; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: bold; color: white; opacity: 0; pointer-events: none; transition: opacity 0.1s; transform: scale(0.8); text-align: center; letter-spacing: 2px; text-shadow: 0 0 20px #000; flex-direction: column;}
+#jumpscare-overlay.show { opacity: 1; transform: scale(1); animation: shakeHard 0.4s infinite; }
+
+#toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background: #334155; color: white; padding: 12px 25px; border-radius: 30px; font-weight: bold; transition: bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 3000; box-shadow: 0 10px 25px rgba(0,0,0,0.5); pointer-events: none; text-align: center; width: max-content; max-width: 90vw;}
+#toast.show { bottom: 30px; }
+#toast.success { background: var(--success); color: #000; border: 2px solid #16a34a; }
+#toast.error { background: var(--danger); color: #fff; border: 2px solid #b91c1c; }
+
+.card-content-wrapper { opacity: 1; transform: translateX(0) scale(1); transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1); }
+.card-content-wrapper.fade-out { opacity: 0; transform: translateX(-15px) scale(0.98); }
+
+.toggle-btn { 
+  background: none; 
+  border: none; 
+  color: var(--text-sub); 
+  font-size: 22px; 
+  cursor: pointer; 
+  padding: 0 5px 0 0; 
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.3s;
+  flex-shrink: 0; 
+}
+.toggle-btn:hover { color: var(--primary); transform: scale(1.1); }
+.sidebar { position: fixed; left: 0; top: 0; width: 320px; height: 100%; background: #020617; padding: 70px 20px 20px; transform: translateX(-100%); transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1000; overflow-y: auto; box-sizing: border-box; border-right: 1px solid rgba(255,255,255,0.05); scrollbar-width: thin; scrollbar-color: var(--primary) transparent; }
+.sidebar.active { transform: translateX(0); }
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); opacity: 0; pointer-events: none; transition: 0.3s; z-index: 900; backdrop-filter: blur(2px); }
+.overlay.active { opacity: 1; pointer-events: auto; }
+.sidebar-header { border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 15px; margin-bottom: 15px; text-align: center; }
+
+#map-day-list { position: relative; padding: 20px 0; display: flex; flex-direction: column; align-items: center; width: 100%; max-height: 60vh; overflow-y: auto; scrollbar-width: none; }
+#map-day-list::-webkit-scrollbar { display: none; }
+#map-day-list::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 8px; background: rgba(255,255,255,0.05); transform: translateX(-50%); z-index: 0; border-radius: 4px; }
+.day-btn { position: relative; z-index: 1; width: 65%; padding: 15px; margin-bottom: 25px; border-radius: 50px; background: #1e293b; color: white; border: 3px solid #334155; text-align: center; cursor: pointer; transition: 0.3s cubic-bezier(0.16, 1, 0.3, 1); font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+.day-btn.locked { opacity: 0.5; cursor: not-allowed; background: #0f172a; border-color: #1e293b; }
+.day-btn.completed { background: var(--success); color: #000; border-color: #16a34a; }
+.day-btn.current { background: var(--primary); color: #000; border-color: #0284c7; box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); animation: pulseGold 2s infinite; transform: scale(1.1) !important; z-index: 2; }
+.day-btn:not(.locked):not(.current):hover { transform: scale(1.05) translateY(-2px) !important; filter: brightness(1.2); }
+
+.rpg-bar { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  background: rgba(10, 15, 28, 0.85); 
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  padding: 8px 12px; 
+  border-radius: 16px; 
+  border: 1px solid rgba(255,255,255,0.08); 
+  margin-top: 10px; 
+  margin-bottom: 20px; 
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); 
+  position: sticky; 
+  top: 10px; /* Jarak melayang dari atap layar */
+  z-index: 950; /* Di bawah Sidebar tapi di atas konten */
+  gap: 8px; 
+  flex-wrap: nowrap; 
+  overflow: hidden; 
+  box-sizing: border-box;
+}
+.rpg-left-group {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+  flex-shrink: 0;
+}
+.rpg-stats { display: flex; gap: 6px; align-items: center; flex-shrink: 1; }
+.stat-item { display: flex; align-items: center; gap: 2px; font-weight: bold; font-size: 12px; flex-shrink: 0; }
+.stat-item.gold { color: var(--gold); }
+.stat-item.exp { color: var(--primary); }
+.level-badge { 
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(129, 140, 248, 0.15));
+  color: var(--primary);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 5px 10px; 
+  border-radius: 8px; 
+  font-weight: bold; 
+  font-size: 11px; 
+  cursor: pointer; 
+  transition: 0.3s; 
+  white-space: nowrap; 
+}
+.level-badge:hover { background: rgba(56, 189, 248, 0.25); border-color: var(--primary); }
+.btn-shop { 
+  background: var(--gold); 
+  color: #000; 
+  border: none; 
+  padding: 5px 10px; 
+  border-radius: 8px; 
+  font-weight: bold; 
+  cursor: pointer; 
+  transition: 0.3s; 
+  font-size: 11px; 
+  white-space: nowrap; 
+  flex-shrink: 0; 
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3); 
+}
+.btn-shop:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(251, 191, 36, 0.5); }
+
+.progress-container { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background: var(--success); transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+
+.combo-text { font-size: 12px; font-weight: bold; color: #f97316; font-style: italic; margin-left: 2px; text-shadow: 0 0 5px rgba(249, 115, 22, 0.5); transition: 0.2s; }
+.combo-text.active { transform: scale(1.1); }
+
+.header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.hp-container { font-size: 24px; color: var(--danger); display: flex; gap: 5px; }
+.zone-badge { padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 12px; text-transform: uppercase; }
+.zone-aman { background: rgba(34, 197, 94, 0.2); color: var(--success); border: 1px solid var(--success); }
+.zone-tempur { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); }
+
+.nav-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; justify-content: center; align-items: center; }
+.tab-btn { background: #1e293b; color: var(--text-sub); border: 1px solid #334155; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; flex-grow: 1; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+
+.tab-btn:not(.active) { opacity: 0.4; filter: grayscale(50%); transform: scale(0.95); }
+.tab-btn:not(.active):not(.locked):hover { opacity: 0.8; transform: scale(0.98); }
+
+.tab-btn.active { background: var(--primary); color: #000; border-color: var(--primary); box-shadow: 0 0 15px rgba(56, 189, 248, 0.6); transform: scale(1.05); z-index: 2; opacity: 1 !important; filter: none !important; }
+
+.tab-btn.locked { opacity: 0.2 !important; cursor: not-allowed; border-style: dashed; }
+.tab-btn.pro-hidden { display: none !important; }
+
+.card { background: var(--card-bg); padding: 25px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); text-align: center; min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center; position: relative; transition: border 0.3s, box-shadow 0.3s; border: 2px solid transparent;}
+#stage-indicator { color:var(--primary); font-weight:bold; margin-bottom: 35px; font-size:14px; text-transform:uppercase; letter-spacing:1px; }
+
+.jp-text { 
+  font-size: 28px; 
+  font-weight: bold; 
+  margin: 0 auto 25px auto; 
+  line-height: 2.5; 
+  display: block; 
+  text-align: left; 
+  width: fit-content; 
+  max-width: 100%;
+  word-wrap: break-word;
+}
+@media (max-width: 400px) {
+  .jp-text { font-size: 24px; line-height: 2.4; } /* <-- Untuk layar HP disesuaikan */
+}
+.arti-text { 
+  font-size: 18px; 
+  color: var(--text-sub); 
+  font-style: italic; 
+  margin: 0 auto 20px auto; 
+  display: block; 
+  text-align: left; 
+  width: fit-content; 
+  max-width: 100%; 
+  word-wrap: break-word; 
+}
+ruby { cursor: pointer; user-select: none; transition: color 0.2s; ruby-position: over; position: relative; display: inline-block; }
+ruby:hover { color: var(--primary); }
+ruby.pro-locked { cursor: default; pointer-events: none; }
+rt { display: block; font-size: 0.5em; color: var(--warning); opacity: 0; transition: opacity 0.2s ease; position: absolute; bottom: 85%; left: 50%; transform: translateX(-50%); white-space: nowrap; pointer-events: none; }
+ruby.show rt { opacity: 1; }
+ruby.pro-locked:hover { color: inherit; }
+ruby.pro-locked:hover rt { opacity: 0; }
+ruby .arti-hint { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); background-color: rgba(15, 23, 42, 0.95); color: var(--primary); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; z-index: 100; border: 1px solid var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
+ruby.show .arti-hint { opacity: 1; }
+.u-line { border-bottom: 3px dashed var(--warning); padding-bottom: 4px; }
+.multi-blank { display: inline-block; min-width: 35px; border-bottom: 3px dashed var(--primary); color: var(--gold); text-align: center; cursor: pointer; padding: 0 5px; margin: 0 5px; transition: 0.2s; }
+.multi-blank:hover { border-color: var(--gold); }
+.input-box { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #475569; background: #0f172a; color: white; font-size: 18px; text-align: center; margin-bottom: 15px; box-sizing: border-box; transition: 0.2s; }
+.input-box:focus { outline: none; border-color: var(--primary); }
+.btn { background: var(--primary); color: #000; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.2s; width: 100%; margin-bottom: 10px; }
+.btn-alt { background: #334155; color: white; }
+.btn:hover { filter: brightness(1.2); transform: translateY(-2px); }
+
+#map-modal, #setup-screen, #cooldown-screen, #shop-modal, #level-modal, #tips-modal { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; z-index: 2000; background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(10px); }
+#setup-screen { background: var(--bg-main); }
+.mode-card { background: rgba(255,255,255,0.05); padding: 15px 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 15px; text-align: left; cursor: pointer; transition: 0.2s; width: 100%; max-width: 400px; box-sizing: border-box; }
+.mode-card:hover { background: rgba(56, 189, 248, 0.1); border-color: var(--primary); transform: scale(1.02); }
+.mode-card.locked { opacity: 0.5; filter: grayscale(1); cursor: not-allowed; }
+.mode-card.locked:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); transform: none; }
+
+.shop-item { background: #1e293b; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 350px; margin-bottom: 10px; border: 1px solid #334155; box-sizing: border-box; }
+.level-list { list-style: none; padding: 0; margin: 0; line-height: 2.0; color: var(--text-sub); }
+.level-list li { border-bottom: 1px dashed rgba(255,255,255,0.1); padding: 5px 0; display: flex; justify-content: space-between;}
+.level-list li:last-child { border: none; }
+
+#btn-tips { position: fixed; bottom: 25px; right: 25px; z-index: 1000; background: var(--warning); color: #000; padding: 12px 18px; border-radius: 50px; font-weight: bold; cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4); transition: 0.3s; font-size: 14px;}
+#btn-tips:hover { transform: scale(1.1); filter: brightness(1.1); }
+
+.hardcore-mode rt { display: none !important; }
+.hardcore-mode .arti-hint { display: none !important; }
+
+.shield-active { border: 2px solid var(--primary) !important; box-shadow: 0 0 20px var(--primary) !important; }
+.intel-box { margin-top: 10px; padding: 10px; background: rgba(56, 189, 248, 0.1); border-radius: 8px; border: 1px dashed var(--primary); font-size: 14px; color: var(--primary); font-style: italic; animation: slideUp 0.3s ease; text-align: left; line-height: 1.5; }
+.shop-item b { color: var(--text-main); }
+
+#kamus-modal { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 20px; z-index: 2500; background: rgba(2, 6, 23, 0.98); backdrop-filter: blur(10px); }
+.kamus-header { width: 100%; max-width: 500px; text-align: center; margin-bottom: 15px; }
+.search-box { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid var(--primary); background: #0f172a; color: white; font-size: 16px; margin-bottom: 15px; box-sizing: border-box; }
+.search-box:focus { outline: none; box-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+.kamus-list { width: 100%; max-width: 500px; max-height: 60vh; overflow-y: auto; background: #1e293b; border-radius: 12px; border: 1px solid #334155; padding: 10px; box-sizing: border-box; scrollbar-width: none; }
+.kamus-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px dashed rgba(255,255,255,0.1); }
+.kamus-item:last-child { border-bottom: none; }
+.kamus-jp { font-size: 18px; font-weight: bold; color: var(--primary); }
+.kamus-id { font-size: 14px; color: var(--text-sub); font-style: italic; text-align: right; }
+
+#result-screen, #promotion-screen { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.95); z-index: 4000; display: flex; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+.result-box { background: #1e293b; padding: 40px 30px; border-radius: 20px; border: 2px solid var(--success); box-shadow: 0 0 40px rgba(34, 197, 94, 0.3); text-align: center; max-width: 90%; width: 350px; box-sizing: border-box; }
+.result-title { color: var(--gold); font-size: 32px; font-weight: bold; margin-bottom: 5px; text-shadow: 0 2px 10px rgba(251, 191, 36, 0.5); }
+.result-subtitle { color: var(--text-main); font-size: 18px; margin-bottom: 25px; }
+.result-stats { background: #0f172a; padding: 20px; border-radius: 12px; border: 1px dashed var(--primary); margin-bottom: 25px; text-align: left; line-height: 2; font-size: 16px; }
+.result-stats .stat-row { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; margin-bottom: 5px; }
+.result-stats .stat-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.result-stats .stat-val { font-weight: bold; color: var(--primary); font-size: 18px; }
+
+@keyframes pulseDanger { 0% { box-shadow: inset 0 0 0px transparent; } 50% { box-shadow: inset 0 0 60px rgba(239, 68, 68, 0.5); } 100% { box-shadow: inset 0 0 0px transparent; } }
+body.danger-mode { animation: pulseDanger 1.5s infinite; }
+
+@keyframes perfectStrike {
+  0% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-color: transparent; }
+  50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(34, 197, 94, 0.8); border-color: var(--success); }
+  100% { transform: scale(1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); border-color: transparent; }
+}
+.card-correct { animation: perfectStrike 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+
+@keyframes modalPopIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes modalPopOut { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(0.9); } }
+.modal-open { animation: modalPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards !important; display: flex !important; }
+.modal-close { animation: modalPopOut 0.2s ease-in forwards !important; display: flex !important; pointer-events: none; }
+@keyframes slidePageIn { 
+  from { opacity: 0; transform: translateX(15px); } 
+  to { opacity: 1; transform: translateX(0); } 
+}
+.slide-page { 
+  animation: slidePageIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+}
+.feedback {
+    transition: max-height 0.25s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, margin 0.25s ease;
+    overflow: hidden;
+    max-height: 150px;
+    opacity: 1;
+    margin-bottom: 15px;
+    font-weight: bold;
+    font-size: 16px;
+    will-change: max-height, opacity; /* <-- Minta bantuan GPU */
+    transform: translateZ(0); /* <-- Mode Turbo 3D aktif */
+}
+.feedback:empty {
+    max-height: 0;
+    margin-bottom: 0;
+    opacity: 0;
+}
+#btn-submit, #btn-next {
+    transition: max-height 0.2s cubic-bezier(0.16, 1, 0.3, 1), padding 0.2s ease, margin 0.2s ease, opacity 0.2s ease;
+    max-height: 80px; 
+    overflow: hidden;
+    will-change: max-height, opacity; /* <-- Minta bantuan GPU */
+    transform: translateZ(0); /* <-- Mode Turbo 3D aktif */
+}
+#btn-submit.hidden, #btn-next.hidden {
+    display: block !important; 
+    max-height: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    opacity: 0 !important;
+    border-width: 0 !important;
+    pointer-events: none;
+}
+.rpg-bar {
+  gap: 4px; 
+  padding: 8px 4px;
+}
+.level-badge, .btn-shop {
+  white-space: nowrap;
+  flex-shrink: 0; 
+}
+.rpg-stats {
+  white-space: nowrap;
+  gap: 6px;
+}
+@media (max-width: 410px) {
+  .rpg-bar { padding: 6px 2px; gap: 2px; }
+  .toggle-btn { font-size: 18px; padding: 0 2px; margin-right: -2px;}
+  .level-badge { font-size: 9px; padding: 4px 5px; }
+  .stat-item { font-size: 10px; gap: 2px; }
+  .combo-text { font-size: 10px; margin-left: 0px; }
+  .rpg-bar .btn-shop { font-size: 9px; padding: 4px 6px; } 
+}
+#tips-bubble {
+  position: fixed;
+  bottom: 80px; 
+  right: 20px;
+  background: var(--primary);
+  color: #000;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 13px;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.5);
+  animation: floatBounce 2s infinite;
+  pointer-events: none; /* Supaya tidak menghalangi klik jika tersentuh */
+}
+#tips-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  right: 25px;
+  border-width: 8px 8px 0;
+  border-style: solid;
+  border-color: var(--primary) transparent transparent transparent;
+}
+@keyframes floatBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 480px; 
+    margin-top: 2vh;
+    border: 2px solid #334155;
+    border-radius: 20px;
+    padding: 30px 20px;
+    background: rgba(15, 23, 42, 0.3); /* Sedikit latar belakang pemisah */
+    box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  }
+  #tips-modal > div, 
+  .result-box, 
+  #level-modal > div, 
+  #shop-modal > div, 
+  #setup-screen > div {
+    transform: scale(1.15) !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<div id="result-screen" class="hidden">
+  <div class="result-box" id="result-box">
+    <div class="result-title">MISSION CLEAR! 🎉</div>
+    <div class="result-subtitle">Hari <span id="res-day">X</span> Diselesaikan</div>
+    
+    <div class="result-stats">
+      <div class="stat-row"><span>✨ EXP Diraih:</span> <span class="stat-val" id="res-exp">0</span></div>
+      <div class="stat-row"><span>🪙 Koin Diraih:</span> <span class="stat-val" id="res-coin">0</span></div>
+      <div class="stat-row"><span>🔥 Max Combo:</span> <span class="stat-val" id="res-combo">0</span></div>
+    </div>
+    
+    <button class="btn" style="background: var(--success); color: #000; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.4);" onclick="UI.nextDayFromResult()">Gass Hari Berikutnya! 🚀</button>
+    <button class="btn btn-alt" style="margin-top: 10px; margin-bottom: 0;" onclick="UI.closeModal('result-screen')">Tutup & Ulas Materi</button>
+  </div>
+</div>
+
+<div id="promotion-screen" class="hidden">
+  <div class="result-box" id="promotion-box" style="border-color: var(--primary); box-shadow: 0 0 40px rgba(56, 189, 248, 0.3);">
+    <div style="font-size: 50px; margin-bottom: 10px;">🌟</div>
+    <div class="result-title" style="color: var(--primary);">PROMOSI GELAR!</div>
+    <div class="result-subtitle">Kerja Kerasmu Terbayar</div>
+    <div style="font-size: 28px; font-weight: bold; color: var(--gold); margin: 20px 0; text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);" id="promo-rank">SAMURAI</div>
+    <button class="btn" style="background: var(--primary); color: #000; box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);" onclick="UI.closeModal('promotion-screen')">Lanjutkan Perjalanan ⚔️</button>
+  </div>
+</div>
+
+<div id="jumpscare-overlay">
+  <div style="color:var(--gold);">⚠️ KUIS DADAKAN ⚠️</div>
+  <div style="font-size:20px; font-weight:normal; margin-top:10px;">Buktikan Hafalanmu!</div>
+</div>
+
+<div id="setup-screen" class="hidden">
+  <div id="view-mode" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <h1 style="color:var(--primary); font-size:36px; margin-bottom:5px; text-align:center;">YOMIKATA V10.6<br><small style="font-size:16px; color:var(--warning);">The Grand Curriculum</small></h1>
+    <p style="color:var(--text-sub); margin-bottom: 30px;">Pilih Gaya Belajarmu.</p>
+    
+    <div class="mode-card" onclick="Game.init('pemula')" style="border-color: var(--primary); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);">
+      <h3 style="color:var(--success); margin:0 0 5px 0;">🔰 Mode Pemula</h3>
+      <small style="color:var(--text-sub);">Ada Hafalan & Materi. Furigana & Hint aktif.</small>
+    </div>
+    
+    <div class="mode-card locked" onclick="alert('Mode Pro akan dikembangkan pada modul terpisah.')">
+      <h3 style="color:#94a3b8; margin:0 0 5px 0;">🔥 Mode Pro (Cerita)</h3>
+      <small style="color:var(--text-sub);">[ Modul Terpisah ]</small>
+    </div>
+  </div>
+</div>
+
+<div id="cooldown-screen" class="hidden">
+  <h2>SISTEM TERKUNCI ☠️</h2>
+  <div style="font-size: 64px; color: var(--danger); font-weight: bold; margin: 20px 0;" id="cd-timer">15:00</div>
+</div>
+
+<div id="level-modal" class="hidden">
+  <h2 style="color:var(--primary); margin-bottom:5px;">🎖️ Hierarki Kensei</h2>
+  <p style="color:var(--text-sub); margin-bottom:20px; font-size:14px; text-align:center;">Jawab kuis dengan benar untuk mendapatkan EXP.</p>
+  <div style="width:100%; max-width:350px; background:#1e293b; padding:20px; border-radius:12px; border:1px solid #334155; margin-bottom:20px;">
+    <ul class="level-list">
+      <li><span><b>Lv. 1 - 9</b></span> <span>🔰 Pemula</span></li>
+      <li><span><b>Lv. 10 - 29</b></span> <span>⚔️ Ronin</span></li>
+      <li><span><b>Lv. 30 - 59</b></span> <span>🛡️ Samurai</span></li>
+      <li><span><b>Lv. 60 - 89</b></span> <span>🏯 Daimyo</span></li>
+      <li><span><b>Lv. 90 - 149</b></span> <span>👑 Shogun</span></li>
+      <li><span><b>Lv. 150+</b></span> <span>⛩️ Kensei</span></li>
+    </ul>
+  </div>
+  <button class="btn btn-alt" style="max-width:350px;" onclick="UI.closeModal('level-modal')">Tutup Log</button>
+</div>
+
+<div id="shop-modal" class="hidden">
+  <h2 style="color:var(--gold); margin-bottom:5px;">🛒 Terminal Suplai</h2>
+  <p style="color:var(--text-sub); margin-bottom:20px;">Saldo: <span id="shop-coin-display" style="color:var(--gold); font-weight:bold;">0</span> 🪙</p>
+  
+  <div style="width: 100%; max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; align-items: center; scrollbar-width: none;">
+    <div class="shop-item">
+      <div><b>❤️ Nano-Repair</b><br><small style="color:var(--text-sub);">Restorasi 1 HP</small></div>
+      <button class="btn btn-shop" style="width:auto; margin:0;" onclick="RPG.buyItem('hp', 150)">150 🪙</button>
+    </div>
+
+    <div class="shop-item">
+      <div><b>🛡️ Aegis Shield</b><br><small style="color:var(--text-sub);">Anti Salah & Jaga Combo</small></div>
+      <button class="btn btn-shop" style="width:auto; margin:0;" onclick="RPG.buyItem('shield', 350)">350 🪙</button>
+    </div>
+
+    <div class="shop-item">
+      <div><b>📜 Intel Arti</b><br><small style="color:var(--text-sub);">Buka Arti (Tab Partikel)</small></div>
+      <button class="btn btn-shop" style="width:auto; margin:0;" onclick="RPG.buyItem('intel', 200)">200 🪙</button>
+    </div>
+
+    <div class="shop-item">
+      <div><b>👁️ Mata Kensei</b><br><small style="color:var(--text-sub);">Skip Soal (Tanpa Reward)</small></div>
+      <button class="btn btn-shop" style="width:auto; margin:0;" onclick="RPG.buyItem('skip', 500)">500 🪙</button>
+    </div>
+
+    <div class="shop-item">
+      <div><b>🗺️ Akses Peta</b><br><small style="color:var(--text-sub);">Buka Hari Berikutnya</small></div>
+      <button class="btn btn-shop" style="width:auto; margin:0;" onclick="RPG.buyUnlock(2100)">2100 🪙</button>
+    </div>
+
+    <div class="shop-item">
+      <div><b>🎁 Kotak Pandora</b><br><small style="color:var(--warning);">Gacha Nasib (100 Koin)</small></div>
+      <button class="btn btn-shop" style="width:auto; margin:0; background:var(--warning);" onclick="RPG.buyItem('pandora', 100)">100 🪙</button>
+    </div>
+    
+        <div class="shop-item">
+      <div><b>🔓 Override Admin</b><br><small style="color:var(--danger);">Bypass Soal (Dev)</small></div>
+      <button class="btn btn-shop" style="width:auto; margin:0; background:var(--danger);" onclick="RPG.adminUnlock()">Bypass</button>
+    </div>
+  </div>
+  
+  <button class="btn btn-alt" style="max-width:350px; margin-top:20px;" onclick="UI.closeModal('shop-modal')">Tutup Terminal</button>
+</div>
+
+<div id="map-modal" class="hidden">
+  <h2 style="color:var(--primary); margin-bottom:5px;">🗺️ Peta Infiltrasi</h2>
+  <p style="color:var(--text-sub); margin-bottom:10px; font-size:14px; text-align:center;">Pilih zona misi yang tersedia.</p>
+  <div id="map-progress-text" style="color:var(--gold); font-size:13px; font-weight:bold; margin-bottom: 20px; text-transform: uppercase;">Progress: 0%</div>
+  <div id="map-day-list"></div>
+  <button class="btn btn-alt" style="max-width:350px; margin-top:20px;" onclick="UI.closeModal('map-modal')">Tutup Peta</button>
+</div>
+
+<div id="kamus-modal" class="hidden">
+  <div class="kamus-header">
+    <h2 style="color:var(--primary); margin-bottom:5px;">📖 Kamus Kensei</h2>
+    <p style="color:var(--text-sub); font-size:14px; margin-bottom:15px;">Koleksi Kosakata Terbuka</p>
+    <input type="text" id="kamus-search" class="search-box" placeholder="Cari romaji atau arti..." onkeyup="UI.searchKamus()" autocomplete="off">
+  </div>
+  <div class="kamus-list" id="kamus-list"></div>
+  <button class="btn btn-alt" style="max-width:350px; margin-top:20px;" onclick="UI.closeModal('kamus-modal')">Tutup Kamus</button>
+</div>
+
+
+<div id="tips-modal" class="hidden">
+  <h2 style="color:var(--warning); margin-bottom:15px;">💡 INFO PENYANGKALAN</h2>
+  <div style="background:#1e293b; padding:20px; border-radius:12px; border:1px solid #334155; margin-bottom:20px; font-size:15px; color:var(--text-main); line-height: 1.6; text-align: left; max-width: 400px;">
+    Dalam bahasa Jepang, ada 3 tingkat kesopanan untuk mengatakan <b>"Bukan"</b>:<br><br>
+    
+    <span style="color:var(--primary); font-weight:bold;">1. ... dewa arimasen (ではありません)</span><br>
+    <span style="color:var(--text-sub); font-size:13px;">Sangat sopan dan formal. Sering dipakai di pidato, tulisan resmi, atau ke orang yang sangat dihormati.</span><br><br>
+    
+    <span style="color:var(--success); font-weight:bold;">2. ... jaa arimasen (じゃありません)</span><br>
+    <span style="color:var(--text-sub); font-size:13px;">Sopan dan standar. Paling umum dipakai dalam percakapan sehari-hari dengan orang yang belum terlalu akrab.</span><br><br>
+    
+    <span style="color:var(--danger); font-weight:bold;">3. ... jaa nai (じゃない)</span><br>
+    <span style="color:var(--text-sub); font-size:13px;">Bentuk kasual/santai. Hanya dipakai ke teman akrab, keluarga, atau orang yang statusnya di bawah kita.</span><br><br>
+    
+    <i style="color:var(--gold); font-size:13px;">Catatan: Fokus kita di kuis nanti adalah bentuk sopan (dewa/jaa arimasen) ya! Bentuk kasual hanya untuk pengetahuan tambahan saat belajar pola.</i>
+  </div>
+  <button class="btn btn-alt" style="max-width:400px;" onclick="UI.closeModal('tips-modal')">Tutup Info</button>
+</div>
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <h3 style="color:var(--text-main); margin:0 0 5px 0;">Peta Navigasi</h3>
+  </div>
+  
+  <div style="text-align:center; margin-bottom: 20px;">
+    <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--primary); width: 100%; box-sizing: border-box; margin-bottom:10px;" onclick="UI.toggleSidebar(); document.getElementById('main-app').classList.add('hidden'); document.getElementById('setup-screen').classList.remove('hidden');">⚙️ Menu Awal</button>
+    <button class="btn btn-alt" id="btn-hardcore" style="font-size:13px; padding:10px; border:1px solid var(--danger); width: 100%; box-sizing: border-box; margin-bottom:10px;" onclick="UI.toggleHardcore()">🥷 Mode Hardcore</button>
+    <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--success); width: 100%; box-sizing: border-box;" onclick="UI.toggleSidebar(); UI.openKamus();">📖 Kamus Kensei</button>
+     <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--warning); width: 100%; box-sizing: border-box; margin-top:10px;" onclick="Game.startDungeon()">🏰 Dungeon Ingatan</button>
+         <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--primary); width: 100%; box-sizing: border-box; margin-top:15px;" onclick="window.location.href='angka.html'">🔢 Modul Angka</button>
+    <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--success); width: 100%; box-sizing: border-box; margin-top:10px;" onclick="window.location.href='waktu.html'">📅 Modul Penanggalan</button>
+    
+ </div>
+
+</div>
+<div class="overlay" id="overlay" onclick="UI.toggleSidebar()"></div>
+
+<button id="btn-tips" class="hidden" onclick="UI.openModal('tips-modal')">💡 Tips</button>
+<div id="tips-bubble" class="hidden">Ada info baru, nih! ✨</div>
+<div class="container hidden" id="main-app">
+  
+  <div class="rpg-bar animate-slide">
+    <div class="rpg-left-group">
+      <button class="toggle-btn" onclick="UI.toggleSidebar()">☰</button>
+      <div class="level-badge" id="ui-lvl" title="Klik untuk info Gelar" onclick="UI.openModal('level-modal')">Lv.1 Ronin</div>
+    </div>
+    
+    <div class="rpg-stats" style="flex-grow: 1; justify-content: center; gap: 10px;">
+      <div class="stat-item exp" title="Experience"><span id="ui-exp">0</span> ✨ <span class="combo-text hidden" id="ui-combo">x2</span></div>
+      <div class="stat-item gold" title="Koin"><span id="ui-coin">0</span> 🪙</div>
+    </div>
+    
+    <button class="btn-shop" onclick="UI.openModal('shop-modal')">🛒 Toko</button>
+  </div>
+
+  <div class="header-bar animate-slide" style="animation-delay: 0.1s; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 0 5px;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button id="ui-day" onclick="UI.openModal('map-modal')" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: var(--text-main); font-weight: bold; font-size: 14px; padding: 5px 12px; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">🗺️ Hari 1 <span style="font-size:10px;">▼</span></button>
+      <div id="ui-zone" class="zone-badge zone-aman" style="font-size: 10px; padding: 3px 8px;">🟢 ZONA AMAN</div>
+    </div>
+    <div class="hp-container" id="ui-hp" style="font-size: 20px;"></div>
+  </div>
+
+  <div class="nav-tabs animate-slide" style="animation-delay: 0.2s;">
+    <button class="tab-btn active" id="tab-hafalan" onclick="UI.switchTab('hafalan')">📖 Hafalan</button>
+    <button class="tab-btn" id="tab-belajar" onclick="UI.switchTab('belajar')">📚 Pola</button>
+    <button class="tab-btn locked" id="tab-partikel" onclick="UI.switchTab('partikel')">🧩 Partikel</button>
+    <button class="tab-btn locked" id="tab-arti" onclick="UI.switchTab('arti')">🇮🇩 Arti</button>
+  </div>
+
+  <div class="progress-container animate-slide" style="animation-delay: 0.3s;">
+    <div class="progress-fill" id="ui-progress"></div>
+  </div>
+
+  <div class="card animate-slide" style="animation-delay: 0.4s;" id="card-main">
+    <div class="card-content-wrapper" id="card-content">
+      <div id="stage-indicator"></div>
+      
+      <div class="jp-text" id="ui-jp"></div>
+      <div class="arti-text" id="ui-arti"></div>
+      <div id="input-area" style="width:100%;"></div>
+      <div class="feedback" id="ui-feedback"></div>
+      <button class="btn btn-alt hidden" id="btn-next" style="margin-top:20px;">Lanjut →</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ==========================================
+// DATA MANUAL CURRICULUM
+// ==========================================
+
+const ManualDB = {
+  // --- HARI 1 ---
+  day1: {
+    hafalan: [
+      {k: "私", r: "わたし", a: "saya"}, {k: "あなた", r: "あなた", a: "Anda"}, {k: "彼", r: "かれ", a: "dia (laki-laki)"}, 
+      {k: "彼女", r: "かのじょ", a: "dia (perempuan)"}, {k: "デウィさん", r: "デウィさん", a: "Dewi"}, {k: "アグスさん", r: "アグスさん", a: "Agus"},
+      {k: "山田さん", r: "やまださん", a: "Yamada"}, {k: "学生", r: "がくせい", a: "siswa"}, {k: "先生", r: "せんせい", a: "guru"}, 
+      {k: "大学生", r: "だいがくせい", a: "mahasiswa / mahasiswi"}, {k: "社員", r: "しゃいん", a: "karyawan"}, {k: "インドネシア人", r: "インドネシアじん", a: "orang Indonesia"},
+      {k: "日本人", r: "にほんじん", a: "orang Jepang"}, {k: "名前", r: "なまえ", a: "nama"}, {k: "年齢", r: "ねんれい", a: "umur"},
+      {k: "出身", r: "しゅっしん", a: "tempat kelahiran"}, {k: "これ", r: "これ", a: "ini"}, {k: "あれ", r: "あれ", a: "itu (yang di sana)"},
+      {k: "本", r: "ほん", a: "buku"}, {k: "野菜", r: "やさい", a: "sayur"}
+    ],
+    materi: [
+      {jp: [ {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"デウィ", r:"デウィ"}, {text:"です。"} ], a: "Saya Dewi.", ansP: "は", ansA: "Saya Dewi."},
+      {jp: [ {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"インドネシア人", r:"インドネシアじん"}, {text:"です。"} ], a: "Saya orang Indonesia.", ansP: "は", ansA: "Saya orang Indonesia."},
+      {jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"アグスさん", r:"アグスさん"}, {text:"です。"} ], a: "Dia (laki-laki) Agus.", ansP: "は", ansA: "Dia (laki-laki) Agus."},
+      {jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"インドネシア人", r:"インドネシアじん"}, {text:"です。"} ], a: "Dia (laki-laki) orang Indonesia.", ansP: "は", ansA: "Dia (laki-laki) orang Indonesia."},
+      {jp: [ {k:"彼女", r:"かのじょ"}, {text:"は", p:true}, {k:"学生", r:"がくせい"}, {text:"です。"} ], a: "Dia (perempuan) adalah siswi.", ansP: "は", ansA: "Dia (perempuan) adalah siswi."},
+      {jp: [ {k:"彼女", r:"かのじょ"}, {text:"は", p:true}, {k:"山田さん", r:"やまださん"}, {text:"です。"} ], a: "Dia (perempuan) Yamada.", ansP: "は", ansA: "Dia (perempuan) Yamada."},
+      {jp: [ {k:"山田さん", r:"やまださん"}, {text:"は", p:true}, {k:"先生", r:"せんせい"}, {text:"です。"} ], a: "Yamada adalah guru.", ansP: "は", ansA: "Yamada adalah guru."},
+      {jp: [ {k:"あなた", r:"あなた"}, {text:"は", p:true}, {k:"日本人", r:"にほんじん"}, {text:"です。"} ], a: "Anda orang Jepang.", ansP: "は", ansA: "Anda orang Jepang."},
+      {jp: [ {k:"年齢", r:"ねんれい"}, {text:"は", p:true}, {k:"20歳", r:"にじゅうさい"}, {text:"です。"} ], a: "Umurnya 20 tahun.", ansP: "は", ansA: "Umurnya 20 tahun."},
+      {jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"本", r:"ほん"}, {text:"です。"} ], a: "Ini adalah buku.", ansP: "は", ansA: "Ini adalah buku."},
+      {jp: [ {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"学生", r:"がくせい"}, {text:"です。"} ], a: "Saya adalah siswa.", ansP: "は", ansA: "Saya adalah siswa."},
+      {jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"日本人", r:"にほんじん"}, {text:"です。"} ], a: "Dia (laki-laki) orang Jepang.", ansP: "は", ansA: "Dia (laki-laki) orang Jepang."},
+      {
+        isMulti: true,
+        jp: [ 
+          {k:"私", r:"わたし", a:"saya"}, {text:"の", p:true}, {k:"名前", r:"なまえ"}, {text:"は", p:true}, {k:"デウィ", r:"デウィ"}, {text:"です。 "},
+          {k:"年齢", r:"ねんれい"}, {text:"は", p:true}, {k:"20歳", r:"にじゅうさい"}, {text:"です。 "},
+          {text:"そして、", a:"dan"}, 
+          {k:"出身", r:"しゅっしん", u:true}, {text:"は", p:true, u:true}, {k:"スラバヤ", r:"スラバヤ", u:true}, {text:"です。", u:true} 
+        ], 
+        a: "Namaku Dewi. Umurku 20 tahun. Dan tempat kelahiranku Surabaya.", 
+        ansP: ["の", "は", "は", "は"],
+        ansA: "Tempat kelahiranku Surabaya.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true,
+        jp: [ 
+          {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"アグスさん", r:"アグスさん"}, {text:"です。 "},
+          {k:"アグスさん", r:"アグスさん", u:true}, {text:"は", p:true, u:true}, {k:"先生", r:"せんせい", u:true}, {text:"です。", u:true} 
+        ], 
+        a: "Dia (laki-laki) Agus. Agus adalah guru.", 
+        ansP: ["は", "は"], ansA: "Agus adalah guru.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true,
+        jp: [ 
+          {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"本", r:"ほん"}, {text:"です。 "},
+          {text:"そして、", a:"dan"}, {k:"あれ", r:"あれ", u:true}, {text:"は", p:true, u:true}, {k:"野菜", r:"やさい", u:true}, {text:"です。", u:true} 
+        ], 
+        a: "Ini adalah buku. Dan itu (yang di sana) adalah sayur.", 
+        ansP: ["は", "は"], ansA: "Itu (yang di sana) adalah sayur.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      }
+    ],
+    kuisExtra: [
+      {jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"社員", r:"しゃいん"}, {text:"です。"} ], a: "Dia (laki-laki) adalah karyawan.", ansP: "は", ansA: "Dia (laki-laki) adalah karyawan."},
+      {jp: [ {k:"デウィさん", r:"デウィさん"}, {text:"は", p:true}, {k:"大学生", r:"だいがくせい"}, {text:"です。"} ], a: "Dewi adalah mahasiswi.", ansP: "は", ansA: "Dewi adalah mahasiswi."},
+      {jp: [ {k:"出身", r:"しゅっしん"}, {text:"は", p:true}, {k:"スラバヤ", r:"スラバヤ"}, {text:"です。"} ], a: "Tempat kelahirannya Surabaya.", ansP: "は", ansA: "Tempat kelahirannya Surabaya."},
+      {jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"野菜", r:"やさい"}, {text:"です。"} ], a: "Itu (yang di sana) adalah sayur.", ansP: "は", ansA: "Itu (yang di sana) adalah sayur."},
+      {jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"本", r:"ほん"}, {text:"です。"} ], a: "Itu (yang di sana) adalah buku.", ansP: "は", ansA: "Itu (yang di sana) adalah buku."}
+    ],
+    proKuisExtra: []
+  },
+
+  // --- HARI 2 ---
+  day2: {
+    hafalan: [
+      {k: "ケンさん", r: "ケンさん", a: "Ken"}, {k: "シンタさん", r: "シンタさん", a: "Sinta"}, 
+      {k: "私達", r: "わたしたち", a: "kami"}, {k: "あなた達", r: "あなたたち", a: "Anda sekalian"}, 
+      {k: "コック", r: "コック", a: "koki"}, {k: "バッソ屋", r: "バッソや", a: "tukang bakso"},
+      {k: "シングル", r: "シングル", a: "single"}, {k: "車", r: "くるま", a: "mobil"}, 
+      {k: "バイク", r: "バイク", a: "sepeda motor"}, {k: "かばん", r: "かばん", a: "tas"}, 
+      {k: "靴", r: "くつ", a: "sepatu"}, {k: "時計", r: "とけい", a: "jam"},
+      {k: "大学", r: "だいがく", a: "universitas"}, {k: "学校", r: "がっこう", a: "sekolah"}, 
+      {k: "会社", r: "かいしゃ", a: "kantor"}, {k: "教室", r: "きょうしつ", a: "ruang kelas"}, 
+      {k: "トイレ", r: "トイレ", a: "toilet"}, {k: "ケーキ屋", r: "ケーキや", a: "toko kue"},
+      {k: "ラップトップ", r: "ラップトップ", a: "laptop"}, {k: "鉛筆", r: "えんぴつ", a: "pensil"}
+    ],
+    materi: [
+      { jp: [ {k:"私", r:"わたし"}, {text:"は"}, {k:"日本人", r:"にほんじん"}, {text:"です。 "}, {k:"ケンさん", r:"ケンさん", u:true}, {text:"も", p:true, u:true}, {k:"日本人", r:"にほんじん", u:true}, {text:"です。", u:true} ], a: "Saya orang Jepang. Ken juga orang Jepang.", ansP: "も", ansA: "Ken juga orang Jepang.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { jp: [ {k:"山田さん", r:"やまださん", u:true}, {text:"は", u:true}, {k:"先生", r:"せんせい", u:true}, {text:"です。 ", u:true}, {k:"シンタさん", r:"シンタさん"}, {text:"も", p:true}, {k:"先生", r:"せんせい"}, {text:"です。"} ], a: "Yamada guru. Sinta juga guru.", ansP: "も", ansA: "Yamada guru.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { jp: [ {k:"私達", r:"わたしたち"}, {text:"は"}, {k:"社員", r:"しゃいん"}, {text:"です。 "}, {k:"あなた達", r:"あなたたち", u:true}, {text:"も", p:true, u:true}, {k:"社員", r:"しゃいん", u:true}, {text:"です。", u:true} ], a: "Kami karyawan. Anda sekalian juga karyawan.", ansP: "も", ansA: "Anda sekalian juga karyawan.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { jp: [ {k:"これ", r:"これ", u:true}, {text:"は", u:true}, {k:"本", r:"ほん", u:true}, {text:"です。 ", u:true}, {k:"あれ", r:"あれ"}, {text:"も", p:true}, {k:"本", r:"ほん"}, {text:"です。"} ], a: "Ini buku. Itu (yang di sana) juga buku.", ansP: "も", ansA: "Ini buku.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { jp: [ {k:"アグスさん", r:"アグスさん"}, {text:"は"}, {k:"バッソ屋", r:"バッソや"}, {text:"です。 "}, {k:"彼", r:"かれ", u:true}, {text:"も", p:true, u:true}, {k:"バッソ屋", r:"バッソや", u:true}, {text:"です。", u:true} ], a: "Agus tukang bakso. Dia (laki-laki) juga tukang bakso.", ansP: "も", ansA: "Dia (laki-laki) juga tukang bakso.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"私", r:"わたし", u:true}, {text:"は", p:true, u:true}, {k:"コック", r:"コック", u:true}, {text:"です。 ", u:true}, {k:"デウィさん", r:"デウィさん"}, {text:"も", p:true}, {k:"コック", r:"コック"}, {text:"です。"} ], a: "Saya koki. Dewi juga koki.", ansP: ["は", "も"], ansA: "Saya koki.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"かばん", r:"かばん"}, {text:"です。 "}, {k:"あれ", r:"あれ", u:true}, {text:"も", p:true, u:true}, {k:"かばん", r:"かばん", u:true}, {text:"です。", u:true} ], a: "Ini tas. Itu (yang di sana) juga tas.", ansP: ["は", "も"], ansA: "Itu (yang di sana) juga tas.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"山田さん", r:"やまださん"}, {text:"は", p:true}, {k:"会社", r:"かいしゃ"}, {text:"です。 "}, {k:"私達", r:"わたしたち", u:true}, {text:"も", p:true, u:true}, {k:"会社", r:"かいしゃ", u:true}, {text:"です。", u:true} ], a: "Yamada di kantor. Kami juga di kantor.", ansP: ["は", "も"], ansA: "Kami juga di kantor.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"彼女", r:"かのじょ", u:true}, {text:"は", p:true, u:true}, {k:"シングル", r:"シングル", u:true}, {text:"です。 ", u:true}, {k:"シンタさん", r:"シンタさん"}, {text:"も", p:true}, {k:"シングル", r:"シングル"}, {text:"です。"} ], a: "Dia (perempuan) single. Sinta juga single.", ansP: ["は", "も"], ansA: "Dia (perempuan) single.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"時計", r:"とけい"}, {text:"です。 "}, {k:"あれ", r:"あれ", u:true}, {text:"も", p:true, u:true}, {k:"時計", r:"とけい", u:true}, {text:"です。", u:true} ], a: "Ini jam. Itu (yang di sana) juga jam.", ansP: ["は", "も"], ansA: "Itu (yang di sana) juga jam.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { jp: [ {k:"これ", r:"これ", u:true}, {text:"は", u:true}, {k:"ラップトップ", r:"ラップトップ", u:true}, {text:"です。 ", u:true}, {k:"あれ", r:"あれ"}, {text:"も", p:true}, {k:"ラップトップ", r:"ラップトップ"}, {text:"です。"} ], a: "Ini laptop. Itu (yang di sana) juga laptop.", ansP: "も", ansA: "Ini laptop.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { jp: [ {k:"私", r:"わたし"}, {text:"は"}, {k:"トイレ", r:"トイレ"}, {text:"です。 "}, {k:"彼", r:"かれ", u:true}, {text:"も", p:true, u:true}, {k:"トイレ", r:"トイレ", u:true}, {text:"です。", u:true} ], a: "Saya di toilet. Dia (laki-laki) juga di toilet.", ansP: "も", ansA: "Dia (laki-laki) juga di toilet.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"アグスさん", r:"アグスさん", u:true}, {text:"は", p:true, u:true}, {k:"日本人", r:"にほんじん", u:true}, {text:"です。 ", u:true}, {k:"ケンさん", r:"ケンさん"}, {text:"も", p:true}, {k:"日本人", r:"にほんじん"}, {text:"です。"} ], a: "Agus orang Jepang. Ken juga orang Jepang.", ansP: ["は", "も"], ansA: "Agus orang Jepang.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"鉛筆", r:"えんぴつ"}, {text:"です。 "}, {k:"あれ", r:"あれ", u:true}, {text:"も", p:true, u:true}, {k:"鉛筆", r:"えんぴつ", u:true}, {text:"です。", u:true} ], a: "Ini pensil. Itu (yang di sana) juga pensil.", ansP: ["は", "も"], ansA: "Itu (yang di sana) juga pensil.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"学校", r:"がっこう"}, {text:"です。 "}, {k:"彼女", r:"かのじょ", u:true}, {text:"も", p:true, u:true}, {k:"学校", r:"がっこう", u:true}, {text:"です。", u:true} ], a: "Dia (laki-laki) di sekolah. Dia (perempuan) juga di sekolah.", ansP: ["は", "も"], ansA: "Dia (perempuan) juga di sekolah.", qA: "Terjemahkanlah kalimat bergaris bawah!" }
+    ],
+        kuisExtra: [
+      { jp: [ {k:"これ", r:"これ"}, {text:"は"}, {k:"辞書", r:"じしょ"}, {text:"です。 "}, {k:"あれ", r:"あれ", u:true}, {text:"も", p:true, u:true}, {k:"辞書", r:"じしょ", u:true}, {text:"です。", u:true} ], a: "Ini kamus. Itu (yang di sana) juga kamus.", ansP: "も", ansA: "Itu (yang di sana) juga kamus.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { jp: [ {k:"デウィさん", r:"デウィさん", u:true}, {text:"は", u:true}, {k:"大学生", r:"だいがくせい", u:true}, {text:"です。 ", u:true}, {k:"シンタさん", r:"シンタさん"}, {text:"も", p:true}, {k:"大学生", r:"だいがくせい"}, {text:"です。"} ], a: "Dewi mahasiswi. Sinta juga mahasiswi.", ansP: "も", ansA: "Dewi mahasiswi.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"靴", r:"くつ"}, {text:"です。 "}, {k:"あれ", r:"あれ", u:true}, {text:"も", p:true, u:true}, {k:"靴", r:"くつ", u:true}, {text:"です。", u:true} ], a: "Ini sepatu. Itu (yang di sana) juga sepatu.", ansP: ["は", "も"], ansA: "Itu (yang di sana) juga sepatu.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"私", r:"わたし", u:true}, {text:"は", p:true, u:true}, {k:"教室", r:"きょうしつ", u:true}, {text:"です。 ", u:true}, {k:"アグスさん", r:"アグスさん"}, {text:"も", p:true}, {k:"教室", r:"きょうしつ"}, {text:"です。"} ], a: "Saya di ruang kelas. Agus juga di ruang kelas.", ansP: ["は", "も"], ansA: "Saya di ruang kelas.", qA: "Terjemahkanlah kalimat bergaris bawah!" },
+      { isMulti: true, jp: [ {k:"ケンさん", r:"ケンさん"}, {text:"は", p:true}, {k:"ケーキ屋", r:"ケーキや"}, {text:"です。 "}, {k:"彼女", r:"かのじょ", u:true}, {text:"も", p:true, u:true}, {k:"ケーキ屋", r:"ケーキや", u:true}, {text:"です。", u:true} ], a: "Ken di toko kue. Dia (perempuan) juga di toko kue.", ansP: ["は", "も"], ansA: "Dia (perempuan) juga di toko kue.", qA: "Terjemahkanlah kalimat bergaris bawah!" }
+    ],
+    proKuisExtra: []
+  },
+
+  // --- HARI 3 ---
+  day3: {
+    hafalan: [
+      {k: "友達", r: "ともだち", a: "teman"}, {k: "子供", r: "こども", a: "anak kecil"}, 
+      {k: "若者", r: "わかもの", a: "pemuda"}, {k: "新聞", r: "しんぶん", a: "koran"}, 
+      {k: "ホテル", r: "ホテル", a: "hotel"}, {k: "海岸", r: "かいがん", a: "pantai"},
+      {k: "町", r: "まち", a: "kota"}, {k: "絵", r: "え", a: "lukisan"}, 
+      {k: "駅", r: "えき", a: "stasiun"}, {k: "社長", r: "しゃちょう", a: "Presiden Direktur"}, 
+      {k: "家", r: "いえ", a: "rumah"}, {k: "服", r: "ふく", a: "pakaian"},
+      {k: "図書館", r: "としょかん", a: "perpustakaan"}, {k: "大統領", r: "だいとうりょう", a: "Presiden negara"}, 
+      {k: "数学", r: "すうがく", a: "matematika"}, {k: "天国", r: "てんごく", a: "surga"}, 
+      {k: "住所", r: "じゅうしょ", a: "alamat"}, {k: "国", r: "くに", a: "negara"},
+      {k: "チーム", r: "チーム", a: "tim"}, {k: "サンダル", r: "サンダル", a: "sandal"}
+    ],
+    materi: [
+      {jp: [ {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"若者", r:"わかもの"}, {text:"ではありません。"} ], a: "Saya bukan pemuda. [Sangat Formal]", ansP: "は", ansA: "Saya bukan pemuda. [Sangat Formal]"},
+      {jp: [ {k:"ケンさん", r:"ケンさん"}, {text:"は", p:true}, {k:"社長", r:"しゃちょう"}, {text:"じゃありません。"} ], a: "Ken bukan Presiden Direktur. [Sopan]", ansP: "は", ansA: "Ken bukan Presiden Direktur. [Sopan]"},
+      {jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"新聞", r:"しんぶん"}, {text:"じゃない。"} ], a: "Ini bukan koran. [Kasual]", ansP: "は", ansA: "Ini bukan koran. [Kasual]"},
+      {jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"ホテル", r:"ホテル"}, {text:"じゃありません。"} ], a: "Itu (yang di sana) bukan hotel. [Sopan]", ansP: "は", ansA: "Itu (yang di sana) bukan hotel. [Sopan]"},
+      {jp: [ {k:"彼女", r:"かのじょ"}, {text:"は", p:true}, {k:"友達", r:"ともだち"}, {text:"じゃない。"} ], a: "Dia (perempuan) bukan teman. [Kasual]", ansP: "は", ansA: "Dia (perempuan) bukan teman. [Kasual]"},
+      {jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"子供", r:"こども"}, {text:"じゃありません。"} ], a: "Dia (laki-laki) bukan anak kecil. [Sopan]", ansP: "は", ansA: "Dia (laki-laki) bukan anak kecil. [Sopan]"},
+      
+      {
+        isMulti: true,
+        jp: [ 
+          {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {k:"服", r:"ふく", u:true}, {text:"です。 ", u:true},
+          {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"服", r:"ふく"}, {text:"ではありません。"} 
+        ], 
+        a: "Ini adalah pakaian. Itu (yang di sana) bukan pakaian. [Sangat Formal]", ansP: ["は", "は"], ansA: "Ini adalah pakaian.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true,
+        jp: [ 
+          {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"社長", r:"しゃちょう"}, {text:"ではありません。 "},
+          {k:"アグスさん", r:"アグスさん", u:true}, {text:"も", p:true, u:true}, {k:"社長", r:"しゃちょう", u:true}, {text:"ではありません。", u:true} 
+        ], 
+        a: "Saya bukan Presiden Direktur. Agus juga bukan Presiden Direktur. [Sangat Formal]", ansP: ["は", "も"], ansA: "Agus juga bukan Presiden Direktur. [Sangat Formal]", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"図書館", r:"としょかん"}, {text:"ではありません。"} ], a: "Ini bukan perpustakaan. [Sangat Formal]", ansP: "は", ansA: "Ini bukan perpustakaan. [Sangat Formal]"},
+      {jp: [ {k:"シンタさん", r:"シンタさん"}, {text:"は", p:true}, {k:"大統領", r:"だいとうりょう"}, {text:"じゃありません。"} ], a: "Sinta bukan Presiden negara. [Sopan]", ansP: "は", ansA: "Sinta bukan Presiden negara. [Sopan]"},
+      {jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"家", r:"いえ"}, {text:"ではありません。"} ], a: "Itu (yang di sana) bukan rumah. [Sangat Formal]", ansP: "は", ansA: "Itu (yang di sana) bukan rumah. [Sangat Formal]"},
+      {jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"数学", r:"すうがく"}, {text:"ではありません。"} ], a: "Ini bukan matematika. [Sangat Formal]", ansP: "は", ansA: "Ini bukan matematika. [Sangat Formal]"},
+      
+      {
+        isMulti: true,
+        jp: [ 
+          {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"サンダル", r:"サンダル"}, {text:"じゃありません。 "},
+          {k:"あれ", r:"あれ", u:true}, {text:"も", p:true, u:true}, {k:"サンダル", r:"サンダル", u:true}, {text:"じゃありません。", u:true} 
+        ], 
+        a: "Ini bukan sandal. Itu (yang di sana) juga bukan sandal. [Sopan]", ansP: ["は", "も"], ansA: "Itu (yang di sana) juga bukan sandal. [Sopan]", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true,
+        jp: [ 
+          {k:"私達", r:"わたしたち", u:true}, {text:"は", p:true, u:true}, {k:"チーム", r:"チーム", u:true}, {text:"ではありません。", u:true} 
+        ], 
+        a: "Kami bukan tim. [Sangat Formal]", ansP: ["は"], ansA: "Kami bukan tim. [Sangat Formal]"
+      },
+      {
+        isMulti: true,
+        jp: [ 
+          {k:"デウィさん", r:"デウィさん"}, {text:"は", p:true}, {k:"友達", r:"ともだち"}, {text:"です。 "},
+          {k:"シンタさん", r:"シンタさん", u:true}, {text:"は", p:true, u:true}, {k:"友達", r:"ともだち", u:true}, {text:"ではありません。", u:true} 
+        ], 
+        a: "Dewi adalah teman. Sinta bukan teman. [Sangat Formal]", ansP: ["は", "は"], ansA: "Sinta bukan teman. [Sangat Formal]", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"住所", r:"じゅうしょ"}, {text:"ではありません。"} ], a: "Ini bukan alamatnya. [Sangat Formal]", ansP: "は", ansA: "Ini bukan alamatnya. [Sangat Formal]"}
+    ],
+    kuisExtra: [
+      {jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"絵", r:"え"}, {text:"ではありません。"} ], a: "Ini bukan lukisan. [Sangat Formal]", ansP: "は", ansA: "Ini bukan lukisan. [Sangat Formal]"},
+      {jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"町", r:"まち"}, {text:"じゃありません。"} ], a: "Itu (yang di sana) bukan kota. [Sopan]", ansP: "は", ansA: "Itu (yang di sana) bukan kota. [Sopan]"},
+      {jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"駅", r:"えき"}, {text:"じゃありません。"} ], a: "Itu (yang di sana) bukan stasiun. [Sopan]", ansP: "は", ansA: "Itu (yang di sana) bukan stasiun. [Sopan]"},
+      {jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"大統領", r:"だいとうりょう"}, {text:"ではありません。"} ], a: "Dia (laki-laki) bukan Presiden negara. [Sangat Formal]", ansP: "は", ansA: "Dia (laki-laki) bukan Presiden negara. [Sangat Formal]"}
+    ],
+    proKuisExtra: []
+  },
+  
+  // --- HARI 4 ---
+  day4: {
+    hafalan: [
+      {k: "社会人", r: "しゃかいじん", a: "pekerja"}, {k: "コンピューター", r: "コンピューター", a: "komputer"}, 
+      {k: "作品", r: "さくひん", a: "karya"}, {k: "既婚", r: "きこん", a: "sudah menikah"}, 
+      {k: "未婚", r: "みこん", a: "belum menikah"}, {k: "独身", r: "どくしん", a: "lajang"},
+      {k: "マレーシア", r: "マレーシア", a: "Malaysia"}, {k: "タイ", r: "タイ", a: "Thailand"}, 
+      {k: "料理", r: "りょうり", a: "masakan"}, {k: "冬", r: "ふゆ", a: "musim dingin"}, 
+      {k: "夜", r: "よる", a: "malam"}, {k: "生まれ", r: "うまれ", a: "tempat kelahiran"},
+      {k: "日本語", r: "にほんご", a: "bahasa Jepang"}, {k: "今日", r: "きょう", a: "hari ini"}, 
+      {k: "明日", r: "あした", a: "besok"}, {k: "休み", r: "やすみ", a: "libur"}, 
+      {k: "会社員", r: "かいしゃいん", a: "pegawai perusahaan"}, {k: "どこ", r: "どこ", a: "di mana"},
+      {k: "誰", r: "だれ", a: "siapa"}, {k: "自己紹介", r: "じこしょうかい", a: "perkenalan diri"}
+    ],
+    materi: [
+      {jp: [ {k:"あなた", r:"あなた"}, {text:"は"}, {k:"社会人", r:"しゃかいじん"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], a: "Apakah Anda pekerja?", ansP: "か", ansA: "Apakah Anda pekerja?"},
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あれ", r:"あれ"}, {text:"は"}, {k:"日本語", r:"にほんご"}, {text:"です。"}, {k:"これ", r:"これ", u:true}, {text:"も", p:true, u:true}, {k:"日本語", r:"にほんご", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true} ], 
+        a: "Itu (yang di sana) adalah bahasa Jepang. Apakah ini juga bahasa Jepang?", ansP: ["も", "か"], ansA: "Apakah ini juga bahasa Jepang?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'では', 'の'],
+        jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"独身", r:"どくしん"}, {text:"では", p:true}, {text:"ありません。"} ], 
+        a: "Dia (laki-laki) bukan lajang.", ansP: ["は", "では"], ansA: "Dia (laki-laki) bukan lajang."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"自己紹介", r:"じこしょうかい"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
+        a: "Apakah ini perkenalan diri?", ansP: ["は", "か"], ansA: "Apakah ini perkenalan diri?"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"デウィさん", r:"デウィさん"}, {text:"は"}, {k:"既婚", r:"きこん"}, {text:"です。"}, {k:"ケンさん", r:"ケンさん"}, {text:"も", p:true}, {k:"既婚", r:"きこん"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {text:"はい、そうです。", u:true} ], 
+        a: "<b>Q:</b> Dewi sudah menikah. Apakah Ken juga sudah menikah?<br><b>A:</b> Ya, sudah.", ansP: ["も", "か"], ansA: "Ya, sudah.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {k:"シンタさん", r:"シンタさん", u:true}, {text:"の", p:true, u:true}, {k:"料理", r:"りょうり", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> はい、そうです。"} ], 
+        a: "<b>Q:</b> Apakah ini masakan Sinta?<br><b>A:</b> Ya, benar.", ansP: ["は", "の", "か"], ansA: "Apakah ini masakan Sinta?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"今日", r:"きょう"}, {text:"は"}, {k:"冬", r:"ふゆ"}, {text:"です。"}, {k:"明日", r:"あした"}, {text:"も", p:true}, {k:"冬", r:"ふゆ"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {text:"はい、そうです。", u:true} ], 
+        a: "<b>Q:</b> Hari ini musim dingin. Apakah besok juga musim dingin?<br><b>A:</b> Ya, benar.", ansP: ["も", "か"], ansA: "Ya, benar.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"生まれ", r:"うまれ", u:true}, {text:"は", p:true, u:true}, {k:"マレーシア", r:"マレーシア", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> はい、そうです。"} ], 
+        a: "<b>Q:</b> Apakah tempat kelahirannya Malaysia?<br><b>A:</b> Ya, benar.", ansP: ["は", "か"], ansA: "Apakah tempat kelahirannya Malaysia?", qA: "Terjemahkanlah kalimat bergaris bawah! (Konteks: membicarakan dia)"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"今日", r:"きょう"}, {text:"は"}, {k:"休み", r:"やすみ"}, {text:"です。"}, {k:"明日", r:"あした"}, {text:"も", p:true}, {k:"休み", r:"やすみ"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {text:"はい、そうです。", u:true} ], 
+        a: "<b>Q:</b> Hari ini libur. Apakah besok juga libur?<br><b>A:</b> Ya, benar.", ansP: ["も", "か"], ansA: "Ya, benar.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"あれ", r:"あれ", u:true}, {text:"は", p:true, u:true}, {k:"ケンさん", r:"ケンさん", u:true}, {text:"の", p:true, u:true}, {k:"作品", r:"さくひん", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。"} ], 
+        a: "<b>Q:</b> Apakah itu (yang di sana) karya Ken?<br><b>A:</b> Bukan, kamu salah.", ansP: ["は", "の", "か"], ansA: "Apakah itu (yang di sana) karya Ken?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"会社員", r:"かいしゃいん"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。"}, {k:"彼", r:"かれ", u:true}, {text:"は", p:true, u:true}, {k:"大学生", r:"だいがくせい", u:true}, {text:"です。", u:true} ], 
+        a: "<b>Q:</b> Apakah dia (laki-laki) pegawai perusahaan?<br><b>A:</b> Bukan, kamu salah. Dia (laki-laki) adalah mahasiswa.", ansP: ["は", "か", "は"], ansA: "Dia (laki-laki) adalah mahasiswa.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"デウィさん", r:"デウィさん"}, {text:"は"}, {k:"先生", r:"せんせい"}, {text:"です。"}, {k:"アグスさん", r:"アグスさん"}, {text:"も", p:true}, {k:"先生", r:"せんせい"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。"}, {k:"アグスさん", r:"アグスさん", u:true}, {text:"は", p:true, u:true}, {k:"大学生", r:"だいがくせい", u:true}, {text:"です。", u:true} ], 
+        a: "<b>Q:</b> Dewi adalah guru. Apakah Agus juga guru?<br><b>A:</b> Bukan, kamu salah. Agus adalah mahasiswa.", ansP: ["も", "か", "は"], ansA: "Agus adalah mahasiswa.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'では', 'の'],
+        jp: [ {k:"彼女", r:"かのじょ"}, {text:"は", p:true}, {k:"先生", r:"せんせい"}, {text:"では", p:true}, {text:"ありません。"} ], 
+        a: "Dia (perempuan) bukan guru.", ansP: ["は", "では"], ansA: "Dia (perempuan) bukan guru."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"シンタさん", r:"シンタさん"}, {text:"は", p:true}, {k:"どこ", r:"どこ"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {k:"シンタさん", r:"シンタさん", u:true}, {text:"は", p:true, u:true}, {k:"学校", r:"がっこう", u:true}, {text:"です。", u:true} ], 
+        a: "<b>Q:</b> Di mana Sinta?<br><b>A:</b> Sinta di sekolah.", ansP: ["は", "か", "は"], ansA: "Sinta di sekolah.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"ここ", r:"ここ"}, {text:"は", p:true}, {k:"どこ", r:"どこ"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {k:"天国", r:"てんごく", u:true}, {text:"です。", u:true} ], 
+        a: "<b>Q:</b> Di mana di sini?<br><b>A:</b> Di surga. 😇", ansP: ["は", "か"], ansA: "Di surga.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      }
+    ],
+    kuisExtra: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'はい', 'いいえ', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"明日", r:"あした"}, {text:"は"}, {k:"休み", r:"やすみ"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {text:"はい", p:true, u:true}, {text:"、そうです。", u:true} ], 
+        a: "<b>Q:</b> Apakah besok libur?<br><b>A:</b> Ya, benar.", ansP: ["か", "はい"], ansA: "Ya, benar.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+       {
+        isMulti: true, opts: ['は', 'も', 'か', 'はい', 'いいえ', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"彼", r:"かれ"}, {text:"は"}, {k:"社会人", r:"しゃかいじん"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {text:"いいえ", p:true, u:true}, {text:"、", u:true}, {k:"違います", r:"ちがいます", u:true}, {text:"。", u:true} ], 
+        a: "<b>Q:</b> Apakah dia (laki-laki) pekerja?<br><b>A:</b> Bukan, kamu salah.", ansP: ["か", "いいえ"], ansA: "Bukan, kamu salah.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'か', 'はい', 'いいえ', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"これ", r:"これ"}, {text:"は"}, {k:"アグスさん", r:"アグスさん"}, {text:"の"}, {k:"作品", r:"さくひん"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {text:"はい", p:true, u:true}, {text:"、そうです。", u:true} ], 
+        a: "<b>Q:</b> Apakah ini karya Agus?<br><b>A:</b> Ya, benar.", ansP: ["か", "はい"], ansA: "Ya, benar.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'はい', 'いいえ', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"シンタさん", r:"シンタさん"}, {text:"は"}, {k:"既婚", r:"きこん"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {text:"いいえ", p:true, u:true}, {text:"、", u:true}, {k:"まだ", r:"まだ", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "<b>Q:</b> Apakah Sinta sudah menikah?<br><b>A:</b> Tidak, belum.", ansP: ["か", "いいえ"], ansA: "Tidak, belum.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'はい', 'いいえ', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"彼女", r:"かのじょ"}, {text:"は"}, {k:"未婚", r:"みこん"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {text:"はい", p:true, u:true}, {text:"、そうです。", u:true} ], 
+        a: "<b>Q:</b> Apakah dia (perempuan) belum menikah?<br><b>A:</b> Ya, belum.", ansP: ["か", "はい"], ansA: "Ya, belum.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      }
+    ],
+    proKuisExtra: []
+  },
+  // --- HARI 5 ---
+  day5: {
+    hafalan: [
+      {k: "国民", r: "こくみん", a: "rakyat"}, {k: "メンバー", r: "メンバー", a: "anggota"},
+      {k: "昨日", r: "きのう", a: "kemarin"}, {k: "今年", r: "ことし", a: "tahun ini"},
+      {k: "去年", r: "きょねん", a: "tahun lalu"}, {k: "景色", r: "けしき", a: "pemandangan"},
+      {k: "隣", r: "となり", a: "sebelah"}, {k: "高校生", r: "こうこうせい", a: "siswa SMA"},
+      {k: "カメラ", r: "カメラ", a: "kamera"}, {k: "紅茶", r: "こうちゃ", a: "teh"},
+      {k: "コーヒー", r: "コーヒー", a: "kopi"}, {k: "音楽", r: "おんがく", a: "musik"},
+      {k: "大阪", r: "おおさか", a: "Osaka"}, {k: "ジャカルタ", r: "ジャカルタ", a: "Jakarta"},
+      {k: "ラーメン", r: "ラーメン", a: "ramen"}, {k: "パソコン", r: "パソコン", a: "PC"},
+      {k: "何", r: "なん", a: "apa"}, {k: "水", r: "みず", a: "air"},
+      {k: "病院", r: "びょういん", a: "rumah sakit"}, {k: "自転車", r: "じてんしゃ", a: "sepeda"}
+    ],
+    materi: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"自転車", r:"じてんしゃ"}, {text:"です"}, {text:"か", p:true}, {text:"、"}, {k:"バイク", r:"バイク"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {k:"バイク", r:"バイク", u:true}, {text:"です。", u:true} ], 
+        a: "<b>Q:</b> Apakah itu (yang di sana) sepeda atau sepeda motor?<br><b>A:</b> Sepeda motor.", ansP: ["は", "か", "か"], ansA: "Sepeda motor.", qA: "Terjemahkanlah jawaban A!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"デウィさん", r:"デウィさん", u:true}, {text:"は", p:true, u:true}, {text:"JKT48", u:true}, {text:"の", p:true, u:true}, {k:"メンバー", r:"メンバー", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> はい、そうです。"} ], 
+        a: "<b>Q:</b> Apakah Dewi anggota JKT48?<br><b>A:</b> Ya, benar.", ansP: ["は", "の", "か"], ansA: "Apakah Dewi anggota JKT48?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"ケンさん", r:"ケンさん"}, {text:"は", p:true}, {text:"マフィア"}, {text:"の", p:true}, {k:"メンバー", r:"メンバー"}, {text:"ですか。<br><b>A:</b> "}, {text:"いいえ、", u:true}, {k:"違います", r:"ちがいます", u:true}, {text:"。", u:true} ],
+        a: "<b>Q:</b> Apakah Ken anggota mafia?<br><b>A:</b> Bukan, kamu salah.", ansP: ["は", "の"], ansA: "Bukan, kamu salah.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"彼", r:"かれ", u:true}, {text:"は", p:true, u:true}, {k:"日本人", r:"にほんじん", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"、", u:true}, {k:"インドネシア人", r:"インドネシアじん", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> "}, {k:"日本人", r:"にほんじん"}, {text:"です。"} ], 
+        a: "<b>Q:</b> Apakah dia (laki-laki) orang Jepang atau orang Indonesia?<br><b>A:</b> Orang Jepang.", ansP: ["は", "か", "か"], ansA: "Apakah dia (laki-laki) orang Jepang atau orang Indonesia?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        jp: [ {text:"<b>Q:</b> "}, {k:"それ", r:"それ"}, {text:"は"}, {k:"紅茶", r:"こうちゃ"}, {text:"ですか、"}, {k:"コーヒー", r:"コーヒー"}, {text:"ですか。<br><b>A:</b> "}, {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {k:"水", r:"みず", u:true}, {text:"です。", u:true} ], 
+        a: "<b>Q:</b> Apakah itu (yang di dekatmu) teh atau kopi?<br><b>A:</b> Ini adalah air.", ansP: "は", ansA: "Ini adalah air.", qA: "Terjemahkanlah jawaban A!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"先生", r:"せんせい"}, {text:"です。"}, {k:"あなた", r:"あなた"}, {text:"も", p:true}, {k:"先生", r:"せんせい"}, {text:"ですか。<br><b>A:</b> "}, {text:"いいえ、", u:true}, {k:"私", r:"わたし", u:true}, {text:"は", p:true, u:true}, {k:"先生", r:"せんせい", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true} ], 
+        a: "<b>Q:</b> Saya adalah guru. Apakah Anda juga guru?<br><b>A:</b> Bukan, saya bukan guru.", ansP: ["は", "も", "は", "では"], ansA: "Bukan, saya bukan guru.", qA: "Terjemahkanlah jawaban A!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"車", r:"くるま"}, {text:"です。"}, {k:"あれ", r:"あれ"}, {text:"も", p:true}, {k:"車", r:"くるま"}, {text:"です。"}, {k:"自転車", r:"じてんしゃ", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true} ], 
+        a: "Ini adalah mobil. Itu (yang di sana) juga mobil. Bukan sepeda.", ansP: ["は", "も", "では"], ansA: "Bukan sepeda.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"シンタさん", r:"シンタさん"}, {text:"は", p:true}, {k:"大学生", r:"だいがくせい"}, {text:"ですか、"}, {k:"社員", r:"しゃいん"}, {text:"ですか。<br><b>A:</b> どちらでもありません。"}, {k:"シンタさん", r:"シンタさん", u:true}, {text:"は", p:true, u:true}, {k:"高校生", r:"こうこうせい", u:true}, {text:"です。", u:true} ], 
+        a: "<b>Q:</b> Apakah Sinta mahasiswi atau karyawan?<br><b>A:</b> Bukan kedua-duanya. Sinta adalah siswi SMA.", ansP: ["は", "は"], ansA: "Sinta adalah siswi SMA.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        jp: [ {text:"<b>Q:</b> "}, {k:"ここ", r:"ここ"}, {text:"は"}, {k:"大阪", r:"おおさか"}, {text:"です"}, {text:"か", p:true}, {text:"、"}, {k:"ジャカルタ", r:"ジャカルタ"}, {text:"ですか。<br><b>A:</b> "}, {k:"ジャカルタ", r:"ジャカルタ", u:true}, {text:"です。", u:true} ], 
+        a: "<b>Q:</b> Apakah di sini Osaka atau Jakarta?<br><b>A:</b> Jakarta.", ansP: "か", ansA: "Jakarta.", qA: "Terjemahkanlah jawaban A!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"出身", r:"しゅっしん", u:true}, {text:"は", p:true, u:true}, {k:"大阪", r:"おおさか", u:true}, {text:"ですか、", u:true}, {k:"ジャカルタ", r:"ジャカルタ", u:true}, {text:"ですか。", u:true}, {text:"<br><b>A:</b> どちらでもありません。"}, {k:"マレーシア", r:"マレーシア"}, {text:"です。"} ], 
+        a: "<b>Q:</b> Apakah tempat kelahirannya Osaka atau Jakarta?<br><b>A:</b> Bukan kedua-duanya. Malaysia.", ansP: ["は"], ansA: "Apakah tempat kelahirannya Osaka atau Jakarta?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"隣", r:"となり", u:true}, {text:"は", p:true, u:true}, {k:"病院", r:"びょういん", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"、", u:true}, {k:"学校", r:"がっこう", u:true}, {text:"ですか。", u:true}, {text:"<br><b>A:</b> "}, {k:"病院", r:"びょういん"}, {text:"です。"} ], 
+        a: "<b>Q:</b> Apakah di sebelah adalah rumah sakit atau sekolah?<br><b>A:</b> Rumah sakit.", ansP: ["は", "か"], ansA: "Apakah di sebelah adalah rumah sakit atau sekolah?", qA: "Terjemahkanlah kalimat tanya (Q) keseluruhan!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"あれ", r:"あれ", u:true}, {text:"は", p:true, u:true}, {k:"去年", r:"きょねん", u:true}, {text:"の", p:true, u:true}, {k:"作品", r:"さくひん", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> はい、そうです。"} ], 
+        a: "<b>Q:</b> Apakah itu (yang di sana) karya tahun lalu?<br><b>A:</b> Ya, benar.", ansP: ["は", "の", "か"], ansA: "Apakah itu (yang di sana) karya tahun lalu?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {k:"日本", r:"にほん", u:true}, {text:"の", p:true, u:true}, {k:"景色", r:"けしき", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> はい、そうです。"} ], 
+        a: "<b>Q:</b> Apakah ini pemandangan Jepang?<br><b>A:</b> Ya, benar.", ansP: ["は", "の", "か"], ansA: "Apakah ini pemandangan Jepang?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"彼", r:"かれ", u:true}, {text:"は", p:true, u:true}, {k:"音楽", r:"おんがく", u:true}, {text:"の", p:true, u:true}, {k:"先生", r:"せんせい", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。"} ], 
+        a: "<b>Q:</b> Apakah dia (laki-laki) guru musik?<br><b>A:</b> Bukan, kamu salah.", ansP: ["は", "の", "か"], ansA: "Apakah dia (laki-laki) guru musik?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {k:"ケンさん", r:"ケンさん", u:true}, {text:"の", p:true, u:true}, {k:"カメラ", r:"カメラ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"、", u:true}, {k:"アグスさん", r:"アグスさん", u:true}, {text:"の", p:true, u:true}, {k:"カメラ", r:"カメラ", u:true}, {text:"ですか。", u:true}, {text:"<br><b>A:</b> "}, {k:"ケンさん", r:"ケンさん"}, {text:"の"}, {k:"カメラ", r:"カメラ"}, {text:"です。"} ], 
+        a: "<b>Q:</b> Apakah ini kamera Ken atau kamera Agus?<br><b>A:</b> Kamera Ken.", ansP: ["は", "の", "か", "の"], ansA: "Apakah ini kamera Ken atau kamera Agus?", qA: "Terjemahkanlah kalimat tanya (Q) keseluruhan!"
+      }
+    ],
+    kuisExtra: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"それ", r:"それ"}, {text:"は", p:true}, {k:"自転車", r:"じてんしゃ"}, {text:"です"}, {text:"か", p:true}, {text:"、"}, {k:"バイク", r:"バイク"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {k:"自転車", r:"じてんしゃ", u:true}, {text:"です。", u:true} ], 
+        a: "<b>Q:</b> Apakah itu (yang di dekatmu) sepeda atau sepeda motor?<br><b>A:</b> Sepeda.", ansP: ["は", "か", "か"], ansA: "Sepeda.", qA: "Terjemahkanlah jawaban A!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"あなた", r:"あなた"}, {text:"は", p:true}, {text:"マフィア"}, {text:"の"}, {k:"メンバー", r:"メンバー"}, {text:"ですか。<br><b>A:</b> "}, {text:"いいえ", p:true, u:true}, {text:"、", u:true}, {k:"違います", r:"ちがいます", u:true}, {text:"。", u:true} ], 
+        a: "<b>Q:</b> Apakah Anda anggota mafia?<br><b>A:</b> Bukan, kamu salah.", ansP: ["は", "いいえ"], ansA: "Bukan, kamu salah.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {k:"何", r:"なん", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> "}, {k:"時計", r:"とけい"}, {text:"です。"} ], 
+        a: "<b>Q:</b> Apa ini?<br><b>A:</b> Jam.", ansP: ["は", "か"], ansA: "Apa ini?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"デウィさん", r:"デウィさん"}, {text:"は"}, {text:"JKT48"}, {text:"の"}, {k:"メンバー", r:"メンバー"}, {text:"です。"}, {k:"シンタさん", r:"シンタさん", u:true}, {text:"も", p:true, u:true}, {text:"JKT48", u:true}, {text:"の", u:true}, {k:"メンバー", r:"メンバー", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> "}, {text:"はい", p:true}, {text:"、そうです。"} ], 
+        a: "<b>Q:</b> Dewi adalah anggota JKT48. Apakah Sinta juga anggota JKT48?<br><b>A:</b> Ya, benar.", ansP: ["も", "か", "はい"], ansA: "Apakah Sinta juga anggota JKT48?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"休み", r:"やすみ"}, {text:"は"}, {k:"昨日", r:"きのう"}, {text:"ですか、"}, {k:"今日", r:"きょう"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {k:"今日", r:"きょう", u:true}, {text:"です。", u:true} ], 
+        a: "<b>Q:</b> Apakah libur kemarin atau hari ini?<br><b>A:</b> Hari ini.", ansP: ["か"], ansA: "Hari ini.", qA: "Terjemahkanlah jawaban A!"
+      }
+    ],
+    proKuisExtra: []
+  },
+
+  // --- HARI 6 ---
+  day6: {
+    hafalan: [
+      {k: "家族", r: "かぞく", a: "keluarga"}, {k: "父", r: "ちち", a: "ayah (sendiri)"},
+      {k: "母", r: "はは", a: "ibu (sendiri)"}, {k: "犬", r: "いぬ", a: "anjing"},
+      {k: "猫", r: "ねこ", a: "kucing"}, {k: "机", r: "つくえ", a: "meja"},
+      {k: "椅子", r: "いす", a: "kursi"}, {k: "辞書", r: "じしょ", a: "kamus"},
+      {k: "雑誌", r: "ざっし", a: "majalah"}, {k: "傘", r: "かさ", a: "payung"},
+      {k: "眼鏡", r: "めがね", a: "kacamata"}, {k: "写真", r: "しゃしん", a: "foto"},
+      {k: "部屋", r: "へや", a: "kamar"}, {k: "窓", r: "まど", a: "jendela"},
+      {k: "ドア", r: "ドア", a: "pintu"}, {k: "食べ物", r: "たべもの", a: "makanan"},
+      {k: "飲み物", r: "のみもの", a: "minuman"}, {k: "海", r: "うみ", a: "laut"},
+      {k: "魚", r: "さかな", a: "ikan"}, {k: "医者", r: "いしゃ", a: "dokter"}
+    ],
+    materi: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"私", r:"わたし"}, {text:"の", p:true}, {k:"傘", r:"かさ"}, {text:"です"}, {text:"。"} ], 
+        a: "Ini adalah payung (milik) saya.", ansP: ["は", "の"], ansA: "Ini adalah payung (milik) saya."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"それ", r:"それ"}, {text:"は", p:true}, {k:"父", r:"ちち"}, {text:"の", p:true}, {k:"眼鏡", r:"めがね"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {text:"はい", p:true, u:true}, {text:"、そうです。", u:true} ], 
+        a: "<b>Q:</b> Apakah itu (yang di dekatmu) kacamata (milik) ayah?<br><b>A:</b> Ya, benar.", ansP: ["は", "の", "か", "はい"], ansA: "Ya, benar.", qA: "Terjemahkanlah jawaban A!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"インドネシア", r:"インドネシア"}, {k:"大学", r:"だいがく"}, {text:"の", p:true}, {k:"学生", r:"がくせい"}, {text:"です。"} ], 
+        a: "Dia (laki-laki) adalah mahasiswa (dari) Universitas Indonesia.", ansP: ["は", "の"], ansA: "Dia (laki-laki) adalah mahasiswa (dari) Universitas Indonesia."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"日本", r:"にほん"}, {text:"の", p:true}, {k:"ラーメン", r:"ラーメン"}, {text:"です"}, {text:"。"} ], 
+        a: "Ini adalah ramen (dari) Jepang.", ansP: ["は", "の"], ansA: "Ini adalah ramen (dari) Jepang."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ 
+          {text:"<b>Q:</b> "}, 
+          {k:"それ", r:"それ"}, {text:"は"}, {k:"あなた", r:"あなた"}, {text:"の"}, {k:"辞書", r:"じしょ"}, {text:"です。 "},
+          {k:"これ", r:"これ"}, {text:"も", p:true}, {k:"あなた", r:"あなた"}, {text:"の", p:true}, {k:"辞書", r:"じしょ"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, 
+          {text:"いいえ", p:true, u:true}, {text:"、", u:true}, {k:"それ", r:"それ", u:true}, {text:"は", p:true, u:true}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"辞書", r:"じしょ", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true} 
+        ], 
+        a: "<b>Q:</b> Itu (yang di dekatmu) adalah kamus (milik) Anda. Apakah ini juga kamus (milik) Anda?<br><b>A:</b> Bukan, itu (yang di dekatmu) bukan kamus (milik) saya.", 
+        ansP: ["も", "の", "か", "いいえ", "は", "の", "では"], 
+        ansA: "Bukan, itu (yang di dekatmu) bukan kamus (milik) saya.", 
+        qA: "Terjemahkanlah jawaban A!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"朝", r:"あさ"}, {text:"の", p:true}, {k:"飲み物", r:"のみもの"}, {text:"です。"} ], 
+        a: "Itu (yang di sana) adalah minuman di pagi hari.", ansP: ["は", "の"], ansA: "Itu (yang di sana) adalah minuman di pagi hari."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"私", r:"わたし"}, {text:"の"}, {k:"父", r:"ちち"}, {text:"は"}, {k:"病院", r:"びょういん"}, {text:"の"}, {k:"医者", r:"いしゃ"}, {text:"です。 "}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"母", r:"はは", u:true}, {text:"も", p:true, u:true}, {k:"病院", r:"びょういん", u:true}, {text:"の", p:true, u:true}, {k:"医者", r:"いしゃ", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Ayah saya adalah dokter (di) rumah sakit. Ibu saya juga dokter (di) rumah sakit.", ansP: ["の", "も", "の"], ansA: "Ibu saya juga dokter (di) rumah sakit.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"犬", r:"いぬ", u:true}, {text:"の", p:true, u:true}, {k:"食べ物", r:"たべもの", u:true}, {text:"は", p:true, u:true}, {k:"これ", r:"これ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"、", u:true}, {k:"あれ", r:"あれ", u:true}, {text:"ですか。", u:true}, {text:"<br><b>A:</b> "}, {k:"あれ", r:"あれ"}, {text:"です。"} ], 
+        a: "<b>Q:</b> Makanan anjing apakah yang ini atau yang (di sana) itu?<br><b>A:</b> Yang (di sana) itu.", ansP: ["の", "は", "か"], ansA: "Makanan anjing apakah yang ini atau yang (di sana) itu?", qA: "Terjemahkanlah kalimat tanya (Q) keseluruhan!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"それ", r:"それ"}, {text:"は", p:true}, {k:"海", r:"うみ"}, {text:"の", p:true}, {k:"魚", r:"さかな"}, {text:"では", p:true}, {text:"ありません。"} ], 
+        a: "Itu (yang di dekatmu) bukan ikan (dari) laut.", ansP: ["は", "の", "では"], ansA: "Itu (yang di dekatmu) bukan ikan (dari) laut."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"今日", r:"きょう"}, {text:"の", p:true}, {k:"雑誌", r:"ざっし"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "},
+        {text:"いいえ", p:true, u:true}, {text:"、", u:true}, {k:"それ", r:"それ", u:true}, {text:"は", p:true, u:true}, {k:"昨日", r:"きのう", u:true}, {text:"の", p:true, u:true}, {k:"雑誌", r:"ざっし", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "<b>Q:</b> Apakah ini majalah hari ini?<br><b>A:</b> Bukan, itu (yang di dekatmu) majalah kemarin.", ansP: ["は", "の", "か", "いいえ", "は", "の"], ansA: "Bukan, itu (yang di dekatmu) majalah kemarin.", qA: "Terjemahkanlah jawaban A!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"部屋", r:"へや"}, {text:"の", p:true}, {k:"窓", r:"まど"}, {text:"です。"} ], 
+        a: "Itu (yang di sana) adalah jendela kamar.", ansP: ["は", "の"], ansA: "Itu (yang di sana) adalah jendela kamar."
+      },
+     {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"家族", r:"かぞく", u:true}, {text:"の", p:true, u:true}, {k:"写真", r:"しゃしん", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Ini adalah foto keluarga saya.", ansP: ["は", "の", "の"], ansA: "Foto keluarga saya.", qA: "Terjemahkanlah frasa yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"あれ", r:"あれ", u:true}, {text:"は", p:true, u:true}, {k:"誰", r:"だれ", u:true}, {text:"の", p:true, u:true}, {k:"部屋", r:"へや", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。<br><b>A:</b> "}, {k:"父", r:"ちち"}, {text:"の"}, {k:"部屋", r:"へや"}, {text:"です。"} ], 
+        a: "<b>Q:</b> Itu (yang di sana) kamar (milik) siapa?<br><b>A:</b> Kamar (milik) ayah.", ansP: ["は", "の", "か"], ansA: "Itu (yang di sana) kamar (milik) siapa?", qA: "Terjemahkanlah kalimat Q!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"父", r:"ちち"}, {text:"の"}, {k:"眼鏡", r:"めがね"}, {text:"は"}, {k:"私", r:"わたし"}, {text:"の"}, {k:"部屋", r:"へや"}, {text:"です。 "}, {k:"母", r:"はは", u:true}, {text:"の", p:true, u:true}, {k:"眼鏡", r:"めがね", u:true}, {text:"も", p:true, u:true}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"部屋", r:"へや", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Kacamata (milik) ayah di kamar saya. Kacamata (milik) ibu juga di kamar saya.", ansP: ["の", "も", "の"], ansA: "Kacamata (milik) ibu juga di kamar saya.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"デウィさん", r:"デウィさん"}, {text:"は", p:true}, {k:"病院", r:"びょういん"}, {text:"の", p:true}, {k:"医者", r:"いしゃ"}, {text:"です。"} ], 
+        a: "Dewi adalah dokter (di) rumah sakit.", 
+        ansP: ["は", "の"], ansA: "Dewi adalah dokter (di) rumah sakit."
+      }
+    ],
+        kuisExtra: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"先生", r:"せんせい"}, {text:"の", p:true}, {k:"机", r:"つくえ"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "}, {text:"はい", p:true, u:true}, {text:"、そうです。", u:true} ], 
+        a: "<b>Q:</b> Apakah ini meja (milik) guru?<br><b>A:</b> Ya, benar.", ansP: ["は", "の", "か", "はい"], ansA: "Ya, benar.", qA: "Terjemahkanlah jawaban A!"
+      },
+       {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"川", r:"かわ"}, {text:"の", p:true}, {k:"魚", r:"さかな"}, {text:"です"}, {text:"。"} ], 
+        a: "Ini adalah ikan (dari) sungai.", ansP: ["は", "の"], ansA: "Ini adalah ikan (dari) sungai."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"私", r:"わたし"}, {text:"の", p:true}, {k:"椅子", r:"いす"}, {text:"では", p:true}, {text:"ありません。"} ], 
+        a: "Itu (yang di sana) bukan kursi (milik) saya.", ansP: ["は", "の", "では"], ansA: "Itu (yang di sana) bukan kursi (milik) saya."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"数学", r:"すうがく"}, {text:"の", p:true}, {k:"本", r:"ほん"}, {text:"です。"} ], 
+        a: "Ini adalah buku matematika.", ansP: ["は", "の"], ansA: "Ini adalah buku matematika."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"それ", r:"それ", u:true}, {text:"は", p:true, u:true}, {k:"日本", r:"にほん", u:true}, {text:"の", p:true, u:true}, {k:"辞書", r:"じしょ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>A:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。"} ], 
+        a: "<b>Q:</b> Apakah itu (yang di dekatmu) kamus (dari) Jepang?<br><b>A:</b> Bukan, kamu salah.", ansP: ["は", "の", "か"], ansA: "Apakah itu (yang di dekatmu) kamus (dari) Jepang?", qA: "Terjemahkanlah kalimat Q!"
+      }
+    ],
+    proKuisExtra: []
+  },
+  // --- HARI 7 ---
+  day7: {
+    hafalan: [
+      {k: "ヤマハ", r: "ヤマハ", a: "Yamaha"}, {k: "ホンダ", r: "ホンダ", a: "Honda"},
+      {k: "ソニー", r: "ソニー", a: "Sony"}, {k: "トヨタ", r: "トヨタ", a: "Toyota"},
+      {k: "アップル", r: "アップル", a: "Apple"}, {k: "兄", r: "あに", a: "kakak laki-laki"}, 
+      {k: "姉", r: "あね", a: "kakak perempuan"}, {k: "弟", r: "おとうと", a: "adik laki-laki"}, 
+      {k: "妹", r: "いもうと", a: "adik perempuan"}, {k: "紙", r: "かみ", a: "kertas"},
+      {k: "ペン", r: "ペン", a: "pena"}, {k: "地図", r: "ちず", a: "peta"},
+      {k: "手紙", r: "てがみ", a: "surat"}, {k: "電話", r: "でんわ", a: "telepon"},
+      {k: "果物", r: "くだもの", a: "buah-buahan"}, {k: "肉", r: "にく", a: "daging"},
+      {k: "卵", r: "たまご", a: "telur"}, {k: "パン", r: "パン", a: "roti"},
+      {k: "ご飯", r: "ごはん", a: "nasi"}, {k: "目", r: "め", a: "mata"}
+    ],
+    materi: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"ヤマハ", r:"ヤマハ"}, {text:"の", p:true}, {k:"バイク", r:"バイク"}, {text:"です"}, {text:"。"} ], 
+        a: "Ini adalah sepeda motor (buatan) Yamaha.", ansP: ["は", "の"], ansA: "Ini adalah sepeda motor (buatan) Yamaha."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>ケン:</b> "}, {k:"それ", r:"それ"}, {text:"は", p:true}, {k:"ソニー", r:"ソニー"}, {text:"の", p:true}, {k:"テレビ", r:"テレビ"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>アグス:</b> "}, {text:"はい", p:true, u:true}, {text:"、そうです。", u:true} ], 
+        a: "<b>Ken:</b> Apakah itu (yang di dekatmu) televisi (buatan) Sony?<br><b>Agus:</b> Ya, kamu benar.", ansP: ["は", "の", "か", "はい"], ansA: "Ya, kamu benar.", qA: "Terjemahkanlah jawaban Agus!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"トヨタ", r:"トヨタ"}, {text:"の", p:true}, {k:"車", r:"くるま"}, {text:"では", p:true}, {text:"ありません。"} ], 
+        a: "Itu (yang di sana) bukan mobil (buatan) Toyota.", ansP: ["は", "の", "では"], ansA: "Itu (yang di sana) bukan mobil (buatan) Toyota."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>デウィ:</b> "}, {k:"あれ", r:"あれ"}, {text:"は"}, {k:"ホンダ", r:"ホンダ"}, {text:"の"}, {k:"自転車", r:"じてんしゃ"}, {text:"です。 "}, {k:"これ", r:"これ"}, {text:"も", p:true}, {k:"ホンダ", r:"ホンダ"}, {text:"の", p:true}, {k:"自転車", r:"じてんしゃ"}, {text:"ですか。<br><b>シンタ:</b> "}, {text:"いいえ、", u:true}, {k:"違います", r:"ちがいます", u:true}, {text:"。", u:true} ], 
+        a: "<b>Dewi:</b> Itu (yang di sana) adalah sepeda (buatan) Honda. Apakah ini juga sepeda (buatan) Honda?<br><b>Sinta:</b> Bukan, kamu salah.", ansP: ["も", "の"], ansA: "Bukan, kamu salah.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"社長", r:"しゃちょう"}, {text:"の", p:true}, {k:"山田さん", r:"やまださん"}, {text:"は", p:true}, {k:"日本人", r:"にほんじん"}, {text:"です。"} ], 
+        a: "Bapak Yamada, Presiden Direktur, adalah orang Jepang.", ansP: ["の", "は"], ansA: "Bapak Yamada, Presiden Direktur, adalah orang Jepang."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>デウィ:</b> "}, {k:"高校生", r:"こうこうせい", u:true}, {text:"の", p:true, u:true}, {k:"アグスさん", r:"アグスさん", u:true}, {text:"は", p:true, u:true}, {k:"家", r:"いえ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"、", u:true}, {k:"学校", r:"がっこう", u:true}, {text:"ですか。", u:true}, {text:"<br><b>ケン:</b> "}, {k:"学校", r:"がっこう"}, {text:"です。"} ], 
+        a: "<b>Dewi:</b> Apakah Agus (yang masih) siswa SMA ada di rumah atau di sekolah?<br><b>Ken:</b> Di sekolah.", ansP: ["の", "は", "か"], ansA: "Apakah Agus (yang masih) siswa SMA ada di rumah atau di sekolah?", qA: "Terjemahkanlah pertanyaan Dewi secara keseluruhan!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"ジャカルタ", r:"ジャカルタ"}, {text:"です。"}, {k:"大学生", r:"だいがくせい", u:true}, {text:"の", p:true, u:true}, {k:"妹", r:"いもうと", u:true}, {text:"も", p:true, u:true}, {k:"ジャカルタ", r:"ジャカルタ", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Saya ada di Jakarta. Adik perempuan saya, (yang masih) mahasiswi, juga ada di Jakarta.", ansP: ["は", "の", "も"], ansA: "Adik perempuan saya, (yang masih) mahasiswi, juga ada di Jakarta.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+       {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>学生:</b> "}, {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"アップル", r:"アップル"}, {text:"の", p:true}, {k:"パソコン", r:"パソコン"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>先生:</b> "}, {text:"はい", p:true, u:true}, {text:"、そうです。", u:true} ], 
+        a: "<b>Siswa:</b> Apakah itu (yang di sana) PC (buatan) Apple?<br><b>Guru:</b> Ya, kamu benar.", ansP: ["は", "の", "か", "はい"], ansA: "Ya, kamu benar.", qA: "Terjemahkanlah jawaban Guru!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>妹:</b> "}, {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {k:"姉", r:"あね", u:true}, {text:"の", p:true, u:true}, {k:"手紙", r:"てがみ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。<br><b>兄:</b> はい、そうです。"} ], 
+        a: "<b>Adik perempuan:</b> Apakah ini surat (dari) kakak perempuan?<br><b>Kakak laki-laki:</b> Ya, kamu benar.", ansP: ["は", "の", "か"], ansA: "Apakah ini surat (dari) kakak perempuan?", qA: "Terjemahkanlah pertanyaan Adik perempuan!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"インドネシア", r:"インドネシア"}, {text:"の", p:true}, {k:"果物", r:"くだもの"}, {text:"は", p:true}, {k:"これ", r:"これ"}, {text:"です"}, {text:"。"} ], 
+        a: "Buah-buahan (dari) Indonesia adalah ini.", ansP: ["の", "は"], ansA: "Buah-buahan (dari) Indonesia adalah ini."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"それ", r:"それ"}, {text:"は", p:true}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"兄", r:"あに", u:true}, {text:"の", p:true, u:true}, {k:"ペン", r:"ペン", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Itu (yang di dekatmu) adalah pena (milik) kakak laki-laki saya.", ansP: ["は", "の", "の"], ansA: "Pena (milik) kakak laki-laki saya.", qA: "Terjemahkanlah frasa yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>ケン:</b> "}, {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"誰", r:"だれ"}, {text:"の", p:true}, {k:"ご飯", r:"ごはん"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>アグス:</b> "}, {k:"姉", r:"あね", u:true}, {text:"の", p:true, u:true}, {k:"ご飯", r:"ごはん", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "<b>Ken:</b> Itu (yang di sana) nasi (punya) siapa?<br><b>Agus:</b> Nasi (punya) kakak perempuan(ku).", ansP: ["は", "の", "か", "の"], ansA: "Nasi (punya) kakak perempuan(ku).", qA: "Terjemahkanlah jawaban Agus!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"インドネシア", r:"インドネシア"}, {text:"の", p:true}, {k:"果物", r:"くだもの"}, {text:"です。"}, {k:"あれ", r:"あれ", u:true}, {text:"は", p:true, u:true}, {k:"日本", r:"にほん", u:true}, {text:"の", p:true, u:true}, {k:"果物", r:"くだもの", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Ini adalah buah-buahan (dari) Indonesia. Itu (yang di sana) adalah buah-buahan (dari) Jepang.", ansP: ["は", "の", "は", "の"], ansA: "Itu (yang di sana) adalah buah-buahan (dari) Jepang.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"社長", r:"しゃちょう"}, {text:"の", p:true}, {k:"山田さん", r:"やまださん"}, {text:"の", p:true}, {k:"車", r:"くるま"}, {text:"です。"} ], 
+        a: "Itu (yang di sana) adalah mobil (milik) Bapak Yamada, Presiden Direktur.", ansP: ["は", "の", "の"], ansA: "Itu (yang di sana) adalah mobil (milik) Bapak Yamada, Presiden Direktur."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"日本", r:"にほん"}, {text:"の", p:true}, {k:"地図", r:"ちず"}, {text:"では", p:true}, {text:"ありません。"} ], 
+        a: "Ini bukan peta (dari) Jepang.", ansP: ["は", "の", "では"], ansA: "Ini bukan peta (dari) Jepang."
+      }
+    ],
+    kuisExtra: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"それ", r:"それ"}, {text:"は", p:true}, {k:"アップル", r:"アップル"}, {text:"の", p:true}, {k:"電話", r:"でんわ"}, {text:"です。"} ], 
+        a: "Itu (yang di dekatmu) adalah telepon (buatan) Apple.", ansP: ["は", "の"], ansA: "Itu (yang di dekatmu) adalah telepon (buatan) Apple."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>アグス:</b> "}, {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"ソニー", r:"ソニー"}, {text:"の", p:true}, {k:"カメラ", r:"カメラ"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>ケン:</b> "}, {text:"はい", p:true, u:true}, {text:"、そうです。", u:true} ], 
+        a: "<b>Agus:</b> Apakah ini kamera (buatan) Sony?<br><b>Ken:</b> Ya, kamu benar.", ansP: ["は", "の", "か", "はい"], ansA: "Ya, kamu benar.", qA: "Terjemahkanlah jawaban Ken!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"パン", r:"パン", u:true}, {text:"では", p:true}, {text:"ありません。"} ], 
+        a: "Itu (yang di sana) bukan roti (milik) saya.", ansP: ["は", "の", "では"], ansA: "Roti (milik) saya.", qA: "Terjemahkan frasa yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {text:"<b>シンタ:</b> "}, {k:"あれ", r:"あれ", u:true}, {text:"は", p:true, u:true}, {k:"誰", r:"だれ", u:true}, {text:"の", p:true, u:true}, {k:"傘", r:"かさ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, {text:"<br><b>デウィ:</b> "}, {k:"妹", r:"いもうと"}, {text:"の"}, {k:"傘", r:"かさ"}, {text:"です。"} ], 
+        a: "<b>Sinta:</b> Itu (yang di sana) payung (punya) siapa?<br><b>Dewi:</b> Payung (punya) adik perempuan(ku).", ansP: ["は", "の", "か"], ansA: "Itu (yang di sana) payung (punya) siapa?", qA: "Terjemahkanlah pertanyaan Sinta!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'はい', 'いいえ'],
+        jp: [ {k:"社長", r:"しゃちょう"}, {text:"の", p:true}, {k:"デウィさん", r:"デウィさん"}, {text:"は", p:true}, {k:"インドネシア人", r:"インドネシアじん"}, {text:"です。"} ], 
+        a: "Ibu Dewi, Presiden Direktur, adalah orang Indonesia.", ansP: ["の", "は"], ansA: "Ibu Dewi, Presiden Direktur, adalah orang Indonesia."
+      }
+    ],
+    proKuisExtra: []
+  },
+  // --- HARI 8 ---
+  day8: {
+        hafalan: [
+      {k: "ベッド", r: "ベッド", a: "kasur"}, {k: "お風呂", r: "おふろ", a: "kamar mandi / bak mandi"}, 
+      {k: "台所", r: "だいどころ", a: "dapur"}, {k: "山", r: "やま", a: "gunung"},
+      {k: "川", r: "かわ", a: "sungai"}, {k: "鳥", r: "とり", a: "burung"}, 
+      {k: "木", r: "き", a: "pohon"}, {k: "花", r: "はな", a: "bunga"}, 
+      {k: "空", r: "そら", a: "langit"}, {k: "お茶", r: "おちゃ", a: "teh (hijau)"}, 
+      {k: "電車", r: "でんしゃ", a: "kereta listrik"}, {k: "飛行機", r: "ひこうき", a: "pesawat"},
+      {k: "銀行", r: "ぎんこう", a: "bank"}, {k: "郵便局", r: "ゆうびんきょく", a: "kantor pos"}, 
+      {k: "公園", r: "こうえん", a: "taman"}, {k: "お父さん", r: "おとうさん", a: "ayah (orang lain)"},
+      {k: "お母さん", r: "おかあさん", a: "ibu (orang lain)"}, {k: "桜", r: "さくら", a: "pohon sakura"},
+      {k: "海外", r: "かいがい", a: "luar negeri"}, {k: "テレビ", r: "テレビ", a: "televisi"}
+    ],
+    materi: [
+      {jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"ベッド", r:"ベッド"}, {text:"です。"} ], a: "Ini adalah kasur.", ansP: "は", ansA: "Ini adalah kasur."},
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>シンタ:</b> "}, {k:"この", r:"この"}, {k:"ベッド", r:"ベッド"}, {text:"は", p:true}, {k:"私", r:"わたし"}, {text:"の", p:true}, {k:"ベッド", r:"ベッド"}, {text:"です。 "},
+          {k:"あの", r:"あの"}, {k:"ベッド", r:"ベッド"}, {text:"も", p:true}, {k:"私", r:"わたし"}, {text:"の", p:true}, {k:"ベッド", r:"ベッド"}, {text:"です。 "},
+          {k:"その", r:"その", u:true}, {k:"ベッド", r:"ベッド", u:true}, {text:"は", p:true, u:true}, {k:"あなた", r:"あなた", u:true}, {text:"の", p:true, u:true}, {k:"ベッド", r:"ベッド", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true},
+          {text:"<br><b>デウィ:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。 "},
+          {k:"この", r:"この", u:true}, {k:"ベッド", r:"ベッド", u:true}, {text:"は", p:true, u:true}, {k:"マリさん", r:"マリさん", u:true}, {text:"の", p:true, u:true}, {k:"ベッド", r:"ベッド", u:true}, {text:"です", u:true}, {text:"。", u:true}
+        ], 
+        a: "<b>Sinta:</b> Kasur ini adalah kasur saya. Kasur di sana itu juga kasur saya. Apakah kasur itu (di dekatmu) adalah kasur Anda?<br><b>Dewi:</b> Bukan, kamu salah. Kasur ini adalah kasur (milik) Mari-san.", 
+        ansP: ["は", "の", "も", "の", "は", "の", "か", "は", "の"], ansA: "Kasur ini adalah kasur (milik) Mari-san.", qA: "Terjemahkanlah kalimat terakhir Dewi!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>お父さん:</b> "}, {k:"それ", r:"それ", u:true}, {text:"は", p:true, u:true}, {k:"お茶", r:"おちゃ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"、", u:true}, {k:"コーヒー", r:"コーヒー", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true},
+          {text:"<br><b>お母さん:</b> "}, {k:"コーヒー", r:"コーヒー"}, {text:"です。"}
+        ], 
+        a: "<b>Ayah:</b> Apakah itu (di dekatmu) teh atau kopi?<br><b>Ibu:</b> Kopi.", 
+        ansP: ["は", "か", "か"], ansA: "Apakah itu (di dekatmu) teh atau kopi?", qA: "Terjemahkanlah pertanyaan Ayah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>お父さん:</b> "}, {k:"その", r:"その"}, {k:"コーヒー", r:"コーヒー"}, {text:"は", p:true}, {k:"日本", r:"にほん"}, {text:"の", p:true}, {k:"コーヒー", r:"コーヒー"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>お母さん:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。 "},
+          {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {k:"マレーシア", r:"マレーシア", u:true}, {text:"の", p:true, u:true}, {k:"コーヒー", r:"コーヒー", u:true}, {text:"です", u:true}, {text:"。", u:true}
+        ], 
+        a: "<b>Ayah:</b> Apakah kopi itu (di dekatmu) adalah kopi (dari) Jepang?<br><b>Ibu:</b> Bukan, kamu salah. Ini adalah kopi (dari) Malaysia.", 
+        ansP: ["は", "の", "か", "は", "の"], 
+        ansA: "Ini adalah kopi (dari) Malaysia.", 
+        qA: "Terjemahkanlah jawaban Ibu yang bergaris bawah!"
+      },
+      {jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"鳥", r:"とり"}, {text:"です。"} ], a: "Itu (di sana) adalah burung.", ansP: "は", ansA: "Itu (di sana) adalah burung."},
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あの", r:"あの"}, {k:"鳥", r:"とり"}, {text:"は", p:true}, {k:"マリさん", r:"マリさん"}, {text:"の", p:true}, {k:"鳥", r:"とり"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
+        a: "Apakah burung di sana itu adalah burung (milik) Mari-san?", ansP: ["は", "の", "か"], ansA: "Apakah burung di sana itu adalah burung (milik) Mari-san?"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"桜", r:"さくら"}, {text:"の", p:true}, {k:"木", r:"き"}, {text:"は", p:true}, {k:"どれ", r:"どれ"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
+        a: "Pohon sakura itu yang mana?", ansP: ["の", "は", "か"], ansA: "Pohon sakura itu yang mana?"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>デウィ:</b> "}, {k:"あの", r:"あの"}, {k:"電車", r:"でんしゃ"}, {text:"は", p:true}, {k:"インドネシア", r:"インドネシア"}, {text:"の", p:true}, {k:"電車", r:"でんしゃ"}, {text:"です。 "},
+          {text:"<br><b>弟:</b> "}, {text:"えっ、", u:true}, {k:"そう です か", r:"そう です か", u:true}, {text:"。", u:true}
+        ], 
+        a: "<b>Dewi:</b> Kereta listrik di sana itu adalah kereta listrik (dari) Indonesia.<br><b>Adik laki-laki:</b> Eh? Benarkah?", 
+        ansP: ["は", "の"], ansA: "Eh? Benarkah?", qA: "Terjemahkanlah jawaban Adik!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>シンタ:</b> "}, {k:"この", r:"この"}, {k:"木", r:"き"}, {text:"は", p:true}, {k:"日本", r:"にほん"}, {text:"の", p:true}, {k:"木", r:"き"}, {text:"です。 "},
+          {text:"<br><b>アリ:</b> "}, {text:"えっ、", u:true}, {k:"そう です か", r:"そう です か", u:true}, {text:"。", u:true}
+        ], 
+        a: "<b>Sinta:</b> Pohon ini adalah pohon (dari) Jepang.<br><b>Ali:</b> Eh? Benarkah?", 
+        ansP: ["は", "の"], ansA: "Eh? Benarkah?", qA: "Terjemahkanlah jawaban Ali!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"その", r:"その"}, {k:"電車", r:"でんしゃ"}, {text:"は", p:true}, {text:"KAI"}, {text:"の", p:true}, {k:"電車", r:"でんしゃ"}, {text:"では", p:true}, {text:"ありません。"} ], 
+        a: "Kereta listrik (yang ada di dekatmu) itu bukan kereta listrik (milik) KAI.", ansP: ["は", "の", "では"], ansA: "Kereta listrik (yang ada di dekatmu) itu bukan kereta listrik (milik) KAI."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>リン:</b> "}, {k:"それ", r:"それ"}, {text:"は", p:true}, {k:"日本", r:"にほん"}, {text:"の", p:true}, {k:"お風呂", r:"おふろ"}, {text:"です。 "},
+          {text:"<br><b>デウィ:</b> えっ、そうですか。じゃあ、"}, {k:"あれ", r:"あれ"}, {text:"も", p:true}, {k:"日本", r:"にほん"}, {text:"の", p:true}, {k:"お風呂", r:"おふろ"}, {text:"です"}, {text:"か", p:true}, {text:"。"},
+          {text:"<br><b>リン:</b> いいえ、違います。"}, {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"海外", r:"かいがい"}, {text:"の", p:true}, {k:"お風呂", r:"おふろ"}, {text:"です"}, {text:"。"}, 
+          /* u:true difokuskan HANYA di kalimat terakhir ini */
+          {k:"日本", r:"にほん", u:true}, {text:"の", p:true, u:true}, {k:"お風呂", r:"おふろ", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true}
+        ], 
+        a: "<b>Rin:</b> Itu (di dekatmu) adalah kamar mandi Jepang.<br><b>Dewi:</b> Eh? Benarkah? Kalau begitu, apakah yang di sana itu juga kamar mandi Jepang?<br><b>Rin:</b> Bukan, kamu salah. Itu (di sana) adalah kamar mandi luar negeri. Bukan kamar mandi Jepang.", 
+        ansP: ["は", "の", "も", "の", "か", "は", "の", "の", "では"], 
+        ansA: "Bukan kamar mandi Jepang.", 
+        qA: "Terjemahkanlah kalimat terakhir Rin yang bergaris bawah!"
+      },
+        {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あの", r:"あの"}, {k:"公園", r:"こうえん"}, {text:"は", p:true}, {k:"日本", r:"にほん"}, {text:"の", p:true}, {k:"公園", r:"こうえん"}, {text:"です。"} ], 
+        a: "Taman di sana itu adalah taman (di) Jepang.", ansP: ["は", "の"], ansA: "Taman di sana itu adalah taman (di) Jepang."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>アリ:</b> "}, {k:"その", r:"その"}, {k:"水", r:"みず"}, {text:"は", p:true}, {text:"アクア"}, {text:"の", p:true}, {k:"水", r:"みず"}, {text:"です。 "},
+          {text:"<br><b>マリ:</b> そう です か。じゃあ、"}, {k:"あの", r:"あの", u:true}, {text:"水", r:"みず", u:true}, {text:"も", p:true, u:true}, {text:"アクア", u:true}, {text:"の", p:true, u:true}, {k:"水", r:"みず", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true},
+          {text:"<br><b>アリ:</b> はい、そうです。"}
+        ], 
+        a: "<b>Ali:</b> Air itu (di dekatmu) adalah air AQUA.<br><b>Mari:</b> Begitu ya. Kalau begitu, apakah air di sana itu juga air AQUA?<br><b>Ali:</b> Ya, benar.", 
+        ansP: ["は", "の", "も", "の", "か"], ansA: "Apakah air di sana itu juga air AQUA?", qA: "Terjemahkanlah pertanyaan Mari!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"その", r:"その"}, {k:"郵便局", r:"ゆうびんきょく"}, {text:"は", p:true}, {k:"ジャカルタ", r:"ジャカルタ"}, {text:"の", p:true}, {k:"郵便局", r:"ゆうびんきょく"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
+        a: "Apakah kantor pos itu (di dekatmu) adalah kantor pos (di) Jakarta?", ansP: ["は", "の", "か"], ansA: "Apakah kantor pos itu (di dekatmu) adalah kantor pos (di) Jakarta?"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"この", r:"この"}, {k:"ベッド", r:"ベッド"}, {text:"は", p:true}, {k:"私", r:"わたし"}, {text:"の", p:true}, {k:"ベッド", r:"ベッド"}, {text:"じゃありません。"} ], 
+        a: "Kasur ini bukan kasur (milik) saya. [Sopan]", ansP: ["は", "の"], ansA: "Kasur ini bukan kasur (milik) saya. [Sopan]"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"この", r:"この"}, {k:"鉛筆", r:"えんぴつ"}, {text:"は", p:true}, {k:"私", r:"わたし"}, {text:"の", p:true}, {k:"鉛筆", r:"えんぴつ"}, {text:"です。"} ], 
+        a: "Pensil ini adalah pensil saya.", ansP: ["は", "の"], ansA: "Pensil ini adalah pensil saya."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あの", r:"あの"}, {k:"時計", r:"とけい"}, {text:"は", p:true}, {k:"デウィさん", r:"デウィさん"}, {text:"の", p:true}, {k:"時計", r:"とけい"}, {text:"です。"} ], 
+        a: "Jam itu (di sana) adalah jam (milik) Dewi.", ansP: ["は", "の"], ansA: "Jam itu (di sana) adalah jam (milik) Dewi."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"その", r:"その"}, {k:"雑誌", r:"ざっし"}, {text:"は", p:true}, {k:"日本", r:"にほん"}, {text:"の", p:true}, {k:"雑誌", r:"ざっし"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
+        a: "Apakah majalah itu (di dekatmu) adalah majalah (dari) Jepang?", ansP: ["は", "の", "か"], ansA: "Apakah majalah itu (di dekatmu) adalah majalah (dari) Jepang?"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"先生", r:"せんせい"}, {text:"の", p:true}, {k:"辞書", r:"じしょ"}, {text:"です。"} ], 
+        a: "Ini adalah kamus (milik) guru.", ansP: ["は", "の"], ansA: "Ini adalah kamus (milik) guru."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"アグスさん", r:"アグスさん"}, {text:"の", p:true}, {k:"傘", r:"かさ"}, {text:"は", p:true}, {k:"どの", r:"どの"}, {k:"傘", r:"かさ"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
+        a: "Payung Agus adalah payung yang mana?", ansP: ["の", "は", "か"], ansA: "Payung Agus adalah payung yang mana?"
+      }
+    ],
+    kuisExtra: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"その", r:"その"}, {k:"台所", r:"だいどころ"}, {text:"は", p:true}, {k:"ホテル", r:"ホテル"}, {text:"の", p:true}, {k:"台所", r:"だいどころ"}, {text:"です。"} ], 
+        a: "Dapur itu (di dekatmu) adalah dapur hotel.", ansP: ["は", "の"], ansA: "Dapur itu (di dekatmu) adalah dapur hotel."
+      },  
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"インドネシア", r:"インドネシア"}, {text:"の", p:true}, {k:"飛行機", r:"ひこうき"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
+        a: "Apakah ini pesawat (dari) Indonesia?", ansP: ["は", "の", "か"], ansA: "Apakah ini pesawat (dari) Indonesia?"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あの", r:"あの"}, {k:"海岸", r:"かいがん"}, {text:"は", p:true}, {text:"バリ"}, {text:"の", p:true}, {k:"海岸", r:"かいがん"}, {text:"です。"} ], 
+        a: "Pantai di sana itu adalah pantai Bali.", ansP: ["は", "の"], ansA: "Pantai di sana itu adalah pantai Bali."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あなた", r:"あなた"}, {text:"の", p:true}, {k:"家", r:"いえ"}, {text:"は", p:true}, {k:"どの", r:"どの"}, {k:"家", r:"いえ"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
+        a: "Rumah Anda itu rumah yang mana?", ansP: ["の", "は", "か"], ansA: "Rumah Anda itu rumah yang mana?"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"この", r:"この"}, {k:"銀行", r:"ぎんこう"}, {text:"は", p:true}, {text:"メガ"}, {text:"の", p:true}, {k:"銀行", r:"ぎんこう"}, {text:"です。"} ], 
+        a: "Bank ini adalah bank MEGA.", ansP: ["は", "の"], ansA: "Bank ini adalah bank MEGA."
+      }
+    ],
+    proKuisExtra: []
+  },
+    // --- HARI 9 ---
+  day9: {
+    hafalan: [
+      {k: "チーム", r: "チーム", a: "tim"}, {k: "絵", r: "え", a: "lukisan"}, 
+      {k: "サンダル", r: "サンダル", a: "sandal"}, {k: "ノートパソコン", r: "ノートパソコン", a: "laptop"}, 
+      {k: "料理", r: "りょうり", a: "masakan"}, {k: "冬", r: "ふゆ", a: "musim dingin"}, 
+      {k: "地図", r: "ちず", a: "peta"}, {k: "国民", r: "こくみん", a: "rakyat"}, 
+      {k: "今年", r: "ことし", a: "tahun ini"}, {k: "音楽", r: "おんがく", a: "musik"}, 
+      {k: "トイレ", r: "トイレ", a: "toilet"}, {k: "写真", r: "しゃしん", a: "foto"}, 
+      {k: "学校", r: "がっこう", a: "sekolah"}, {k: "卵", r: "たまご", a: "telur"}, 
+      {k: "紙", r: "かみ", a: "kertas"}, {k: "電話", r: "でんわ", a: "telepon"}, 
+      {k: "山", r: "やま", a: "gunung"}, {k: "川", r: "かわ", a: "sungai"}, 
+      {k: "海外", r: "かいがい", a: "luar negeri"}, {k: "教室", r: "きょうしつ", a: "ruang kelas"}
+    ],
+    materi: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {k:"ここ", r:"ここ"}, {text:"は", p:true}, {k:"川", r:"かわ"}, {text:"の", p:true}, {k:"町", r:"まち"}, {text:"です。 "}, 
+          {k:"山", r:"やま"}, {text:"の"}, {k:"町", r:"まち"}, {text:"では"}, {text:"ありません。 "}, 
+          {k:"この", r:"この", u:true}, {k:"町", r:"まち", u:true}, {text:"の", p:true, u:true}, {k:"名前", r:"なまえ", u:true}, {text:"は", p:true, u:true}, {text:"バンジャルマシン", u:true}, {text:"です。", u:true} 
+        ], 
+        a: "Di sini adalah kota sungai. Bukan kota gunung. Nama kota ini adalah Banjarmasin.", 
+        ansP: ["は", "の", "の", "は"], ansA: "Nama kota ini adalah Banjarmasin.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>アグス:</b> "}, {k:"私", r:"わたし"}, {text:"は"}, {k:"インドネシア", r:"インドネシア"}, {text:"の"}, {k:"大統領", r:"だいとうりょう"}, {text:"です。"}, 
+          {k:"こちら", r:"こちら"}, {text:"は", p:true}, {k:"私", r:"わたし"}, {text:"の", p:true}, {k:"国", r:"くに"}, {text:"です。"}, 
+          {k:"あなた達", r:"あなたたち"}, {text:"は", p:true}, {k:"私", r:"わたし"}, {text:"の"}, {k:"国民", r:"こくみん"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>ケン達:</b> いいえ、"}, 
+          {k:"違います", r:"ちがいます"}, {text:"。 "}, 
+          {k:"私達", r:"わたしたち", u:true}, {text:"は", p:true, u:true}, {k:"あなた", r:"あなた", u:true}, {text:"の", p:true, u:true}, {k:"友達", r:"ともだち", u:true}, {text:"です", u:true}, {text:"。", u:true}, 
+          {text:" そして、"}, {k:"あなた", r:"あなた"}, {text:"は"}, {k:"インドネシア", r:"インドネシア"}, {text:"の"}, {k:"大統領", r:"だいとうりょう"}, {text:"では"}, {text:"ありません。"} 
+        ], 
+        a: "<b>Agus:</b> Saya adalah Presiden Indonesia. Sebelah sini adalah negara saya. Apakah kalian semuanya adalah rakyat saya?<br><b>Ken, Rin, Sakura:</b> Bukan, kamu salah. Kami adalah temanmu. Dan juga, kamu bukan Presiden Indonesia.", 
+        ansP: ["は", "の", "は", "か", "は", "の"], ansA: "Kami adalah temanmu.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>ハル:</b> "}, {k:"私", r:"わたし"}, {text:"は"}, {k:"リン", r:"リン"}, {text:"の"}, {k:"父", r:"ちち"}, {text:"です。 "}, 
+          {k:"こちら", r:"こちら"}, {text:"は", p:true}, {k:"リン", r:"リン"}, {text:"の", p:true}, {k:"母", r:"はは"}, {text:"です。 "}, 
+          {k:"あなた", r:"あなた", u:true}, {text:"は", p:true, u:true}, {k:"どちら様", r:"どちらさま", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, 
+          {text:"<br><b>サクラ:</b> "}, {k:"初めまして", r:"はじめまして"}, {text:"。"}, {k:"私", r:"わたし"}, {text:"は"}, {k:"リンさん", r:"リンさん"}, {text:"の"}, {k:"友達", r:"ともだち"}, {text:"です。よろしく "}, {k:"お願いします", r:"おねがいします"}, {text:"。"} 
+        ], 
+        a: "<b>Haru:</b> Saya adalah ayah Rin. Sebelah sini adalah ibu Rin. Anda siapa? [Sopan]<br><b>Sakura:</b> Salam kenal. Saya adalah teman Rin. Mohon bantuannya.", 
+        ansP: ["は", "の", "は", "か"], ansA: "Anda siapa?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"お母さん", r:"おかあさん", u:true}, {text:"の", p:true, u:true}, {k:"電話", r:"でんわ", u:true}, {text:"は", p:true, u:true}, {k:"あそこ", r:"あそこ", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Telepon ibu ada di sana (jauh).", ansP: ["の", "は"], ansA: "Telepon ibu ada di sana (jauh).", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"こちら", r:"こちら", u:true}, {text:"は", p:true, u:true}, {k:"音楽", r:"おんがく", u:true}, {text:"の", p:true, u:true}, {k:"先生", r:"せんせい", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Orang ini (sebelah sini) adalah guru musik.", ansP: ["は", "の"], ansA: "Orang ini (sebelah sini) adalah guru musik.", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"そちら", r:"そちら", u:true}, {text:"は", p:true, u:true}, {k:"海外", r:"かいがい", u:true}, {text:"の", p:true, u:true}, {k:"学生", r:"がくせい", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true} ], 
+        a: "Apakah orang itu (di dekatmu) adalah siswa (dari) luar negeri?", ansP: ["は", "の", "か"], ansA: "Apakah orang itu (di dekatmu) adalah siswa (dari) luar negeri?", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>サクラ:</b> "}, {k:"冬", r:"ふゆ"}, {text:"の"}, {k:"国", r:"くに"}, {text:"は", p:true}, {k:"こちら", r:"こちら"}, {text:"です"}, {text:"か", p:true}, {text:"、"}, {k:"あちら", r:"あちら"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>マリ:</b> どちらでもありません。 "}, 
+          {k:"こちら", r:"こちら", u:true}, {text:"は", p:true, u:true}, {k:"インドネシア", r:"インドネシア", u:true}, {text:"の", p:true, u:true}, {k:"地図", r:"ちず", u:true}, {text:"です", u:true}, {text:"。", u:true}, {text:" "}, 
+          {k:"あちら", r:"あちら"}, {text:"は"}, {k:"マレーシア", r:"マレーシア"}, {text:"の"}, {k:"地図", r:"ちず"}, {text:"です。"} 
+        ], 
+        a: "<b>Sakura:</b> Negara musim dingin ada di sebelah sini atau sebelah sana?<br><b>Mari:</b> Bukan kedua-duanya. Sebelah sini adalah peta Indonesia. Sebelah sana adalah peta Malaysia.", 
+        ansP: ["は", "か", "か", "は", "の"], ansA: "Sebelah sini adalah peta Indonesia.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あちら", r:"あちら", u:true}, {text:"は", p:true, u:true}, {k:"社長", r:"しゃちょう", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Orang di sebelah sana itu adalah Presiden Direktur.", ansP: ["は"], ansA: "Orang di sebelah sana itu adalah Presiden Direktur.", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"ここ", r:"ここ", u:true}, {text:"は", p:true, u:true}, {k:"日本", r:"にほん", u:true}, {text:"の", p:true, u:true}, {k:"ラーメン", r:"ラーメン", u:true}, {text:"じゃありません", u:true}, {text:"。", u:true} ], 
+        a: "Di sini bukan ramen Jepang. [Sopan]", ansP: ["は", "の"], ansA: "Di sini bukan ramen Jepang.", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"そこ", r:"そこ", u:true}, {text:"は", p:true, u:true}, {k:"母", r:"はは", u:true}, {text:"の", p:true, u:true}, {k:"料理", r:"りょうり", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true} ], 
+        a: "Di situ bukan masakan ibu. [Sangat Formal]", ansP: ["は", "の", "では"], ansA: "Di situ bukan masakan ibu.", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>リン:</b> "}, {k:"こちら", r:"こちら"}, {text:"は", p:true}, {k:"今年", r:"ことし"}, {text:"の"}, {k:"写真", r:"しゃしん"}, {text:"です。<br><b>デウィ:</b> えっ、そうですか。じゃあ、"}, 
+          {k:"あちら", r:"あちら", u:true}, {text:"も", p:true, u:true}, {k:"今年", r:"ことし", u:true}, {text:"の", p:true, u:true}, {k:"写真", r:"しゃしん", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, 
+          {text:"<br><b>リン:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。"}, {k:"あちら", r:"あちら"}, {text:"は"}, {k:"去年", r:"きょねん"}, {text:"の"}, {k:"写真", r:"しゃしん"}, {text:"です。"}, {k:"今年", r:"ことし"}, {text:"の"}, {k:"写真", r:"しゃしん"}, {text:"では"}, {text:"ありません。"} 
+        ], 
+        a: "<b>Rin:</b> Sebelah sini adalah foto tahun ini.<br><b>Dewi:</b> Eh? Benarkah? Kalau begitu, apakah di sebelah sana juga foto tahun ini?<br><b>Rin:</b> Bukan, kamu salah. Di sebelah sana adalah foto tahun lalu. Bukan foto tahun ini.", 
+        ansP: ["は", "も", "の", "か"], ansA: "Apakah di sebelah sana juga foto tahun ini?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あそこ", r:"あそこ", u:true}, {text:"は", p:true, u:true}, {k:"鳥", r:"とり", u:true}, {text:"の", p:true, u:true}, {k:"卵", r:"たまご", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Di sana (jauh) adalah telur burung.", ansP: ["は", "の"], ansA: "Di sana (jauh) adalah telur burung.", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ 
+          {text:"<b>アリ:</b> "}, {k:"この", r:"この"}, {k:"料理", r:"りょうり"}, {text:"は", p:true}, {k:"海外", r:"かいがい"}, {text:"の"}, {k:"料理", r:"りょうり"}, {text:"です。<br><b>マリ:</b> あれ？"}, {k:"違います", r:"ちがいます"}, {text:"。"}, 
+          {k:"この", r:"この"}, {k:"料理", r:"りょうり"}, {text:"は"}, {k:"大阪", r:"おおさか"}, {text:"の"}, {k:"料理", r:"りょうり"}, {text:"です。"}, 
+          {k:"その", r:"その", u:true}, {k:"料理", r:"りょうり", u:true}, {text:"も", p:true, u:true}, {k:"大阪", r:"おおさか", u:true}, {text:"の", p:true, u:true}, {k:"料理", r:"りょうり", u:true}, {text:"です", u:true}, {text:"。", u:true}, 
+          {text:"<br><b>アリ:</b> えっ？そうですか。ごめんなさい。"} 
+        ], 
+        a: "<b>Ali:</b> Masakan ini adalah masakan luar negeri.<br><b>Mari:</b> Eh? Salah. Masakan ini adalah masakan Osaka. Masakan itu (di dekatmu) juga masakan Osaka.<br><b>Ali:</b> Eh? Begitu ya. Maaf.", 
+        ansP: ["は", "も", "の"], ansA: "Masakan itu juga masakan Osaka.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>シンタ:</b> "}, {k:"トイレ", r:"トイレ"}, {text:"は", p:true}, {k:"どこ", r:"どこ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。<br><b>デウィ:</b> "}, {k:"あそこ", r:"あそこ"}, {text:"です。"} ], 
+        a: "<b>Sinta:</b> Toilet ada di mana?<br><b>Dewi:</b> Di sana (jauh).", ansP: ["は", "か"], ansA: "ada di mana?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あそこ", r:"あそこ", u:true}, {text:"は", p:true, u:true}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"学校", r:"がっこう", u:true}, {text:"じゃない", u:true}, {text:"。 "}, {k:"私", r:"わたし"}, {text:"の"}, {k:"学校", r:"がっこう"}, {text:"は", p:true}, {k:"ここ", r:"ここ"}, {text:"です。"} ], 
+        a: "Di sana (jauh) bukan sekolah saya. Sekolah saya ada di sini. [Kasual]", ansP: ["は", "の", "は"], ansA: "Di sana (jauh) bukan sekolah saya.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {text:"<b>ケン:</b> "}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"電話", r:"でんわ", u:true}, {text:"は", p:true, u:true}, {k:"どこ", r:"どこ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。<br><b>お姉さん:</b> "}, {k:"お父さん", r:"おとうさん"}, {text:"の", p:true}, {k:"部屋", r:"へや"}, {text:"です。"} ], 
+        a: "<b>Ken:</b> Telepon saya ada di mana?<br><b>Kakak perempuan:</b> Di kamar ayah.", ansP: ["の", "は", "か", "の"], ansA: "Telepon saya ada di mana?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あなた", r:"あなた"}, {text:"の"}, {k:"ペン", r:"ペン"}, {text:"は"}, {k:"ここ", r:"ここ"}, {text:"です。 "}, {text:"でも、"}, {k:"あなた", r:"あなた", u:true}, {text:"の", p:true, u:true}, {k:"本", r:"ほん", u:true}, {text:"は", p:true, u:true}, {k:"シンタさん", r:"シンタさん", u:true}, {text:"の", p:true, u:true}, {k:"教室", r:"きょうしつ", u:true}, {text:"です", u:true}, {text:"。"} ], 
+        a: "Pena Anda ada di sini. Tetapi, buku Anda ada di ruang kelas Sinta.", ansP: ["の", "は", "の"], ansA: "buku Anda ada di ruang kelas Sinta.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あちら", r:"あちら", u:true}, {text:"の", p:true, u:true}, {k:"人", r:"ひと", u:true}, {text:"は", p:true, u:true}, {k:"誰", r:"だれ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。"} ], 
+        a: "Orang di sebelah sana itu siapa?", ansP: ["の", "は", "か"], ansA: "Orang di sebelah sana itu siapa?", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"ノートパソコン", r:"ノートパソコン", u:true}, {text:"は", p:true, u:true}, {k:"そこ", r:"そこ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。"} ], 
+        a: "Apakah laptop saya ada di situ?", ansP: ["の", "は", "か"], ansA: "Apakah laptop saya ada di situ?", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"お兄さん", r:"おにいさん", u:true}, {text:"の", p:true, u:true}, {k:"サンダル", r:"サンダル", u:true}, {text:"は", p:true, u:true}, {k:"どこ", r:"どこ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。"} ], 
+        a: "Sandal kakak laki-laki ada di mana?", ansP: ["の", "は", "か"], ansA: "Sandal kakak laki-laki ada di mana?", qA: "Terjemahkan keseluruhan kalimat!"
+      }
+    ],
+    kuisExtra: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"ここ", r:"ここ"}, {text:"は", p:true}, {text:"ねこまた"}, {text:"の", p:true}, {k:"チーム", r:"チーム"}, {text:"の", p:true}, {k:"部屋", r:"へや"}, {text:"です。"} ], 
+        a: "Di sini adalah kamar tim Nekomata.", ansP: ["は", "の", "の"], ansA: "Di sini adalah kamar tim Nekomata.", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"私", r:"わたし"}, {text:"の", p:true}, {k:"ノートパソコン", r:"ノートパソコン"}, {text:"は", p:true}, {k:"どこ", r:"どこ"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
+        a: "Laptop saya ada di mana?", ansP: ["の", "は", "か"], ansA: "Laptop saya ada di mana?", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"そちら", r:"そちら"}, {text:"は", p:true}, {k:"マレーシア", r:"マレーシア"}, {text:"の", p:true}, {k:"学生", r:"がくせい"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
+        a: "Apakah orang di situ (dekatmu) adalah siswa Malaysia?", ansP: ["は", "の", "か"], ansA: "Apakah orang di situ (dekatmu) adalah siswa Malaysia?", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"富士", r:"ふじ"}, {text:"の", p:true}, {k:"山", r:"やま"}, {text:"の", p:true}, {k:"絵", r:"え"}, {text:"は", p:true}, {k:"こちら", r:"こちら"}, {text:"です。"} ], 
+        a: "Lukisan Gunung Fuji ada di sebelah sini.", ansP: ["の", "の", "は"], ansA: "Lukisan Gunung Fuji ada di sebelah sini.", qA: "Terjemahkan keseluruhan kalimat!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
+        jp: [ {k:"あそこ", r:"あそこ"}, {text:"は", p:true}, {k:"病院", r:"びょういん"}, {text:"では", p:true}, {text:"ありません。"} ], 
+        a: "Di sana (jauh) bukan rumah sakit.", ansP: ["は", "では"], ansA: "Di sana (jauh) bukan rumah sakit.", qA: "Terjemahkan keseluruhan kalimat!"
+      }
+    ],
+    proKuisExtra: []
+  },
+  
+};
+
+const Engine = {
+  buildRubyFormat: (k, r, a, isPro) => {
+    if(!k) return "";
+    const cls = isPro ? 'pro-locked' : '';
+    
+    if (k === r || !r) {
+        if (a && !isPro) return `<ruby class="${cls}" onclick="this.classList.toggle('show')">${k}<div class="arti-hint">${a}</div></ruby>`;
+        return k; 
+    }
+    let pLen = 0;
+    while (pLen < k.length && pLen < r.length && k[pLen] === r[pLen]) pLen++;
+    let sLen = 0;
+    while (sLen < k.length - pLen && sLen < r.length - pLen && k[k.length - 1 - sLen] === r[r.length - 1 - sLen]) sLen++;
+    let prefix = k.slice(0, pLen);
+    let suffix = k.slice(k.length - sLen);
+    let kanji = k.slice(pLen, k.length - sLen);
+    let kana = r.slice(pLen, r.length - sLen);
+    let hintHtml = (a && !isPro) ? `<div class="arti-hint">${a}</div>` : '';
+    return `${prefix}<ruby class="${cls}" onclick="this.classList.toggle('show')">${kanji}<rt>${kana}</rt>${hintHtml}</ruby>${suffix}`;
+  },
+  
+  renderSentence: (arr, isPro, maskParticle = false, showUnderline = false, isMulti = false) => {
+     let html = "";
+     let pIdx = 0;
+     arr.forEach(item => {
+        let chunkHtml = "";
+        if(item.k) chunkHtml = Engine.buildRubyFormat(item.k, item.r, item.a, isPro);
+        else if(item.text) {
+            if(maskParticle && item.p) {
+                if (isMulti) {
+                    chunkHtml = `<span class="multi-blank" id="mblank-${pIdx}" onclick="Action.clearMulti(${pIdx})">_</span>`;
+                    pIdx++;
+                } else {
+                    chunkHtml = isPro ? "[?]" : " [ ? ] "; 
+                }
+            } else {
+                chunkHtml = item.text;
+            }
+        }
+        if(item.u && showUnderline) html += `<span class="u-line">${chunkHtml}</span>`;
+        else html += chunkHtml;
+     });
+     return html;
+  },
+  shuffle: (array) => {
+    let currentIndex = array.length,  randomIndex;
+    while (currentIndex > 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex); currentIndex--;
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+    return array;
+  }
+};
+
+const RPG = {
+  level: parseInt(localStorage.getItem('yk_lvl')) || 1, exp: parseInt(localStorage.getItem('yk_exp')) || 0,
+  coins: parseInt(localStorage.getItem('yk_coins')) || 0, combo: 0,
+  hasShield: false, intelActive: false,
+  getTitle: function() { 
+    if(this.level >= 150) return "⛩️ Kensei"; if(this.level >= 90) return "👑 Shogun";
+    if(this.level >= 60) return "🏯 Daimyo"; if(this.level >= 30) return "🛡️ Samurai";
+    if(this.level >= 10) return "⚔️ Ronin"; return "🔰 Pemula";
+  },
+  getExpRequirement: function() {
+    let multiplier = 2; 
+    if (this.level >= 150) multiplier = 20;
+    else if (this.level >= 90) multiplier = 12;
+    else if (this.level >= 60) multiplier = 8;
+    else if (this.level >= 30) multiplier = 5;
+    else if (this.level >= 10) multiplier = 3;
+    return this.level * 100 * multiplier;
+  },
+  updateUI: function() {
+    document.getElementById('ui-lvl').innerText = `Lv.${this.level} ${this.getTitle()}`;
+    document.getElementById('ui-exp').innerText = this.exp; document.getElementById('ui-coin').innerText = this.coins; document.getElementById('shop-coin-display').innerText = this.coins;
+    const cUI = document.getElementById('ui-combo');
+    if(this.combo >= 2) { 
+        let dispCombo = Math.min(this.combo, 15);
+        let maxText = this.combo >= 15 ? " (MAX)" : "";
+        cUI.innerText = `🔥 x${dispCombo}${maxText}`; 
+        if(this.combo >= 15) cUI.style.color = "var(--danger)"; else cUI.style.color = "#f97316";
+        cUI.classList.remove('hidden'); cUI.classList.add('active'); 
+    } else { cUI.classList.add('hidden'); cUI.classList.remove('active'); }
+  },
+          addReward: function(baseExp, baseCoin, evt) {
+    let multi = this.combo >= 2 ? Math.min(this.combo, 15) : 1; 
+    let earnedExp = baseExp * multi; let earnedCoin = baseCoin * multi;
+    this.exp += earnedExp; this.coins += earnedCoin;
+    Game.dailyStats.exp += earnedExp;
+    Game.dailyStats.coin += earnedCoin;
+    let nextLvlExp = this.getExpRequirement();
+    this.spawnFloatingText(`+${earnedExp} EXP ✨`, "var(--primary)", evt, -20, 0);
+    setTimeout(() => { this.spawnFloatingText(`+${earnedCoin} 🪙`, "var(--gold)", evt, 20, 20); }, 150);
+    if(this.exp >= nextLvlExp) { 
+        let gelarLama = this.getTitle(); // Ingat gelar sebelum naik level
+        this.level++; 
+        this.exp -= nextLvlExp; 
+        let gelarBaru = this.getTitle(); // Cek gelar setelah naik level
+        if (gelarLama !== gelarBaru) {
+            document.getElementById('promo-rank').innerText = gelarBaru.replace(/[^a-zA-Z\s]/g, '').trim();
+            UI.openModal('promotion-screen');
+            UI.showToast(`Luar Biasa! Gelar Dievaluasi.`, 'success');
+        } else {
+            UI.showToast(`Level Up! Sekarang Lv.${this.level} ✨`, 'success');
+        }
+    } 
+    this.save(); this.updateUI();
+  },
+  
+  buyItem: function(type, cost) {
+    if(this.coins >= cost) {
+      if(type === 'hp' && Game.hp < 3) { 
+          this.coins -= cost; Game.hp++; localStorage.setItem('yk_hp', Game.hp); UI.renderHP(); UI.showToast("Nano-Repair Diaktifkan! +1 HP", "success"); 
+          // --- MATIKAN DARAH SEKARAT KALAU HABIS BELI HP ---
+          if (Game.hp > 1) document.body.classList.remove('danger-mode');
+      } else if (type === 'shield') {
+          let t = Game.currentTab;
+          if(t === 'partikel' || t === 'arti') {
+              if(!Game.hasShield) {
+                  this.coins -= cost; Game.hasShield = true;
+                  document.getElementById('card-main').classList.add('shield-active');
+                  UI.showToast("Aegis Shield Aktif! Melindungi 1x kesalahan.", "success");
+              } else { UI.showToast("Shield sudah aktif!", "error"); return; }
+          } else { UI.showToast("Sinyal Ditolak: Hanya untuk Zona Tempur.", "error"); return; }
+      } else if (type === 'intel') {
+          let t = Game.currentTab;
+          if(t === 'partikel') {
+              if(!Game.intelActive) {
+                  this.coins -= cost; Game.intelActive = true;
+                  let itm = Game.sessionData[t][Game.currentIndex];
+                  let intelBox = document.createElement('div');
+                  intelBox.className = 'intel-box'; intelBox.innerHTML = `<b>Intel Arti:</b> ${itm.a}`;
+                  document.getElementById('input-area').prepend(intelBox);
+                  UI.showToast("Intel Terjemahan Berhasil Diretas!", "success");
+              } else { UI.showToast("Intel sudah terbuka!", "error"); return; }
+          } else { UI.showToast("Sinyal Ditolak: Hanya untuk Tab Partikel.", "error"); return; }
+        } else if (type === 'pandora') {
+          this.coins -= cost;
+          let rng = Math.random();
+          if (rng < 0.1) { // 10% Peluang: Full HP
+              Game.hp = 3; localStorage.setItem('yk_hp', Game.hp); UI.renderHP();
+              UI.showToast("JACKPOT! HP Pulih Sepenuhnya!", "success");
+              document.body.classList.remove('danger-mode');
+          } else if (rng < 0.4) { // 30% Peluang: Shield
+              if(!Game.hasShield) {
+                  Game.hasShield = true; document.getElementById('card-main').classList.add('shield-active');
+                  UI.showToast("Beruntung! Aegis Shield Aktif.", "success");
+              } else {
+                  this.coins += 50; // Cashback kalau udah punya shield
+                  UI.showToast("Sudah punya Shield! Cashback 50 Koin.", "warning");
+              }
+          } else if (rng < 0.8) { // 40% Peluang: Zonk
+              UI.showToast("ZONK! Kotaknya kosong melompong wkwkwk.", "warning");
+          } else { // 20% Peluang: Trap / Jebakan
+              UI.showToast("JEBAKAN BATMAN! Terkena Racun -1 HP!", "error");
+              Game.decreaseHP(null); 
+          }
+    } else if (type === 'skip') {
+          let t = Game.currentTab;
+          if(t === 'partikel' || t === 'arti') {
+              this.coins -= cost; UI.showToast("Mata Kensei: Bypass Berhasil!", "success");
+              UI.closeModal('shop-modal');
+              UI.showResult(true, "", null, true); 
+          } else { UI.showToast("Sinyal Ditolak: Hanya untuk Zona Tempur.", "error"); return; }
+      } else { UI.showToast("Sinyal Ditolak: Transaksi tidak valid / HP Penuh.", "error"); return; }
+      this.save(); this.updateUI();
+    } else UI.showToast("Kredit tidak memadai.", "error");
+  },
+  buyUnlock: function(cost) {
+    if(this.coins >= cost) {
+      this.coins -= cost; Game.unlockedDay++; localStorage.setItem('yk_unlocked', Game.unlockedDay);
+      UI.renderMap(); UI.showToast("Peta Baru Terbuka! Akses Hari " + Game.unlockedDay, "success");
+      this.save(); this.updateUI();
+    } else { UI.showToast("Kredit tidak memadai.", "error"); }
+  },
+      adminUnlock: function() {
+    if (Game.adminMode) {
+        Game.adminMode = false;
+        Game.unlockedDay = parseInt(localStorage.getItem('yk_unlocked')) || 1;
+        if (Game.currentDay > Game.unlockedDay) Game.currentDay = Game.unlockedDay;
+        UI.closeModal('shop-modal');
+        UI.showToast("Mode Admin Dinonaktifkan.", "warning");
+        UI.renderMap();
+        UI.loadStep(); // Refresh tampilan untuk membuang tombol Bypass
+        return;
+    }
+
+    let pwd = prompt("Sandi Otorisasi Dev:");
+    if(pwd === "Zajuli123") {
+      Game.adminMode = true;
+      Game.unlockedDay = 99; // Membuka seluruh hari di Peta Navigasi secara instan
+      UI.closeModal('shop-modal');
+      UI.showToast("Override Diterima. Mode Admin Aktif!", "success");
+      UI.renderMap();
+      UI.loadStep(); // Refresh tampilan untuk memunculkan tombol Bypass
+    } else if (pwd !== null) { 
+      UI.showToast("Akses Ditolak.", "error"); 
+    }
+  },
+    spawnFloatingText: function(text, color, evt, offsetX = 0, offsetY = 0) {
+    const el = document.createElement('div'); el.className = 'floating-text'; el.style.color = color; el.innerText = text;
+    
+    let x, y;
+    // Kalau diklik pakai mouse/jari, teks muncul di titik klik.
+    // Kalau tekan Enter, teks muncul persis dari tengah Kartu Kuis!
+    if (evt && evt.clientX && evt.clientX > 0) {
+        x = evt.clientX; y = evt.clientY;
+    } else {
+        const card = document.getElementById('card-main').getBoundingClientRect();
+        x = card.left + (card.width / 2);
+        y = card.top + (card.height / 2);
+    }
+    el.style.left = `${x - 30 + offsetX}px`; 
+    el.style.top = `${y - 30 + offsetY}px`;
+    document.body.appendChild(el); 
+    setTimeout(() => el.remove(), 1000);
+  },
+  save: function() { localStorage.setItem('yk_lvl', this.level); localStorage.setItem('yk_exp', this.exp); localStorage.setItem('yk_coins', this.coins); }
+};
+
+const Game = {
+  adminMode: false, 
+  mode: '', hp: 3, hpLostThisTurn: false, jumpscareTriggered: false,
+  unlockedDay: parseInt(localStorage.getItem('yk_unlocked')) || 1, currentDay: 1, currentTab: 'hafalan', currentIndex: 0, currentAns: "", targetMultiAns: [], currentMultiAns: [],
+  currentAnsKanji: "", currentAnsHiragana: "",
+  sessionData: { hafalan: [], pengayaan: [], belajar: [], partikel: [], arti: [] },
+  tabProgress: { hafalan: 0, belajar: 0, partikel: 0, arti: 0 }, 
+  dungeonPool: [], dungeonScore: 0,
+  
+  startDungeon: () => {
+    if(Game.hp <= 0) { UI.showToast("HP habis! Pulihkan diri atau tunggu cooldown.", "error"); return; }
+    UI.toggleSidebar();
+    
+    let pool = [];
+    for(let i=1; i<=Game.unlockedDay; i++) {
+        if(ManualDB['day'+i] && ManualDB['day'+i].hafalan) pool = pool.concat(ManualDB['day'+i].hafalan);
+    }
+    if(pool.length < 4) { UI.showToast("Kosakata belum cukup untuk masuk Dungeon!", "error"); return; }
+    
+    Game.currentTab = 'dungeon'; Game.dungeonScore = 0; Game.dungeonPool = pool;
+    document.getElementById('ui-day').innerText = "🏰 DUNGEON INGATAN";
+    const badge = document.getElementById('ui-zone');
+    badge.className = "zone-badge zone-tempur"; badge.innerText = "☠️ SURVIVAL MODE";
+    
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    UI.loadStep();
+  },
+  dailyStats: { exp: 0, coin: 0, maxCombo: 0 },
+
+  checkStoredMode: () => {
+    let saved = localStorage.getItem('yk_mode');
+    if (saved === 'pemula') { Game.init(saved); } else { document.getElementById('setup-screen').classList.remove('hidden'); }
+  },
+  init: (mode) => {
+    if(Cooldown.check()) return;
+    Game.mode = mode; localStorage.setItem('yk_mode', mode); document.getElementById('setup-screen').classList.add('hidden');
+    document.getElementById('tab-hafalan').classList.remove('pro-hidden'); document.getElementById('tab-belajar').classList.remove('pro-hidden');
+    document.getElementById('tab-partikel').classList.add('locked'); document.getElementById('tab-arti').classList.add('locked');
+
+    Game.hp = parseInt(localStorage.getItem('yk_hp')) || 3; if(Game.hp<=0) Game.hp=3; 
+    document.getElementById('main-app').classList.remove('hidden'); 
+    Game.currentDay = Game.unlockedDay > 1 ? Game.unlockedDay : 1; 
+    RPG.updateUI(); UI.renderHP(); Game.loadDayData(); UI.renderMap();
+  },
+    loadDayData: () => {
+    document.getElementById('ui-day').innerText = `Hari ${Game.currentDay}`; 
+    let dbKey = `day${Game.currentDay}`; let dayData = ManualDB[dbKey];
+    
+    Game.currentTab = null; 
+    Game.currentIndex = 0;
+    
+    Game.tabProgress = { hafalan: 0, belajar: 0, partikel: 0, arti: 0 }; Game.jumpscareTriggered = false;
+    Game.dailyStats = { exp: 0, coin: 0, maxCombo: 0 }; 
+
+    if(!dayData) {
+       document.getElementById('ui-day').innerText = `Hari ${Game.currentDay} (WIP)`;
+       Game.sessionData = { hafalan: [{k:"WIP"}], pengayaan: [], belajar: [{a:"WIP"}], partikel: [{a:"WIP"}], arti: [{a:"WIP"}] };
+       UI.switchTab('hafalan'); return;
+    }
+
+    Game.sessionData.hafalan = [...dayData.hafalan]; Game.sessionData.pengayaan = Engine.shuffle([...dayData.hafalan]); 
+    Game.sessionData.belajar = [...dayData.materi]; 
+    let pool = [...dayData.materi, ...(dayData.kuisExtra || [])];
+    if (Game.currentDay >= 4) {
+        Game.sessionData.partikel = Engine.shuffle([...pool]).slice(0, 15); Game.sessionData.arti = Engine.shuffle([...pool]).slice(0, 15);
+        
+        document.getElementById('tab-partikel').classList.remove('locked');
+        document.getElementById('tab-arti').classList.remove('locked');
+        
+    } else {
+        let shortPool = Engine.shuffle(pool.filter(x => !x.isMulti)); let longPool = Engine.shuffle(pool.filter(x => x.isMulti));
+        Game.sessionData.partikel = [...shortPool.slice(0, 7), ...longPool.slice(0, 3)]; 
+        Game.sessionData.arti = Engine.shuffle([...pool]).slice(0, 15);     
+  
+        document.getElementById('tab-partikel').classList.add('locked');
+        document.getElementById('tab-arti').classList.add('locked');
+    }
+    UI.switchTab('hafalan');
+  },
+    decreaseHP: (evt) => {
+    Game.hpLostThisTurn = true; Game.hp--; RPG.combo = 0; RPG.updateUI(); localStorage.setItem('yk_hp', Game.hp); UI.renderHP();
+    RPG.spawnFloatingText("-1 HP 🩸", "var(--danger)", evt); // Memunculkan teks damage
+    if(Game.hp <= 0) setTimeout(() => Cooldown.triggerDeath(Game.mode), 1000);
+  },
+  completeDay: () => {
+    if(Game.currentDay === Game.unlockedDay) { 
+        Game.unlockedDay++; localStorage.setItem('yk_unlocked', Game.unlockedDay); 
+        RPG.addReward(50, 20, null); // Bonus First Clear
+        UI.showToast(`Infiltrasi Hari Selesai!`, 'success'); 
+    }
+    
+    document.getElementById('res-day').innerText = Game.currentDay;
+    document.getElementById('res-exp').innerText = Game.dailyStats.exp;
+    document.getElementById('res-coin').innerText = Game.dailyStats.coin;
+    document.getElementById('res-combo').innerText = Game.dailyStats.maxCombo;
+
+    UI.openModal('result-screen'); 
+  }
+};
+
+const UI = {
+  openModal: (id) => { const m = document.getElementById(id); m.classList.remove('hidden', 'modal-close'); m.classList.add('modal-open'); },
+  closeModal: (id) => { const m = document.getElementById(id); m.classList.remove('modal-open'); m.classList.add('modal-close'); setTimeout(() => { m.classList.add('hidden'); m.classList.remove('modal-close'); }, 200); },
+  showToast: (msg, type='success') => { const t = document.getElementById('toast'); t.innerText = msg; t.className = `show ${type}`; setTimeout(()=> t.className = '', 2500); },
+  toggleSidebar: () => { document.getElementById('sidebar').classList.toggle('active'); document.getElementById('overlay').classList.toggle('active'); },
+  
+nextDayFromResult: () => {
+  document.getElementById('result-box').classList.remove('show');
+  setTimeout(() => {
+      UI.closeModal('result-screen');
+      if (Game.currentDay < Game.unlockedDay) {
+          Game.currentDay++; 
+      }
+      Game.loadDayData();
+      UI.renderMap();
+  }, 400); 
+},
+
+  toggleHardcore: () => {
+    document.body.classList.toggle('hardcore-mode'); let isHC = document.body.classList.contains('hardcore-mode');
+    document.getElementById('btn-hardcore').innerText = isHC ? "👁️ Tampilkan Furigana" : "🥷 Mode Hardcore";
+    UI.showToast(isHC ? "Mode Hardcore Aktif! Insting Ninja." : "Furigana Kembali", "success"); UI.toggleSidebar();
+  },
+    openKamus: () => { document.getElementById('kamus-search').value = ""; UI.renderKamusList(""); UI.openModal('kamus-modal'); },    
+  searchKamus: () => { let query = document.getElementById('kamus-search').value.toLowerCase(); UI.renderKamusList(query); },
+  renderKamusList: (query) => {
+    const list = document.getElementById('kamus-list'); list.innerHTML = ""; let words = [];
+    for(let i=1; i<=Game.unlockedDay; i++) { if(ManualDB['day'+i] && ManualDB['day'+i].hafalan) words = words.concat(ManualDB['day'+i].hafalan); }
+    let uniqueWords = Array.from(new Set(words.map(a => a.k))).map(k => { return words.find(a => a.k === k) });
+    if(query) uniqueWords = uniqueWords.filter(w => w.k.toLowerCase().includes(query) || (w.r && w.r.toLowerCase().includes(query)) || (w.a && w.a.toLowerCase().includes(query)));
+    if(uniqueWords.length === 0) { list.innerHTML = `<div style="text-align:center; padding:20px; color:var(--text-sub);">Tidak ditemukan.</div>`; return; }
+    uniqueWords.forEach(w => {
+        let romajiText = w.r && w.k !== w.r ? ` (${w.r})` : "";
+        list.innerHTML += `<div class="kamus-item"><div class="kamus-jp">${w.k}<span style="font-size:12px; color:var(--warning); font-weight:normal;">${romajiText}</span></div><div class="kamus-id">${w.a}</div></div>`;
+    });
+  },
+  renderMap: () => {
+    const list = document.getElementById('map-day-list'); list.innerHTML = ''; 
+    const totalDays = 11; // <-- Dibatasi 11 hari sesuai kurikulummu
+    let perc = Math.round(((Game.unlockedDay - 1) / totalDays) * 100); 
+    document.getElementById('map-progress-text').innerText = `Progress: ${perc}%`;
+    
+    for (let i = 1; i <= Math.max(Game.unlockedDay, totalDays); i++) {
+      const btn = document.createElement('button');
+      let stat = i < Game.unlockedDay ? 'completed' : (i === Game.unlockedDay ? 'current' : 'locked');
+      let wave = Math.sin((i - 1) * 1.5) * 45; 
+      btn.className = `day-btn ${stat}`; 
+      btn.innerText = `HARI ${i}`; 
+      btn.style.transform = `translateX(${wave}px)`;
+      
+      if (i <= Game.unlockedDay) {
+          btn.onclick = () => { 
+              Game.currentDay = i; 
+              Game.loadDayData(); 
+              UI.closeModal('map-modal'); // Tutup peta saat hari diklik
+          };
+      }
+      list.appendChild(btn);
+    }
+  },
+  switchTab: (tId) => {
+    if((tId === 'partikel' || tId === 'arti') && Game.hp <= 0) return;
+    if(Game.currentTab) Game.tabProgress[Game.currentTab] = Game.currentIndex;
+    Game.currentTab = tId; Game.currentIndex = Game.tabProgress[tId]; 
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active')); document.getElementById(`tab-${tId}`).classList.add('active');
+    const isAman = (tId === 'hafalan' || tId === 'belajar');
+    const badge = document.getElementById('ui-zone'); badge.className = `zone-badge ${isAman ? 'zone-aman' : 'zone-tempur'}`; badge.innerText = isAman ? "🟢 ZONA AMAN" : "🔴 ZONA TEMPUR";
+    if(tId === 'belajar') { document.getElementById('tab-partikel').classList.remove('locked'); document.getElementById('tab-arti').classList.remove('locked'); }
+    UI.loadStep();
+  },
+  triggerNextAnim: (callback) => {
+    const w = document.getElementById('card-content');
+    w.classList.add('fade-out'); setTimeout(() => { callback(); w.classList.remove('fade-out'); }, 250);
+  },
+    loadStep: () => {
+    const t = Game.currentTab; const i = Game.currentIndex;
+    if (!Game.hasShield) { 
+        document.getElementById('card-main').classList.remove('shield-active'); 
+    } else { 
+        document.getElementById('card-main').classList.add('shield-active'); 
+    }
+    ['ui-jp', 'ui-arti', 'ui-feedback', 'input-area'].forEach(id => document.getElementById(id).innerHTML = ''); document.getElementById('btn-next').classList.add('hidden');
+    const isPro = (Game.mode === 'pro');
+    const btnTips = document.getElementById('btn-tips'); const tipsModal = document.getElementById('tips-modal');
+const tipsH2 = tipsModal.querySelector('h2'); const tipsContent = tipsModal.querySelector('div');
+const tipsBubble = document.getElementById('tips-bubble'); 
+btnTips.innerHTML = "💡 Tips"; // Reset nama tombol ke default
+if (tipsBubble) tipsBubble.classList.add('hidden'); 
+          if (Game.currentDay === 2 && t === 'belajar' && (i === 7 || i === 11 || i === 14)) {
+      btnTips.classList.remove('hidden');
+      btnTips.onclick = () => {
+          tipsH2.innerHTML = "💡 INFO BUDAYA & KONTEKS";
+          tipsContent.innerHTML = `Dalam bahasa Jepang, pola <b>A は B です</b> tidak selamanya berarti "A adalah B" secara harfiah.<br><br>
+          <span style="color:var(--text-sub); font-size:13px;">Orang Jepang sering menyingkat kalimat jika lawan bicaranya secara logika sudah pasti paham maksudnya. Kalimat <b style="color:white;">山田さんは会社です</b> secara harfiah berarti <i>"Yamada (ada di) kantor"</i>.</span><br><br>
+          <span style="color:var(--text-sub); font-size:13px;">Karena manusia tidak mungkin berubah menjadi wujud bangunan, orang Jepang akan otomatis mengerti dari konteks bahwa maksudnya adalah <b>Yamada sedang berada di kantor</b>.</span><br><br>
+          <i style="color:var(--gold); font-size:13px;">Catatan: Hal ini juga berlaku untuk kalimat seperti "Saya (ada di) toilet" (私はトイレです) atau "Dia (ada di) sekolah" (彼は学校です). Terdengar aneh di bahasa kita, tapi sangat natural di bahasa Jepang!</i>`;
+          UI.openModal('tips-modal');
+      };
+    } else if (Game.currentDay === 3 && t === 'belajar') {
+      btnTips.classList.remove('hidden');
+      btnTips.onclick = () => {
+          tipsH2.innerHTML = "💡 INFO PENYANGKALAN";
+          tipsContent.innerHTML = `Dalam bahasa Jepang, ada 3 tingkat kesopanan untuk mengatakan <b>"Bukan"</b>:<br><br><span style="color:var(--primary); font-weight:bold;">1. ... dewa arimasen (ではありません)</span><br><br><span style="color:var(--success); font-weight:bold;">2. ... jaa arimasen (じゃありません)</span><br><br><span style="color:var(--danger); font-weight:bold;">3. ... jaa nai (じゃない)</span><br><br><i style="color:var(--gold); font-size:13px;">Catatan: Fokus kita di kuis nanti adalah bentuk sopan (dewa/jaa arimasen) ya!</i>`;
+          tipsModal.classList.remove('hidden');
+      };
+    } else if (Game.currentDay === 4 && t === 'belajar' && i < 9) {
+      btnTips.classList.remove('hidden');
+      btnTips.onclick = () => {
+          tipsH2.innerHTML = "💡 MISTERI TANDA TANYA (?)";
+          tipsContent.innerHTML = `Mungkin kamu bingung mengapa kalimat tanya di sini tidak memakai tanda tanya (?). Berikut penjelasannya:<br><br>
+          <span style="color:var(--primary); font-weight:bold;">1. Peran Partikel か (ka)</span><br>
+          <span style="color:var(--text-sub); font-size:13px;">Dalam bahasa Jepang formal, partikel <b>か</b> di akhir kalimat sudah berfungsi sebagai tanda tanya. Jadi, secara aturan standar, kita hanya perlu mengakhirinya dengan tanda titik (。).</span><br><br>
+          <span style="color:var(--success); font-weight:bold;">2. Kapan "?" Digunakan?</span><br>
+          <span style="color:var(--text-sub); font-size:13px;">Tanda tanya biasanya muncul pada tulisan <b>Kasual</b> (seperti chat teman, Manga, atau Novel). Hal ini dilakukan karena dalam percakapan santai, partikel "ka" sering dihilangkan, sehingga tanda tanya digunakan untuk menandai intonasi nada yang naik di akhir kalimat.</span><br><br>
+          <i style="color:var(--gold); font-size:13px;">Kesimpulan: Selama ada partikel "ka", tanda titik sudah cukup untuk bertanya!</i>`;
+          UI.openModal('tips-modal');
+      };
+    } else if (Game.currentDay === 4 && t === 'belajar' && i >= 9) {
+      btnTips.classList.remove('hidden');
+      
+      if (!Game.chigaimasuTipSeen) {
+          tipsBubble.classList.remove('hidden');
+      }
+ 
+      btnTips.onclick = () => {
+          Game.chigaimasuTipSeen = true; 
+          tipsBubble.classList.add('hidden'); 
+          tipsH2.innerHTML = "💡 RAHASIA SOU DESU & CHIGAIMASU";
+          tipsContent.innerHTML = `Dalam percakapan bahasa Jepang, orang jarang mengulang seluruh kalimat untuk menjawab "Ya" atau "Tidak". Mereka menggunakan variasi ini:<br><br>
+          <span style="color:var(--success); font-weight:bold;">1. Sou desu (そうです)</span><br>
+          <span style="color:var(--text-sub); font-size:13px;">Secara harfiah berarti <b>"Seperti itu / Begitulah adanya"</b>. Digunakan untuk membenarkan asumsi lawan bicara. Terjemahan naturalnya: <b>"Ya, kamu benar."</b></span><br><br>
+          <span style="color:var(--danger); font-weight:bold;">2. Chigaimasu (違います)</span><br>
+          <span style="color:var(--text-sub); font-size:13px;">Secara harfiah berarti <b>"Berbeda / Salah"</b>. Di kepala orang Jepang, saat menjawab <i>Iie, chigaimasu</i>, mereka sedang berkata: <i>"Tidak, (asumsimu itu) salah atau berbeda dengan kenyataan."</i> Terjemahan naturalnya: <b>"Bukan, kamu salah."</b></span>`;
+          UI.openModal('tips-modal');
+      };
+    } else if (Game.currentDay === 6 && t === 'belajar' && i === 6) { 
+      btnTips.classList.remove('hidden');
+      btnTips.onclick = () => {
+          tipsH2.innerHTML = "💡 INFO BUDAYA: ISHA VS SENSEI";
+          tipsContent.innerHTML = `Dalam bahasa Jepang, profesi medis secara harfiah disebut <b style="color:var(--primary);">Isha (医者)</b>. Namun, di anime atau dorama, kamu mungkin sering mendengar dokter dipanggil <b style="color:var(--success);">Sensei (先生)</b>. Apa bedanya?<br><br>
+          <span style="color:var(--text-sub); font-size:13px;">1. <b>Isha (Profesi)</b>: Dipakai saat kita membicarakan pekerjaan seseorang secara objektif. (Contoh: "Ayahku adalah seorang dokter / isha").</span><br><br>
+          <span style="color:var(--text-sub); font-size:13px;">2. <b>Sensei (Gelar Kehormatan)</b>: Karena profesi medis sangat dihormati di Jepang, kata "Sensei" digunakan untuk <b>menyapa atau memanggil</b> dokter secara langsung.</span>
+          
+          <div style="background-color:rgba(0,0,0,0.2); padding:15px; border-radius:10px; margin-top:20px; text-align:left;">
+              <span style="color:var(--gold); font-size:14px; font-weight:bold;">💡 Kesimpulan:</span><br>
+              <i style="color:var(--gold); font-size:13px; line-height:1.6; display:block; margin-top:8px;">Saat mengobrol dengan dokter di klinik, panggillah mereka <b>Sensei</b>, bukan <b>Isha</b>!</i>
+              <p style="margin-bottom:0;"></p>
+          </div>`;
+          UI.openModal('tips-modal');
+      };
+    } else if (Game.currentDay === 7 && t === 'belajar') {
+      btnTips.classList.remove('hidden');
+      if (i >= 8) {
+          if (!Game.uchiSotoTipSeen) {
+              tipsBubble.classList.remove('hidden');
+          }
+          
+          btnTips.onclick = () => {
+              Game.uchiSotoTipSeen = true; 
+              tipsBubble.classList.add('hidden'); 
+              
+              tipsH2.innerHTML = "💡 UCHI & SOTO (KELUARGA)";
+              tipsContent.innerHTML = `
+              <div id="slide-uchi-1" class="slide-page">
+                  <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:10px;">
+                      Pernahkah kamu bertanya-tanya, kenapa bahasa Jepang punya banyak sekali sebutan untuk keluarga? Tenang saja, kamu tidak sendirian! Sangat wajar kalau pemula merasa kebingungan.<br><br>
+                      Kuncinya ada pada konsep <b>Uchi-Soto</b> (Orang Dalam vs Orang Luar). Mari kita kenalan perlahan dengan dua kelompok ini:<br>
+                  </span>
+                  <span style="color:var(--primary); font-weight:bold; font-size: 15px;">1. Kelompok "Merendah" (Uchi)</span><br>
+                  <span style="color:var(--text-sub); font-size:13px;">Digunakan KHUSUS saat menceritakan keluarga SENDIRI kepada orang luar.</span><br>
+                  <span style="font-size:14px; line-height:1.6;">
+                  • <b>Chichi</b> (Ayah), <b>Haha</b> (Ibu)<br>
+                  • <b>Ani</b> (Kakak Laki), <b>Ane</b> (Kakak Peremp)<br>
+                  </span>
+                  <span style="color:var(--gold); font-size:12px; display:block; margin-top:4px;"><i>Contoh: これは私の<b>父</b>です。<br>(Kore wa watashi no <b>chichi</b> desu / Ini adalah ayah saya).</i></span><br>
+                  
+                  <button class="btn" style="padding:10px; font-size:14px; margin-top:10px; background:var(--gold); width:100%;" onclick="document.getElementById('slide-uchi-1').style.display='none'; document.getElementById('slide-uchi-2').style.display='block';">Lanjutkan ➡️</button>
+              </div>
+              
+              <div id="slide-uchi-2" class="slide-page" style="display:none;">
+                  <span style="color:var(--success); font-weight:bold; font-size: 15px;">2. Kelompok "Hormat" (Soto)</span><br>
+                  <span style="color:var(--text-sub); font-size:13px;">Digunakan untuk menghormati keluarga ORANG LAIN.</span><br>
+                  <span style="font-size:14px; line-height:1.6;">
+                  • <b>Otousan</b> (Ayah), <b>Okaasan</b> (Ibu)<br>
+                  • <b>Oniisan</b> (Kakak Laki), <b>Oneesan</b> (Kakak Peremp)<br>
+                  </span>
+                  <span style="color:var(--gold); font-size:12px; display:block; margin-top:4px;"><i>Contoh: それはケンさんの<b>お母さん</b>です。<br>(Sore wa Ken-san no <b>okaasan</b> desu / Itu adalah ibu Ken).</i></span><br>
+                  
+                  <div style="display:flex; gap:10px; margin-top:15px;">
+                      <button class="btn btn-alt" style="padding:10px; font-size:14px; flex:1;" onclick="document.getElementById('slide-uchi-2').style.display='none'; document.getElementById('slide-uchi-1').style.display='block';">⬅️ Kembali</button>
+                      <button class="btn" style="padding:10px; font-size:14px; background:var(--gold); flex:1;" onclick="document.getElementById('slide-uchi-2').style.display='none'; document.getElementById('slide-uchi-3').style.display='block';">Lanjutkan ➡️</button>
+                  </div>
+              </div>
+
+              <div id="slide-uchi-3" class="slide-page" style="display:none;">
+                  <span style="color:var(--warning); font-weight:bold; font-size: 15px;">💡 Jebakan Klasik: Menceritakan vs Memanggil</span><br>
+                  <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-top:8px;">
+                      Banyak pemula sering terjebak di sini. Kamu mungkin bertanya: <i>"Kalau Chichi itu untuk ayah sendiri, kenapa anak-anak di rumah memanggil ayah mereka dengan sebutan Otousan?"</i><br><br>
+                      Jawabannya ada pada <b>situasi</b> saat berbicara:<br><br>
+                      <b style="color:white;">1. Saat Memanggil Langsung (Face-to-Face)</b><br>
+                      Di dalam rumah, orang tua memiliki posisi yang lebih tinggi dan harus kamu hormati. Oleh karena itu, saat kamu menyapa atau memanggil mereka secara langsung, kamu <b>wajib</b> memakai kata hormat.
+                  </span>
+                  <div style="display:flex; gap:10px; margin-top:15px;">
+                      <button class="btn btn-alt" style="padding:10px; font-size:14px; flex:1;" onclick="document.getElementById('slide-uchi-3').style.display='none'; document.getElementById('slide-uchi-2').style.display='block';">⬅️ Kembali</button>
+                      <button class="btn" style="padding:10px; font-size:14px; background:var(--gold); flex:1;" onclick="document.getElementById('slide-uchi-3').style.display='none'; document.getElementById('slide-uchi-4').style.display='block';">Lanjutkan lagi? ➡️</button>
+                  </div>
+              </div>
+
+              <div id="slide-uchi-4" class="slide-page" style="display:none;">
+                  <span style="color:var(--warning); font-weight:bold; font-size: 15px;">💡 Lanjutan: Memanggil Langsung</span><br>
+                  <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-top:8px;">
+                      • <i>Anak menyapa ibunya di rumah:</i><br>
+                      <span style="color:white;">「<b>お母さん</b>、元気ですか。」</span><br>
+                      <i>(<b>Okaasan</b>, genki desu ka / Ibu, apa kabar?)</i> ✅<br><br>
+                      Seorang anak di Jepang <b>TIDAK AKAN PERNAH</b> memanggil ayahnya dengan berteriak "Chichi!" ke wajahnya. Itu akan terdengar sangat aneh dan kurang ajar, lho!
+                  </span>
+                  <div style="display:flex; gap:10px; margin-top:15px;">
+                      <button class="btn btn-alt" style="padding:10px; font-size:14px; flex:1;" onclick="document.getElementById('slide-uchi-4').style.display='none'; document.getElementById('slide-uchi-3').style.display='block';">⬅️ Kembali</button>
+                      <button class="btn" style="padding:10px; font-size:14px; background:var(--gold); flex:1;" onclick="document.getElementById('slide-uchi-4').style.display='none'; document.getElementById('slide-uchi-5').style.display='block';">Masih mau lanjut lagi? ➡️</button>
+                  </div>
+              </div>
+
+              <div id="slide-uchi-5" class="slide-page" style="display:none;">
+                  <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block;">
+                      <b style="color:white; font-size: 14px;">2. Saat Menceritakan ke Orang Luar</b><br>
+                      Nah, barulah aturan 'Uchi' (merendah) tadi berlaku! Saat kamu ngobrol dengan teman, dan menceritakan keluargamu, kamu <b>harus merendahkan statusnya</b>.<br><br>
+                      • <i>Bicara ke teman soal ayah sendiri:</i><br>
+                      <span style="color:white;">「<b>父</b>は家です。」</span><br>
+                      <i>(<b>Chichi</b> wa ie desu / Ayahku ada di rumah.)</i> ✅<br><br>
+                      • <i>Bertanya ke teman soal ayahnya:</i><br>
+                      <span style="color:white;">「<b>お父さん</b>は家ですか。」</span><br>
+                      <i>(<b>Otousan</b> wa ie desu ka / Apakah ayahmu ada di rumah?)</i> ✅<br>
+                      
+                      <div style="background:rgba(255, 215, 0, 0.1); padding:8px; border-left:3px solid var(--gold); margin:8px 0; font-size:12px;">
+                          <b>Ke mana perginya "Watashi no" & "Anata no"? 🤔</b><br>
+                          Di Jepang, kata <i>watashi no</i> dan <i>anata no</i> sangat sering <b>dibuang</b> jika konteksnya sudah jelas. Kata <i>Chichi</i> otomatis berarti "ayahku", dan <i>Otousan</i> otomatis berarti "ayahmu"!
+                      </div>
+                  </span>
+                  <div style="display:flex; gap:10px; margin-top:15px;">
+                      <button class="btn btn-alt" style="padding:10px; font-size:14px; flex:1;" onclick="document.getElementById('slide-uchi-5').style.display='none'; document.getElementById('slide-uchi-4').style.display='block';">⬅️ Kembali</button>
+                      <button class="btn" style="padding:10px; font-size:14px; background:var(--gold); flex:1;" onclick="document.getElementById('slide-uchi-5').style.display='none'; document.getElementById('slide-uchi-6').style.display='block';">Ini yang terakhir, wkwk ➡️</button>
+                  </div>
+              </div>
+
+              <div id="slide-uchi-6" class="slide-page" style="display:none;">
+                  <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block;">
+                      <b style="color:var(--warning); font-size: 15px;">Mari kita simpulkan pelan-pelan:</b><br><br>
+                      • <b>Memanggil langsung</b>:<br>Wajib pakai gelar hormat (Otousan/Okaasan).<br><br>
+                      • <b>Menceritakan (ke orang luar)</b>:<br>Wajib pakai gelar merendah (Chichi/Haha).<br><br>
+                      <i style="color:var(--gold);">Sampai di sini, sudah mulai terbayang kan bedanya? Pelan-pelan saja memahaminya, kamu pasti bisa! 😊</i>
+                  </span>
+                  
+                  <div style="display:flex; gap:10px; margin-top:20px;">
+                      <button class="btn btn-alt" style="padding:10px; font-size:14px; flex:1;" onclick="document.getElementById('slide-uchi-6').style.display='none'; document.getElementById('slide-uchi-5').style.display='block';">⬅️ Kembali</button>
+                      <button class="btn" style="padding:10px; font-size:14px; background:var(--success); color:#000; flex:1;" onclick="document.getElementById('slide-uchi-6').style.display='none'; document.getElementById('slide-uchi-1').style.display='block'; UI.closeModal('tips-modal');">Selesai ✅</button>
+                  </div>
+              </div>`;
+              
+              UI.openModal('tips-modal'); 
+          };
+      } 
+      else {       
+          btnTips.onclick = () => {
+              tipsH2.innerHTML = "💡 FUNGSI PARTIKEL NO (の)";
+              tipsContent.innerHTML = `Partikel <b>の (no)</b> berfungsi menghubungkan dua kata benda. KB1 bertugas menerangkan KB2:<br><br>
+              <span style="color:var(--primary); font-weight:bold;">1. Kepemilikan:</span> 私の本 (Buku saya)<br>
+              <span style="color:var(--success); font-weight:bold;">2. Asal/Anggota:</span> 日本の学生 (Siswa asal Jepang)<br>
+              <span style="color:var(--warning); font-weight:bold;">3. Keterangan Jenis:</span> 日本語の本 (Buku bahasa Jepang)<br>
+              <span style="color:var(--danger); font-weight:bold;">4. Buatan/Merek:</span> ヤマハのバイク (Motor buatan Yamaha)<br>
+              <span style="color:var(--gold); font-weight:bold;">5. Status/Jabatan:</span> 社長の山田さん (Pak Yamada yang menjabat Presdir)<br><br>
+              <i style="color:var(--gold); font-size:13px;">Catatan: Intinya, KB1 (yang di depan) adalah informasi tambahan untuk memperjelas KB2 (benda utamanya)!</i>`;
+              UI.openModal('tips-modal');
+          };
+      }
+    } else if (Game.currentDay === 8 && t === 'belajar') {
+      btnTips.classList.remove('hidden');
+      
+      btnTips.onclick = () => {
+          tipsH2.innerHTML = "💡 KELUARGA KOSOADO (BENDA)";
+          tipsContent.innerHTML = `
+          <div id="slide-kosoado-1">
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:10px;">
+                  Sistem kata tunjuk di Jepang sangat rapi lho! Kuncinya ada di awalan <b>Ko-So-A-Do</b> (Ini - Itu dekat - Itu jauh - Mana).<br><br>
+                  Mari kita lihat <b style="color:var(--primary);">Kelompok 1: Benda Mandiri</b>.<br>
+                  Kelompok ini bisa berdiri sendiri sebagai Subjek dalam kalimat (langsung diikuti partikel <b>wa</b>).
+              </span>
+              <table style="width:100%; border-collapse: collapse; font-size: 13px; text-align:left; background:rgba(255,255,255,0.05); border-radius:8px; overflow:hidden;">
+                  <tr style="background:rgba(56, 189, 248, 0.2);">
+                      <th style="padding:8px; border:1px solid #334155;">Jepang</th>
+                      <th style="padding:8px; border:1px solid #334155;">Arti</th>
+                      <th style="padding:8px; border:1px solid #334155;">Contoh</th>
+                  </tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>これ (Kore)</b></td><td style="padding:8px; border:1px solid #334155;">Ini</td><td style="padding:8px; border:1px solid #334155;"><b>これ</b>は本です。</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>それ (Sore)</b></td><td style="padding:8px; border:1px solid #334155;">Itu (di dekatmu)</td><td style="padding:8px; border:1px solid #334155;"><b>それ</b>は本です。</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>あれ (Are)</b></td><td style="padding:8px; border:1px solid #334155;">Itu (di sana)</td><td style="padding:8px; border:1px solid #334155;"><b>あれ</b>は本です。</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155; color:var(--warning);"><b>どれ (Dore)</b></td><td style="padding:8px; border:1px solid #334155; color:var(--warning);">Yang mana</td><td style="padding:8px; border:1px solid #334155; color:var(--warning);">あなたの本は<b>どれ</b>ですか。</td></tr>
+              </table>
+              <button class="btn" style="padding:8px 12px; font-size:13px; margin:15px 0 0 0; background:var(--gold); width:100%;" onclick="document.getElementById('slide-kosoado-1').style.display='none'; document.getElementById('slide-kosoado-2').style.display='block';">Lanjut  ➡️</button>
+          </div>
+          
+          <div id="slide-kosoado-2" style="display:none;">
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:10px;">
+                   <b style="color:var(--success);">Kelompok 2: Penunjuk Benda</b>.<br>
+                  Berbeda dengan Kore/Sore, kata-kata ini <b>TIDAK BISA</b> berdiri sendiri. Mereka <b>wajib menempel</b> langsung dengan kata benda!
+              </span>
+              <table style="width:100%; border-collapse: collapse; font-size: 13px; text-align:left; background:rgba(255,255,255,0.05); border-radius:8px; overflow:hidden;">
+                  <tr style="background:rgba(34, 197, 94, 0.2);">
+                      <th style="padding:8px; border:1px solid #334155;">Jepang</th>
+                      <th style="padding:8px; border:1px solid #334155;">Arti</th>
+                      <th style="padding:8px; border:1px solid #334155;">Contoh</th>
+                  </tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>この (Kono)</b></td><td style="padding:8px; border:1px solid #334155;">... ini</td><td style="padding:8px; border:1px solid #334155;"><b>この</b>本は...</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>その (Sono)</b></td><td style="padding:8px; border:1px solid #334155;">... itu (dekatmu)</td><td style="padding:8px; border:1px solid #334155;"><b>その</b>本は...</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>あの (Ano)</b></td><td style="padding:8px; border:1px solid #334155;">... itu (di sana)</td><td style="padding:8px; border:1px solid #334155;"><b>あの</b>本は...</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155; color:var(--warning);"><b>どの (Dono)</b></td><td style="padding:8px; border:1px solid #334155; color:var(--warning);">... yang mana</td><td style="padding:8px; border:1px solid #334155; color:var(--warning);"><b>どの</b>本ですか。</td></tr>
+              </table>
+              <div style="background:rgba(239, 68, 68, 0.1); padding:8px; border-left:3px solid var(--danger); margin:15px 0 8px 0; font-size:12px;">
+                  <b>⚠️ JANGAN TERTUKAR!</b><br>
+                  ❌ <b>この</b>は本です。 <i>(Salah!)</i><br>
+                  ✅ <b>これ</b>は本です。 <i>(Benar: Ini adalah buku)</i><br>
+                  ✅ <b>この</b>本は私の本です。 <i>(Benar: Buku ini adalah milikku)</i>
+              </div>
+              <button class="btn btn-alt" style="padding:8px 12px; font-size:13px; width:100%;" onclick="document.getElementById('slide-kosoado-2').style.display='none'; document.getElementById('slide-kosoado-1').style.display='block';">⬅️ Kembali ke Slide 1</button>
+          </div>`;
+          UI.openModal('tips-modal');
+      };
+    } else { btnTips.classList.add('hidden'); }
+    if (t === 'dungeon') {
+        document.getElementById('stage-indicator').innerText = `🔥 SKOR SURVIVAL: ${Game.dungeonScore}`;
+        document.getElementById('ui-progress').style.width = `100%`;
+
+        // Ambil 1 kata acak dari seluruh pool
+        let pool = Game.dungeonPool;
+        let target = pool[Math.floor(Math.random() * pool.length)];
+        
+        document.getElementById('ui-jp').innerHTML = Engine.buildRubyFormat(target.k, target.r, null, false);
+
+        // Bikin 3 opsi pengecoh dari pool yang sama
+        let opts = [target.a];
+        let wrongPool = Engine.shuffle([...pool].filter(x => x.a !== target.a));
+        opts.push(wrongPool[0].a, wrongPool[1].a, wrongPool[2].a);
+        opts = Engine.shuffle(opts);
+
+        document.getElementById('input-area').innerHTML = opts.map(o => `<button class="btn btn-alt" style="margin-bottom:8px;" onclick="Action.checkDungeon('${o.replace(/'/g, "\\'")}', '${target.a.replace(/'/g, "\\'")}', event)">${o}</button>`).join('');
+        return; // Setop fungsi di sini agar tidak menjalankan kuis reguler
+    }
+    
+    if (t === 'hafalan') {
+      if(Game.sessionData.hafalan[0].k === "WIP") { document.getElementById('ui-jp').innerHTML = "UNDER CONSTRUCTION"; return; }
+      const tHaf = Game.sessionData.hafalan.length; const tPeng = Game.sessionData.pengayaan.length; UI.updateProgress(i, tHaf + tPeng);
+      if (i === tHaf && !Game.jumpscareTriggered) { Game.jumpscareTriggered = true; const js = document.getElementById('jumpscare-overlay'); js.classList.add('show'); setTimeout(() => { js.classList.remove('show'); UI.loadStep(); }, 1000); return; }
+      if (i < tHaf) {
+        const itm = Game.sessionData.hafalan[i]; document.getElementById('stage-indicator').innerText = `KOSAKATA : ${i + 1} / ${tHaf}`;
+        document.getElementById('ui-jp').innerHTML = Engine.buildRubyFormat(itm.k, itm.r, null, false); document.getElementById('ui-arti').innerHTML = itm.a; UI.makeNextBtn("Hafal →");
+      } else if (i < tHaf + tPeng) {
+        const pIdx = i - tHaf; const itm = Game.sessionData.pengayaan[pIdx]; document.getElementById('stage-indicator').innerText = `🚨 KUIS DADAKAN : ${pIdx + 1} / ${tPeng}`;
+        document.getElementById('ui-jp').innerHTML = Engine.buildRubyFormat(itm.k, itm.r, null, false);
+        let opts = [itm.a]; let pool = Game.sessionData.hafalan.filter(x => x.a !== itm.a); Engine.shuffle(pool); opts.push(pool[0].a); opts.push(pool[1].a); Engine.shuffle(opts);
+        document.getElementById('input-area').innerHTML = opts.map(o => `<button class="btn btn-alt" onclick="Action.checkPengayaan('${o}', '${itm.a}', event)">${o}</button>`).join('');
+      } else {
+        document.getElementById('stage-indicator').innerText = ""; document.getElementById('ui-jp').innerHTML = "🎉 Pemanasan Selesai!"; document.getElementById('ui-arti').innerHTML = "Akses tab Pola.";
+        document.getElementById('input-area').innerHTML = `<button class="btn btn-alt" onclick="Action.resetTab()">🔄 Ulas Kembali Sesi Hafalan</button>`;
+      }
+    } else {
+      const dL = Game.sessionData[t]; UI.updateProgress(i, dL.length); 
+      if (i >= dL.length) { 
+          document.getElementById('stage-indicator').innerText = ""; document.getElementById('ui-jp').innerHTML = "🎉 Sesi Tuntas!"; 
+          let reviewBtn = `<button class="btn btn-alt" style="margin-bottom:10px;" onclick="Action.resetTab()">🔄 Ulas Kembali Sesi Ini</button>`;
+         
+          if(t === 'arti') {
+              document.getElementById('input-area').innerHTML = `${reviewBtn}<button class="btn" style="background:var(--gold); color:#000; box-shadow: 0 0 15px rgba(251, 191, 36, 0.4);" onclick="Game.completeDay()">Selesaikan Misi 🏆</button>`; 
+          } else {
+              document.getElementById('input-area').innerHTML = reviewBtn; 
+          }
+          return; 
+      }
+      document.getElementById('stage-indicator').innerText = `${t.toUpperCase()} : ${i + 1} / ${dL.length}`; const itm = dL[i];
+      if(itm.a === 'WIP') { document.getElementById('ui-jp').innerHTML = "Under Construction"; return; }
+
+      if (t === 'belajar') {
+        document.getElementById('ui-jp').innerHTML = Engine.renderSentence(itm.jp, false, false, false, false); document.getElementById('ui-arti').innerHTML = itm.a; UI.makeNextBtn("Paham →");
+      } else if (t === 'partikel') {
+        if (itm.isMulti) {
+           document.getElementById('ui-jp').innerHTML = Engine.renderSentence(itm.jp, isPro, true, false, true); 
+           Game.targetMultiAns = itm.ansP; Game.currentMultiAns = new Array(itm.ansP.length).fill(null);
+           let defaultOpts = itm.opts || ['は', 'の', 'も', 'と', 'で', 'に', 'を', 'では']; let optsHtml = '<div style="margin-bottom:15px;">';
+           defaultOpts.forEach(p => { optsHtml += `<button class="btn btn-alt" style="display:inline-block; width:auto; margin:4px; padding:10px 15px; font-size:18px;" onclick="Action.fillMulti('${p}')">${p}</button>`; });
+           optsHtml += '</div>'; document.getElementById('input-area').innerHTML = `${optsHtml}<button class="btn hidden" id="btn-submit" onclick="Action.checkMulti(event)">EKSEKUSI</button>`;
+        } else {
+           document.getElementById('ui-jp').innerHTML = Engine.renderSentence(itm.jp, isPro, true, false, false); Game.currentAns = itm.ansP;
+           document.getElementById('input-area').innerHTML = `<input type="text" id="answer-box" class="input-box" placeholder="Ketik partikel" autocomplete="off"><button class="btn" id="btn-submit">EKSEKUSI</button>`;
+           setTimeout(() => { document.getElementById('answer-box').focus(); document.getElementById('btn-submit').onclick = Action.checkInput; }, 100);
+        }
+        if (Game.intelActive) {
+            let intelBox = `<div class="intel-box" style="margin-bottom:15px;"><b>Intel Arti:</b> ${itm.a}</div>`;
+            document.getElementById('input-area').insertAdjacentHTML('afterbegin', intelBox);
+        }
+      } else if (t === 'arti') {
+        let displayA = itm.a;
+        if (itm.qA && itm.qA.toLowerCase().includes("garis bawah") && itm.ansA) {
+            let safeAnsA = itm.ansA.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            let regex = new RegExp(`(${safeAnsA})`, "i");
+            displayA = displayA.replace(regex, `<u style="text-decoration: underline; text-decoration-style: dashed; text-decoration-color: var(--primary); text-underline-offset: 4px;">$1</u>`);
+        }
+        let qText = itm.qA ? `${displayA}<br><br><span style="font-size:14px; color:var(--warning);">${itm.qA.replace("Terjemahkanlah kalimat bergaris bawah!", "Tulis bagian bergaris bawah dalam bhs Jepang!").replace("Terjemahkanlah jawaban A!", "Tulis jawaban A dalam bhs Jepang!").replace("Terjemahkan keseluruhan kalimat!", "Terjemahkan ke bahasa Jepang!")}</span>` : displayA;
+        document.getElementById('ui-jp').innerHTML = `<div style="font-size:20px; line-height:1.5;">${qText}</div>`; 
+        
+        let targetArr = itm.jp.some(x => x.u) ? itm.jp.filter(x => x.u) : itm.jp;
+        let aK = "", aH = "";
+        targetArr.forEach(x => { aK += (x.k || x.text); aH += (x.r || x.text); });
+        
+        const cleanStr = (s) => s.replace(/<[^>]*>?/gm, '').replace(/[。、！？,\?\sQ:A:]/g, '');
+        const displayStr = (s) => s.replace(/<[^>]*>?/gm, '').replace(/(<b>Q:<\/b>|<b>A:<\/b>|Q:|A:)/g, '').trim();
+
+        Game.currentAnsKanji = cleanStr(aK);
+        Game.currentAnsHiragana = cleanStr(aH);
+        
+        Game.displayKanji = displayStr(aK);
+        Game.displayHiragana = displayStr(aH);
+        
+        document.getElementById('input-area').innerHTML = `<input type="text" id="answer-box" class="input-box" placeholder="Ketik Hiragana / Kanji..." autocomplete="off"><button class="btn" id="btn-submit">EKSEKUSI</button>`;
+        setTimeout(() => { document.getElementById('answer-box').focus(); document.getElementById('btn-submit').onclick = Action.checkInput; }, 100);
+      }
+      if (Game.adminMode && t !== 'hafalan' && t !== 'dungeon' && t !== 'belajar' && i < Game.sessionData[t].length) {
+          let adminBtn = `<button class="btn" style="background:var(--danger); color:white; margin-top:15px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);" onclick="UI.showResult(true, 'ADMIN BYPASS', null, true)">⏩ Bypass Soal (Admin)</button>`;
+          document.getElementById('input-area').insertAdjacentHTML('beforeend', adminBtn);
+      }
+      
+    }
+  },
+  updateProgress: (c, t) => { document.getElementById('ui-progress').style.width = `${t === 0 ? 100 : (c / t) * 100}%`; },
+    makeNextBtn: (txt) => { 
+    const b = document.getElementById('btn-next'); 
+    b.innerText = txt; b.classList.remove('hidden'); 
+    b.onclick = () => UI.triggerNextAnim(() => { 
+        Game.intelActive = false; 
+        
+        Game.currentIndex++; 
+        UI.loadStep(); 
+    }); 
+  },
+  renderHP: () => {
+    document.getElementById('ui-hp').innerHTML = Array(3).fill(0).map((_,i) => {
+      let isL = i >= Game.hp; let animC = (isL && i === Game.hp && Game.hpLostThisTurn) ? 'bleed' : '';
+      return `<span class="heart ${isL ? 'lost' : ''} ${animC}">❤</span>`;
+    }).join('');
+    Game.hpLostThisTurn = false;
+  },
+      showResult: (isC, key, evt, isSkip = false) => {
+    const fb = document.getElementById('ui-feedback'); const inp = document.getElementById('answer-box');
+    const card = document.getElementById('card-main'); // Tarik elemen card
+
+    if(inp) inp.disabled = true; document.getElementById('btn-submit').classList.add('hidden');
+    
+        if(isC) { 
+      fb.innerHTML = "BENAR ✅"; fb.style.color = "var(--success)"; if(inp) inp.style.borderColor = "var(--success)"; 
+      
+      card.classList.remove('shake-hard'); 
+      card.classList.add('card-correct');
+      setTimeout(()=>card.classList.remove('card-correct'), 500);
+
+      if(!isSkip) { 
+          RPG.combo++; 
+          if(RPG.combo > Game.dailyStats.maxCombo) Game.dailyStats.maxCombo = RPG.combo;
+          RPG.addReward(10, 5, evt); 
+      } 
+ 
+      if(Game.currentTab !== 'dungeon') {
+          UI.makeNextBtn("Lanjut →");
+      }
+    } else { 
+      if(Game.hasShield) {
+          Game.hasShield = false; card.classList.remove('shield-active');
+          UI.showToast("Aegis Shield Hancur! Kesalahan dimaafkan.", "warning");
+          fb.innerHTML = "DITAHAN SHIELD 🛡️ Coba lagi!"; fb.style.color = "var(--primary)"; 
+          if(inp) { inp.disabled = false; inp.value = ""; inp.focus(); document.getElementById('btn-submit').classList.remove('hidden'); }
+      } else {
+          fb.innerHTML = `SALAH ❌<br><span style="font-size:14px; color:var(--text-sub);">Kunci: ${key}</span>`; fb.style.color = "var(--danger)"; 
+          card.classList.add('shake-hard'); setTimeout(()=>card.classList.remove('shake-hard'), 500); 
+          Game.decreaseHP(evt); 
+                  
+          if (Game.hp === 1) {
+              document.body.classList.add('danger-mode');
+          } else if (Game.hp <= 0 || Game.hp > 1) {
+              document.body.classList.remove('danger-mode'); 
+          }
+                    UI.makeNextBtn("Lanjut →");
+      }
+    }
+  } 
+}; 
+
+const Action = {
+  resetTab: () => {
+      Game.currentIndex = 0;
+      Game.tabProgress[Game.currentTab] = 0;
+      if(Game.currentTab === 'hafalan') Game.jumpscareTriggered = false;
+      UI.loadStep();
+  },
+  
+    normalizeSemantics: (text) => {
+    // Sapu pembersih baru: titik jp, koma jp, seru jp, tanya jp, koma indo, tanya indo, dan spasi
+    return text.toLowerCase().replace(/[。、！？,\?\s]/g, '').trim(); 
+  },
+  
+  checkInput: (evt) => { 
+    let rawVal = document.getElementById('answer-box').value; if(!rawVal) return;
+    
+    if (Game.currentTab === 'arti') {
+        let cleanVal = rawVal.replace(/[。、！？,\?\s]/g, '');
+        let isCorrect = (cleanVal === Game.currentAnsKanji) || (cleanVal === Game.currentAnsHiragana);
+        
+        // Tampilkan teks Display yang masih mengandung Koma & Titik!
+        let displayKey = Game.displayKanji !== Game.displayHiragana ? `${Game.displayKanji} / ${Game.displayHiragana}` : Game.displayKanji;
+        UI.showResult(isCorrect, displayKey, evt);
+    } else {
+        let v = Action.normalizeSemantics(rawVal);
+        let k = Action.normalizeSemantics(Game.currentAns);
+        UI.showResult(v === k, Game.currentAns, evt); 
+    }
+  },
+
+  checkPengayaan: (sel, cor, evt) => { 
+      if(sel === cor) { 
+          RPG.addReward(2, 1, evt); 
+          UI.triggerNextAnim(() => { Game.currentIndex++; UI.loadStep(); }); 
+      } else { 
+          document.getElementById('ui-feedback').innerHTML = "Salah! ❌"; 
+          document.getElementById('ui-feedback').style.color = "var(--warning)"; 
+          RPG.combo = 0; RPG.updateUI(); 
+      } 
+  },
+
+  checkDungeon: (sel, cor, evt) => {
+      if(sel === cor) {
+          Game.dungeonScore++; RPG.combo++;
+          if(RPG.combo > Game.dailyStats.maxCombo) Game.dailyStats.maxCombo = RPG.combo;
+          RPG.addReward(5, 2, evt); 
+          
+          const card = document.getElementById('card-main');
+          card.classList.remove('shake-hard'); card.classList.add('card-correct');
+          setTimeout(()=>card.classList.remove('card-correct'), 500);
+          
+          UI.triggerNextAnim(() => { UI.loadStep(); }); 
+      } else {
+          document.getElementById('ui-feedback').innerHTML = `SALAH ❌<br><span style="font-size:14px; color:var(--text-sub);">Kunci: ${cor}</span>`;
+          document.getElementById('ui-feedback').style.color = "var(--danger)";
+          
+          const card = document.getElementById('card-main');
+          card.classList.add('shake-hard'); setTimeout(()=>card.classList.remove('shake-hard'), 500);
+          
+          Game.decreaseHP(evt);
+          
+          if(Game.hp > 0) {
+              document.getElementById('input-area').innerHTML = `<button class="btn" onclick="UI.triggerNextAnim(() => { UI.loadStep(); })">Lanjut Bertahan →</button>`;
+          } else {
+              document.getElementById('input-area').innerHTML = `<button class="btn" style="background:var(--danger); color:white;" onclick="Game.init(Game.mode)">💀 KEMBALI KE LOBI</button>`;
+          }
+      }
+  },
+  
+  fillMulti: (p) => {
+    let idx = Game.currentMultiAns.indexOf(null);
+    if(idx !== -1) {
+        Game.currentMultiAns[idx] = p;
+        const b = document.getElementById(`mblank-${idx}`);
+        b.innerText = p; 
+        b.style.color = "var(--primary)"; 
+        b.style.borderBottomStyle = "solid";
+
+        if(!Game.currentMultiAns.includes(null)) {
+            document.getElementById('btn-submit').classList.remove('hidden');
+        }
+    } else {
+        const btnSubmit = document.getElementById('btn-submit');
+        btnSubmit.classList.add('shake-hard');
+        setTimeout(() => btnSubmit.classList.remove('shake-hard'), 300);
+        UI.showToast("Slot penuh! Klik partikel pada kalimat di atas untuk mengubahnya.", "error");
+    }
+  },
+  clearMulti: (idx) => {
+    Game.currentMultiAns[idx] = null;
+    const b = document.getElementById(`mblank-${idx}`);
+    b.innerText = "_"; 
+    b.style.color = "var(--gold)"; 
+    b.style.borderBottomStyle = "dashed";
+    document.getElementById('btn-submit').classList.add('hidden');
+  },
+  checkMulti: (evt) => {
+    let isCorrect = JSON.stringify(Game.currentMultiAns) === JSON.stringify(Game.targetMultiAns);
+    UI.showResult(isCorrect, Game.targetMultiAns.join(" & "), evt);
+  }
+};
+document.addEventListener('keydown', (e) => { 
+  if(e.key === 'Enter') { 
+    const bs = document.getElementById('btn-submit'); 
+    const bn = document.getElementById('btn-next'); 
+    if(bs && !bs.classList.contains('hidden')) bs.click(); 
+    else if(bn && !bn.classList.contains('hidden')) bn.click(); 
+  } 
+});
+const Cooldown = {
+  triggerDeath: (m) => { 
+    localStorage.setItem('yk_lock', Date.now() + (15 * 60 * 1000)); 
+    document.getElementById('cd-timer').innerText = "Sistem Lock"; 
+    localStorage.setItem('yk_hp', 3); Cooldown.check(); 
+  },
+  check: () => {
+    const rm = (parseInt(localStorage.getItem('yk_lock')) || 0) - Date.now();
+    if (rm > 0) {
+      ['setup-screen','main-app'].forEach(id=>document.getElementById(id).classList.add('hidden')); document.getElementById('cooldown-screen').classList.remove('hidden');
+      let cd = setInterval(() => { const r = parseInt(localStorage.getItem('yk_lock')) - Date.now(); if(r <= 0) { clearInterval(cd); location.reload(); return; } document.getElementById('cd-timer').innerText = `${Math.floor(r/60000)}:${String(Math.floor((r%60000)/1000)).padStart(2,'0')}`; }, 1000); return true;
+    } return false;
+  }
+};
+window.onload = Game.checkStoredMode;
+</script>
+</body>
+</html>
