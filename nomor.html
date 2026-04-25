@@ -17,21 +17,27 @@
     --text-sub: #94a3b8;
   }
   
-  body { font-family: 'Segoe UI', sans-serif; background: var(--bg-main); color: var(--text-main); margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 15px 10px; overflow-x: hidden; }
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg-main); color: var(--text-main); margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 15px 10px 80px 10px; overflow-x: hidden; }
   .container { width: 100%; max-width: 550px; position: relative; }
   button, input { touch-action: manipulation; font-family: inherit; }
   .hidden { display: none !important; }
 
-  /* Navigasi Utama */
-  .btn-back { background: #1e293b; color: var(--text-main); border: 1px solid #334155; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-bottom: 15px; transition: all 0.3s ease; }
-  .btn-back:hover { border-color: var(--primary); color: var(--primary); box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
-  .btn-back:active { transform: scale(0.97); }
+  /* HEADER MINIMALIS */
+  .top-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 20px; }
+  .btn-header { background: #1e293b; color: white; border: 1px solid #334155; width: 42px; height: 42px; border-radius: 12px; font-size: 20px; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+  .btn-header:active { transform: scale(0.85); box-shadow: 0 2px 3px rgba(0,0,0,0.3); }
+  .btn-header.spin-anim { transform: rotate(180deg) scale(0.5); opacity: 0; }
+  .header-title { font-weight: 800; font-size: 18px; color: var(--gold); letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
-  .mode-switch { display: flex; width: 100%; background: #0f172a; border-radius: 12px; border: 2px solid #334155; overflow: hidden; margin-bottom: 15px; position: relative; }
-  .mode-btn { flex: 1; padding: 12px; font-weight: bold; font-size: 14px; color: var(--text-sub); background: transparent; border: none; cursor: pointer; transition: all 0.4s ease; z-index: 2; }
-  .mode-btn.active { color: #000; }
-  .mode-btn.active#btn-mode-angka { background: var(--primary); }
-  .mode-btn.active#btn-mode-waktu { background: var(--success); }
+  /* BOTTOM NAVIGATION BAR */
+  .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px); border-top: 1px solid #334155; display: flex; padding: 8px 0 15px 0; z-index: 100; justify-content: space-around; box-shadow: 0 -5px 15px rgba(0,0,0,0.5); }
+  .b-nav-btn { flex: 1; background: transparent; border: none; color: var(--text-sub); font-size: 11px; font-weight: bold; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); -webkit-tap-highlight-color: transparent; }
+  .b-nav-icon { font-size: 24px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); filter: grayscale(100%); opacity: 0.5; }
+  .b-nav-btn:active { transform: scale(0.92); }
+  .b-nav-btn.active#btn-mode-angka { color: var(--primary); }
+  .b-nav-btn.active#btn-mode-angka .b-nav-icon { filter: none; opacity: 1; transform: translateY(-4px) scale(1.15); }
+  .b-nav-btn.active#btn-mode-waktu { color: var(--success); }
+  .b-nav-btn.active#btn-mode-waktu .b-nav-icon { filter: none; opacity: 1; transform: translateY(-4px) scale(1.15); }
 
   .nav-tabs { display: flex; gap: 5px; margin-bottom: 10px; justify-content: center; background: transparent;}
   .tab-btn { background: #1e293b; color: var(--text-sub); border: 1px solid #334155; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; flex-grow: 1; transition: all 0.3s ease; text-align: center; }
@@ -44,6 +50,7 @@
 
   /* Animasi Transisi */
   .fade-in-up { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .fade-out-down { animation: fadeOutDown 0.25s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
   .pop-in { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
   .slide-in-right { animation: slideInRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
   .slide-out-left { animation: slideOutLeft 0.25s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
@@ -51,7 +58,8 @@
   .slide-out-right { animation: slideOutRight 0.25s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
   
   @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes popIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
+   @keyframes fadeOutDown { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(20px); } }
+ @keyframes popIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
   @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
   @keyframes slideOutLeft { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-50px); } }
   @keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
@@ -61,12 +69,34 @@
   .content-section { background: var(--card-bg); border-radius: 20px; padding: 25px 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); min-height: 400px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; position: relative; }
   .progress-text { font-size: 14px; font-weight: bold; letter-spacing: 1px; margin-bottom: 15px; text-transform: uppercase; }
 
-  /* Flashcard UI (Mode Angka) */
-  .content-hafalan { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
+  /* Flashcard UI */
+  .content-hafalan { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; position: relative; padding-top: 30px; }
   
-  .kanji-text { font-size: 65px; font-weight: bold; margin: 5px 0 15px 0; color: var(--text-main); text-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor: pointer; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent;}
-  .hira-text { font-size: 20px; color: var(--warning); margin-bottom: 5px; font-weight: bold; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-  .arti-text { font-size: 22px; color: var(--text-sub); font-style: italic; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .kanji-text { 
+    font-size: clamp(35px, 8vw, 55px); /* Dinamis: Min 35px, Max 55px */
+    font-weight: bold; 
+    margin: 5px 0 15px 0; 
+    color: var(--text-main); 
+    text-shadow: 0 4px 10px rgba(0,0,0,0.5); 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    -webkit-tap-highlight-color: transparent;
+    line-height: 1.2; /* Menjaga jarak antar baris kalau terpaksa turun */
+  }
+  .hira-text { 
+    font-size: clamp(14px, 4vw, 18px); /* Sedikit diperkecil */
+    color: var(--warning); 
+    margin-bottom: 5px; 
+    font-weight: bold; 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+  }
+  .arti-text { 
+    font-size: clamp(15px, 4.5vw, 20px); /* Sedikit diperkecil */
+    color: var(--text-sub); 
+    font-style: italic; 
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+  }
+
   
   .blur-hide { filter: blur(8px); opacity: 0; transform: translateY(10px); pointer-events: none; }
   .blur-show { filter: blur(0); opacity: 1; transform: translateY(0); pointer-events: auto; }
@@ -78,14 +108,30 @@
   .pulse-hint { animation: pulseHint 2s infinite; }
   @keyframes pulseHint { 0%, 100% { transform: scale(1); color: var(--text-main); } 50% { transform: scale(1.05); color: var(--primary); } }
 
-  /* Buku Waktu UI (Mode Waktu) */
+  /* Floating Bubble UI SMOOTH */
+  .btn-bubble { position: absolute; right: 0px; top: -15px; width: 35px; height: 35px; border-radius: 50%; background: rgba(34, 197, 94, 0.2); border: 1px solid var(--success); color: white; font-size: 18px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 10; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent;}
+  .btn-bubble:hover { background: rgba(34, 197, 94, 0.4); transform: scale(1.1); }
+  .btn-bubble:active { transform: scale(0.9); }
+  
+  .bubble-popup { 
+    position: absolute; top: 30px; right: 0px; background: rgba(15, 23, 42, 0.95); 
+    border: 2px solid var(--success); padding: 15px; border-radius: 12px; width: 250px; 
+    text-align: left; font-size: 13px; color: var(--text-main); z-index: 11; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7); backdrop-filter: blur(5px); line-height: 1.5;
+    opacity: 0; visibility: hidden; transform: translateY(-15px) scale(0.9);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: top right;
+  }
+  .bubble-popup.show-popup { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+
+  /* Buku Waktu / Tabel UI */
   .book-container { flex-grow: 1; display: flex; flex-direction: column; width: 100%; height: 100%; text-align: left; }
   .book-page { flex-grow: 1; overflow-y: auto; overflow-x: hidden; padding-right: 5px; scrollbar-width: thin; scrollbar-color: var(--success) transparent; }
   .book-title { color: var(--success); font-size: 20px; font-weight: bold; margin-bottom: 10px; border-bottom: 2px dashed rgba(34, 197, 94, 0.3); padding-bottom: 8px;}
   .book-narrative { font-size: 14px; line-height: 1.6; color: var(--text-main); margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border-left: 4px solid var(--success); }
   
   .tabel-waktu { width: 100%; border-collapse: collapse; font-size: 16px; margin-bottom: 10px; background: rgba(255,255,255,0.02); border-radius: 8px; table-layout: auto; }
-  .tabel-waktu th { background: rgba(34, 197, 94, 0.15); color: var(--success); padding: 12px; border-bottom: 2px solid var(--success); text-align: left; position: sticky; top: 0; backdrop-filter: blur(5px); z-index: 10;}
+  .tabel-waktu th { background: rgba(34, 197, 94, 0.15); color: var(--success); padding: 12px; border-bottom: 2px solid var(--success); text-align: left; position: sticky; top: 0; backdrop-filter: blur(5px); z-index: 5;}
   .tabel-waktu td { padding: 12px; border-bottom: 1px dashed rgba(255,255,255,0.05); vertical-align: middle; word-break: break-word;}
   .tabel-waktu tr:last-child td { border-bottom: none; }
   
@@ -150,13 +196,12 @@
 <body>
 
 <div class="container">
-  <button class="btn-back" onclick="window.location.href='index.html'">⬅️ Kembali ke Menu Utama</button>
-
-  <div class="mode-switch">
-    <button class="mode-btn active" id="btn-mode-angka" onclick="Modul.switchMode('angka')">🔢 MODE ANGKA</button>
-    <button class="mode-btn" id="btn-mode-waktu" onclick="Modul.switchMode('waktu')">⏰ MODE WAKTU</button>
+  <div class="top-header">
+    <button class="btn-header" onclick="window.location.href='index.html'">⬅️</button>
+    <div class="header-title">YOMIKATA</div>
+    <button class="btn-header" id="btn-toggle-view" onclick="Modul.toggleView()">📋</button>
   </div>
-
+  
   <div class="nav-tabs">
     <button class="tab-btn active" id="btn-tab-hafalan" onclick="Modul.switchTab('hafalan')">📖 Hafalan</button>
     <button class="tab-btn" id="btn-tab-pg" onclick="Modul.switchTab('pg')">🎯 Pilgan</button>
@@ -204,6 +249,17 @@
     </div>
   </div>
 
+</div>
+
+<div class="bottom-nav">
+  <button class="b-nav-btn active" id="btn-mode-angka" onclick="Modul.switchMode('angka')">
+    <span class="b-nav-icon">🔢</span>
+    <span>Angka</span>
+  </button>
+  <button class="b-nav-btn" id="btn-mode-waktu" onclick="Modul.switchMode('waktu')">
+    <span class="b-nav-icon">⏰</span>
+    <span>Waktu</span>
+  </button>
 </div>
 
 <script>
@@ -306,6 +362,7 @@ const DatabaseMateri = {
     ]
   },
   waktu: [
+    // BAB 1: JAM
     { k: "何時", r: "なんじ", a: "Jam berapa?", grp: "jam" }, 
     { k: "一時", r: "いちじ", a: "Jam 1", grp: "jam" },
     { k: "二時", r: "にじ", a: "Jam 2", grp: "jam" }, 
@@ -324,6 +381,7 @@ const DatabaseMateri = {
     { k: "午前 十時", r: "ごぜん じゅうじ", a: "Jam 10 pagi", grp: "jam" }, 
     { k: "午後 一時", r: "ごご いちじ", a: "Jam 1 siang", grp: "jam" },
     
+    // BAB 2: MENIT
     { k: "何分", r: "なんぷん", a: "Berapa menit?", grp: "menit" },
     { k: "一分", r: "いっぷん", a: "1 Menit", grp: "menit", alert: "Berubah bunyi (pun)!" },
     { k: "二分", r: "にふん", a: "2 Menit", grp: "menit" }, 
@@ -347,6 +405,7 @@ const DatabaseMateri = {
     { k: "十時 半", r: "じゅうじ はん", a: "Jam 10:30", grp: "menit" }, 
     { k: "十二時 半", r: "じゅうにじ はん", a: "Jam 12:30", grp: "menit" },
     
+    // BAB 3: DETIK
     { k: "何秒", r: "なんびょう", a: "Berapa detik?", grp: "detik" }, 
     { k: "一秒", r: "いちびょう", a: "1 Detik", grp: "detik" },
     { k: "二秒", r: "にびょう", a: "2 Detik", grp: "detik" }, 
@@ -360,12 +419,42 @@ const DatabaseMateri = {
     { k: "十秒", r: "じゅうびょう", a: "10 Detik", grp: "detik" }, 
     { k: "十一秒", r: "じゅういちびょう", a: "11 Detik", grp: "detik" },
     
+    // BAB 4: KOMBINASI
     { k: "十二時 三十二分 七秒", r: "じゅうにじ さんじゅうにふん ななびょう", a: "Jam 12 lewat 32 menit 7 detik", grp: "komb", note: "Pola: Jam + Menit + Detik" },
     { k: "午後 四時 十五分 三十秒", r: "ごご よじ じゅうごふん さんじゅうびょう", a: "Jam 04:15:30 PM (Sore)", grp: "komb" },
     { k: "午前 九時 八分 一秒", r: "ごぜん くじ はっぷん いちびょう", a: "Jam 09:08:01 AM (Pagi)", grp: "komb" },
     { k: "午後 八時 四十五分", r: "ごご はちじ よんじゅうごふん", a: "Jam 08:45 PM (Malam)", grp: "komb" },
     { k: "午前 七時 二十分", r: "ごぜん しちじ にじゅっぷん", a: "Jam 07:20 AM (Pagi)", grp: "komb" },
-    { k: "十一時 五十九分 五十九秒", r: "じゅういちじ ごじゅうきゅうふん ごじゅうきゅうびょう", a: "Jam 11:59:59", grp: "komb", alert: "Ayo eja pelan-pelan!" }
+    { k: "十一時 五十九分 五十九秒", r: "じゅういちじ ごじゅうきゅうふん ごじゅうきゅうびょう", a: "Jam 11:59:59", grp: "komb", alert: "Ayo eja pelan-pelan!" },
+    { k: "午前 一時 五分", r: "ごぜん いちじ ごふん", a: "Jam 01:05 AM (Pagi)", grp: "komb" },
+    { k: "午後 二時 十分", r: "ごご にじ じゅっぷん", a: "Jam 02:10 PM (Siang)", grp: "komb" },
+    { k: "三時 半", r: "さんじ はん", a: "Jam 03:30", grp: "komb" },
+    { k: "四時 四十四分 四十四秒", r: "よじ よんじゅうよんぷん よんじゅうよんびょう", a: "Jam 04:44:44", grp: "komb", alert: "Awas: Angka 4 dibaca yo/yon!" },
+    { k: "午前 五時 五十五分", r: "ごぜん ごじ ごじゅうごふん", a: "Jam 05:55 AM (Pagi)", grp: "komb" },
+    { k: "午後 六時 一分", r: "ごご ろくじ いっぷん", a: "Jam 06:01 PM (Sore)", grp: "komb", alert: "1 Menit = Ippun" },
+    { k: "七時 七分 七秒", r: "しちじ ななふん ななびょう", a: "Jam 07:07:07", grp: "komb" },
+    { k: "八時 二十分 十五秒", r: "はちじ にじゅっぷん じゅうごびょう", a: "Jam 08:20:15", grp: "komb" },
+    { k: "午前 九時 三十分", r: "ごぜん くじ さんじゅっぷん", a: "Jam 09:30 AM (Pagi)", grp: "komb", alert: "9 = ku-ji!" },
+    { k: "十時 十分 十秒", r: "じゅうじ じゅっぷん じゅうびょう", a: "Jam 10:10:10", grp: "komb" },
+    { k: "午後 十一時 十一分", r: "ごご じゅういちじ じゅういっぷん", a: "Jam 11:11 PM (Malam)", grp: "komb" },
+    { k: "午前 六時 半", r: "ごぜん ろくじ はん", a: "Jam 06:30 AM (Pagi)", grp: "komb" },
+    { k: "午後 七時 四十五分", r: "ごご しちじ よんじゅうごふん", a: "Jam 07:45 PM (Malam)", grp: "komb" },
+    { k: "八時 五十分", r: "はちじ ごじゅっぷん", a: "Jam 08:50", grp: "komb" },
+    { k: "九時 五分 二秒", r: "くじ ごふん にびょう", a: "Jam 09:05:02", grp: "komb" },
+    { k: "十時 二十五分", r: "じゅうじ にじゅうごふん", a: "Jam 10:25", grp: "komb" },
+    { k: "午後 三時 十五分", r: "ごご さんじ じゅうごふん", a: "Jam 03:15 PM (Sore)", grp: "komb" },
+    { k: "午前 四時 二十分", r: "ごぜん よじ にじゅっぷん", a: "Jam 04:20 AM (Pagi)", grp: "komb" },
+    { k: "五時 三十五分", r: "ごじ さんじゅうごふん", a: "Jam 05:35", grp: "komb" },
+    { k: "午後 九時 四十分", r: "ごご くじ よんじゅっぷん", a: "Jam 09:40 PM (Malam)", grp: "komb" },
+    { k: "十一時 五分", r: "じゅういちじ ごふん", a: "Jam 11:05", grp: "komb" },
+    { k: "午後 十時 半", r: "ごご じゅうじ はん", a: "Jam 10:30 PM (Malam)", grp: "komb" },
+    { k: "午前 八時 四分", r: "ごぜん はちじ よんぷん", a: "Jam 08:04 AM (Pagi)", grp: "komb" },
+    { k: "六時 三分", r: "ろくじ さんぷん", a: "Jam 06:03", grp: "komb", alert: "3 Menit = San-pun" },
+    { k: "七時 六分", r: "しちじ ろっぷん", a: "Jam 07:06", grp: "komb", alert: "6 Menit = Rop-pun" },
+    { k: "午後 一時 二分", r: "ごご いちじ にふん", a: "Jam 01:02 PM (Siang)", grp: "komb" },
+    { k: "午前 二時 九分", r: "ごぜん にじ きゅうふん", a: "Jam 02:09 AM (Pagi)", grp: "komb" },
+    { k: "四時 零分", r: "よじ ぜろふん", a: "Jam 04:00 Pas", grp: "komb" },
+    { k: "十二時 一分", r: "じゅうにじ いっぷん", a: "Jam 12:01", grp: "komb" }
   ]
 };
 
@@ -464,26 +553,122 @@ const QuizIsian = {
 };
 
 // ==========================================
-// ENGINE MODUL
+// BANK SOAL GENERATOR
+// ==========================================
+const BankSoalSesi3 = []; // Ratusan (100 - 999)
+const BankSoalSesi4 = []; // Ribuan (1000 - 9999)
+const BankSoalMenit = []; // 1 - 59
+const BankSoalDetik = []; // 1 - 59
+
+const ModulGenerator = {
+  init: function() {
+    for (let i = 100; i <= 999; i++) BankSoalSesi3.push(this.getAngka(i));
+    for (let i = 1000; i <= 9999; i++) BankSoalSesi4.push(this.getAngka(i));
+    for (let i = 1; i <= 59; i++) BankSoalMenit.push(this.getMenit(i));
+    for (let i = 1; i <= 59; i++) BankSoalDetik.push(this.getDetik(i));
+  },
+
+  getAngka: function(num) {
+    const kJ = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+    const hJ = ["", "いち", "に", "さん", "よん", "ご", "ろく", "なな", "はち", "きゅう"];
+    
+    let ribuan = Math.floor(num / 1000);
+    let ratusan = Math.floor((num % 1000) / 100);
+    let puluhan = Math.floor((num % 100) / 10);
+    let satuan = num % 10;
+    
+    let k = "", r = "";
+    if (ribuan > 0) {
+        if (ribuan === 3) { k += "三千"; r += "さんぜん"; }
+        else if (ribuan === 8) { k += "八千"; r += "はっせん"; }
+        else if (ribuan === 1) { k += "千"; r += "せん"; }
+        else { k += kJ[ribuan] + "千"; r += hJ[ribuan] + "せん"; }
+    }
+    if (ratusan > 0) {
+        if (ratusan === 3) { k += "三百"; r += "さんびゃく"; }
+        else if (ratusan === 6) { k += "六百"; r += "ろっぴゃく"; }
+        else if (ratusan === 8) { k += "八百"; r += "はっぴゃく"; }
+        else if (ratusan === 1) { k += "百"; r += "ひゃく"; }
+        else { k += kJ[ratusan] + "百"; r += hJ[ratusan] + "ひゃく"; }
+    }
+    if (puluhan > 0) {
+        if (puluhan === 1) { k += "十"; r += "じゅう"; }
+        else { k += kJ[puluhan] + "十"; r += hJ[puluhan] + "じゅう"; }
+    }
+    if (satuan > 0) { k += kJ[satuan]; r += hJ[satuan]; }
+    return { k: k, r: r, a: num.toString() };
+  },
+
+  getMenit: function(i) {
+    const kJ = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+    const hJ = ["", "いち", "に", "さん", "よん", "ご", "ろく", "なな", "はち", "きゅう"];
+    const sMenitK = ["", "一分", "二分", "三分", "四分", "五分", "六分", "七分", "八分", "九分"];
+    const sMenitR = ["", "いっぷん", "にふん", "さんぷん", "よんぷん", "ごふん", "ろっぷん", "ななふん", "はっぷん", "きゅうふん"];
+
+    let puluhan = Math.floor(i / 10);
+    let satuan = i % 10;
+    let k = "", r = "";
+
+    if (puluhan === 0) { k = sMenitK[satuan]; r = sMenitR[satuan]; } 
+    else {
+        let k_pul = (puluhan === 1 ? "十" : kJ[puluhan] + "十");
+        let r_pul = (puluhan === 1 ? "じゅっぷん" : hJ[puluhan] + "じゅっぷん");
+
+        if (satuan === 0) { k = k_pul + "分"; r = r_pul; } 
+        else {
+            let r_pul_awal = (puluhan === 1 ? "じゅう" : hJ[puluhan] + "じゅう");
+            k = k_pul + sMenitK[satuan]; r = r_pul_awal + sMenitR[satuan];
+        }
+    }
+    return { k: k, r: r, a: `${i} Menit`, grp: 'menit' };
+  },
+
+  getDetik: function(i) {
+    const kJ = ["", "一", "二", "三", "四", "五", "六", "七", "八", "九"];
+    const hJ = ["", "いち", "に", "さん", "よん", "ご", "ろく", "なな", "はち", "きゅう"];
+
+    let puluhan = Math.floor(i / 10);
+    let satuan = i % 10;
+    let k = "", r = "";
+
+    if (puluhan === 0) { k = kJ[satuan] + "秒"; r = hJ[satuan] + "びょう"; } 
+    else {
+        let k_pul = (puluhan === 1 ? "十" : kJ[puluhan] + "十");
+        let r_pul = (puluhan === 1 ? "じゅう" : hJ[puluhan] + "じゅう");
+
+        if (satuan === 0) { k = k_pul + "秒"; r = r_pul + "びょう"; } 
+        else { k = k_pul + kJ[satuan] + "秒"; r = r_pul + hJ[satuan] + "びょう"; }
+    }
+    return { k: k, r: r, a: `${i} Detik`, grp: 'detik' };
+  }
+};
+
+
+// ==========================================
+// ENGINE MODUL UTAMA
 // ==========================================
 const Modul = {
-  activeMode: 'angka', activeTab: 'hafalan', activeSesi: 1, activeSesiWaktu: 0,
+  activeMode: 'angka', activeTab: 'hafalan', viewMode: 'flashcard', 
+  activeSesi: 1, activeSesiWaktu: 0,
   cardIdx: 0, idxPG: 0, scorePG: 0, idxIsian: 0, scoreIsian: 0,
   activeArray: [], activePGData: [], activeIsianData: [],
-  bookPage: 0, touchstartX: 0, touchendX: 0,
 
   init: function() { this.switchMode('angka'); },
 
-  triggerAnimation: function(elementId, animClass) {
+    triggerAnimation: function(elementId, animClass) {
     const el = document.getElementById(elementId);
     if(!el) return;
-    el.classList.remove('slide-in-right', 'slide-out-left', 'slide-in-left', 'slide-out-right', 'pop-in', 'fade-in-up');
+    
+    // Tambahkan 'fade-out-down' di dalam daftar remove ini!
+    el.classList.remove('slide-in-right', 'slide-out-left', 'slide-in-left', 'slide-out-right', 'pop-in', 'fade-in-up', 'fade-out-down');
+    
     void el.offsetWidth;
     el.classList.add(animClass);
   },
 
   switchMode: function(mode) {
     this.activeMode = mode;
+    this.cardIdx = 0; // Reset index
     document.getElementById('btn-mode-angka').classList.toggle('active', mode === 'angka');
     document.getElementById('btn-mode-waktu').classList.toggle('active', mode === 'waktu');
     
@@ -500,6 +685,28 @@ const Modul = {
     this.switchTab('hafalan');
   },
 
+    toggleView: function() {
+    const btn = document.getElementById('btn-toggle-view');
+    if(btn) btn.classList.add('spin-anim'); // Mulai animasi putar ikon
+    
+    // Tarik konten ke bawah/hilang sebelum diganti
+    this.triggerAnimation('sec-hafalan', 'fade-out-down');
+
+    setTimeout(() => {
+        this.viewMode = (this.viewMode === 'flashcard') ? 'tabel' : 'flashcard';
+        this.cardIdx = 0;
+        if(btn) {
+            btn.innerHTML = (this.viewMode === 'flashcard') ? '📋' : '🎴';
+            btn.classList.remove('spin-anim'); // Ikon selesai berputar
+        }
+        
+        if (this.activeTab === 'hafalan') {
+            this.renderHafalan(false); // Render HTML baru tanpa slide
+            this.triggerAnimation('sec-hafalan', 'fade-in-up'); // Munculkan ke atas
+        }
+    }, 250);
+  },
+
   switchTab: function(tab) {
     this.activeTab = tab;
     ['hafalan', 'pg', 'isian'].forEach(t => {
@@ -509,14 +716,16 @@ const Modul = {
     
     document.getElementById('btn-tab-'+tab).classList.add('active');
     
+    // Tampilkan tombol toggle mini di header hanya pada tab hafalan
+    const toggleBtn = document.getElementById('btn-toggle-view');
+    if(toggleBtn) toggleBtn.style.visibility = (tab === 'hafalan') ? 'visible' : 'hidden';
+    
     if (tab === 'hafalan') { 
       document.getElementById('sec-hafalan').classList.remove('hidden');
       this.triggerAnimation('sec-hafalan', 'fade-in-up');
-      if(this.activeMode === 'angka') {
-          this.switchSesi(this.activeSesi);
-      } else {
-          this.switchSesiWaktu(this.activeSesiWaktu);
-      }
+      
+      if(this.activeMode === 'angka') this.switchSesi(this.activeSesi);
+      else this.switchSesiWaktu(this.activeSesiWaktu);
     } 
     else if (tab === 'pg') { 
       document.getElementById('sec-pg').classList.remove('hidden');
@@ -537,19 +746,12 @@ const Modul = {
     [1,2,3,4,5].forEach(i => document.getElementById('btn-sub-'+i).classList.remove('active'));
     document.getElementById('btn-sub-'+s).classList.add('active');
     
-    if (this.activeTab === 'hafalan') {
-        this.activeArray = DatabaseMateri.angka[s];
-        this.cardIdx = 0;
-        this.renderFC(false);
-    } else if (this.activeTab === 'pg') {
-        this.activePGData = this.generatePG();
-        this.idxPG = 0; this.scorePG = 0;
-        this.renderPG(false);
-    } else if (this.activeTab === 'isian') {
-        this.activeIsianData = this.generateIsian();
-        this.idxIsian = 0; this.scoreIsian = 0;
-        this.renderIsian(false);
-    }
+    this.activeArray = DatabaseMateri.angka[s];
+    this.cardIdx = 0;
+
+    if (this.activeTab === 'hafalan') this.renderHafalan(false);
+    else if (this.activeTab === 'pg') { this.activePGData = this.generatePG(); this.idxPG = 0; this.scorePG = 0; this.renderPG(false); } 
+    else if (this.activeTab === 'isian') { this.activeIsianData = this.generateIsian(); this.idxIsian = 0; this.scoreIsian = 0; this.renderIsian(false); }
   },
 
   switchSesiWaktu: function(idx) {
@@ -557,63 +759,55 @@ const Modul = {
     [1,2,3,4].forEach(i => document.getElementById('btn-sub-w'+i).classList.remove('active'));
     document.getElementById('btn-sub-w'+(idx+1)).classList.add('active');
 
-    if (this.activeTab === 'hafalan') {
-        this.bookPage = idx;
-        this.renderBook(false);
-    } else if (this.activeTab === 'pg') {
-        this.activePGData = this.generatePG();
-        this.idxPG = 0; this.scorePG = 0;
-        this.renderPG(false);
-    } else if (this.activeTab === 'isian') {
-        this.activeIsianData = this.generateIsian();
-        this.idxIsian = 0; this.scoreIsian = 0;
-        this.renderIsian(false);
-    }
+    // Filter array berdasarkan grup waktu untuk digunakan bersama oleh FC dan Tabel
+    let grps = BookPages[idx].groups;
+    this.activeArray = DatabaseMateri.waktu.filter(x => grps.includes(x.grp));
+    this.cardIdx = 0;
+
+    if (this.activeTab === 'hafalan') this.renderHafalan(false);
+    else if (this.activeTab === 'pg') { this.activePGData = this.generatePG(); this.idxPG = 0; this.scorePG = 0; this.renderPG(false); } 
+    else if (this.activeTab === 'isian') { this.activeIsianData = this.generateIsian(); this.idxIsian = 0; this.scoreIsian = 0; this.renderIsian(false); }
+  },
+
+  renderHafalan: function(useSlideAnim = true) {
+    if (this.viewMode === 'flashcard') this.renderFC(useSlideAnim);
+    else this.renderBook(useSlideAnim ? 'right' : 'none');
   },
 
   generatePG: function() {
-    let fullPool;
-    let part1, part2;
+    let baseMateri, part1, part2;
     let generated = [];
     let manualPG = QuizPG[this.activeMode] || [];
     
     if (this.activeMode === 'angka') {
-        let baseMateri = DatabaseMateri.angka[this.activeSesi];
-        if (this.activeSesi === 2) {
-            let shuffledBank = [...BankSoalSesi2].sort(() => Math.random() - 0.5);
-            part1 = shuffledBank.slice(0, 10); 
-            part2 = shuffledBank.slice(10, 20);
-            fullPool = BankSoalSesi2; 
-        } else if (this.activeSesi > 2) {
-            let shuffledBase = [...baseMateri].sort(() => Math.random() - 0.5);
-            part1 = shuffledBase.slice(0, 10).sort(() => Math.random() - 0.5);
-            part2 = shuffledBase.slice(0, 10).sort(() => Math.random() - 0.5);
-            fullPool = baseMateri;
-        } else {
-            part1 = [...baseMateri].sort(() => Math.random() - 0.5);
-            part2 = [...baseMateri].sort(() => Math.random() - 0.5);
-            fullPool = baseMateri;
-        }
+        if (this.activeSesi === 2) baseMateri = BankSoalSesi2;
+        else if (this.activeSesi === 3) baseMateri = BankSoalSesi3; 
+        else if (this.activeSesi === 4) baseMateri = BankSoalSesi4; 
+        else baseMateri = DatabaseMateri.angka[this.activeSesi];
     } else {
         let activeGroup = BookPages[this.activeSesiWaktu].groups[0];
-        let baseMateri = DatabaseMateri.waktu.filter(item => item.grp === activeGroup);
-        part1 = [...baseMateri].sort(() => Math.random() - 0.5);
-        part2 = [...baseMateri].sort(() => Math.random() - 0.5);
-        fullPool = baseMateri;
+        if (activeGroup === 'menit') baseMateri = BankSoalMenit; 
+        else if (activeGroup === 'detik') baseMateri = BankSoalDetik; 
+        else baseMateri = DatabaseMateri.waktu.filter(item => item.grp === activeGroup);
+    }
+    
+    let fullPool = baseMateri;
+    let shuffled = [...baseMateri].sort(() => Math.random() - 0.5);
+    
+    if (shuffled.length >= 20) { part1 = shuffled.slice(0, 10); part2 = shuffled.slice(10, 20); } 
+    else if (shuffled.length >= 10) { part1 = [...shuffled].slice(0, 10); part2 = [...shuffled].sort(() => Math.random() - 0.5).slice(0, 10); } 
+    else {
+        const fill10 = () => { let res = []; while(res.length < 10) { res.push(...[...shuffled].slice(0, 10 - res.length)); } return res; };
+        part1 = fill10(); part2 = fill10();
     }
 
     part1.forEach(item => {
         let manualQ = manualPG.find(q => q.q.includes(`<b>${item.k}</b>`) || q.ans === item.r.replace(/[\s]/g, ''));
-        
-        if(manualQ) {
-            if (!generated.some(g => g.q === manualQ.q)) {
-                generated.push({ q: manualQ.q, opts: [...manualQ.opts].sort(() => Math.random() - 0.5), ans: manualQ.ans });
-            }
-        } else {
+        if(manualQ) { generated.push({ q: manualQ.q, opts: [...manualQ.opts].sort(() => Math.random() - 0.5), ans: manualQ.ans }); } 
+        else {
             let opts = [item.r.replace(/[\s]/g, '')];
             while(opts.length < Math.min(4, fullPool.length)) {
-                let rItem = fullPool[Math.floor(Math.random() * fullPool.length)];
-                let rText = rItem.r.replace(/[\s]/g, '');
+                let rText = fullPool[Math.floor(Math.random() * fullPool.length)].r.replace(/[\s]/g, '');
                 if(!opts.includes(rText)) opts.push(rText);
             }
             generated.push({ q: `Apa cara baca (Hiragana) dari <b>${item.k}</b>?`, opts: opts.sort(() => Math.random() - 0.5), ans: item.r.replace(/[\s]/g, '') });
@@ -623,8 +817,7 @@ const Modul = {
     part2.forEach(item => {
         let opts = [item.k.replace(/[\s]/g, '')];
         while(opts.length < Math.min(4, fullPool.length)) {
-            let rItem = fullPool[Math.floor(Math.random() * fullPool.length)];
-            let kText = rItem.k.replace(/[\s]/g, '');
+            let kText = fullPool[Math.floor(Math.random() * fullPool.length)].k.replace(/[\s]/g, '');
             if(!opts.includes(kText)) opts.push(kText);
         }
         generated.push({ q: `Apa bentuk kanji/angka dari <b>${item.r}</b>?`, opts: opts.sort(() => Math.random() - 0.5), ans: item.k.replace(/[\s]/g, '') });
@@ -634,38 +827,35 @@ const Modul = {
   },
 
   generateIsian: function() {
-    let part1, part2;
+    let baseMateri, part1, part2;
     let generated = [];
     let manualIsian = QuizIsian[this.activeMode] || [];
 
     if (this.activeMode === 'angka') {
-        let baseMateri = DatabaseMateri.angka[this.activeSesi];
-        if (this.activeSesi === 2) {
-            let shuffledBank = [...BankSoalSesi2].sort(() => Math.random() - 0.5);
-            part1 = shuffledBank.slice(0, 10);
-            part2 = shuffledBank.slice(10, 20);
-        } else if (this.activeSesi > 2) {
-            let shuffledBase = [...baseMateri].sort(() => Math.random() - 0.5);
-            part1 = shuffledBase.slice(0, 10).sort(() => Math.random() - 0.5);
-            part2 = shuffledBase.slice(0, 10).sort(() => Math.random() - 0.5);
-        } else {
-            part1 = [...baseMateri].sort(() => Math.random() - 0.5);
-            part2 = [...baseMateri].sort(() => Math.random() - 0.5);
-        }
+        if (this.activeSesi === 2) baseMateri = BankSoalSesi2;
+        else if (this.activeSesi === 3) baseMateri = BankSoalSesi3;
+        else if (this.activeSesi === 4) baseMateri = BankSoalSesi4;
+        else baseMateri = DatabaseMateri.angka[this.activeSesi];
     } else {
         let activeGroup = BookPages[this.activeSesiWaktu].groups[0];
-        let baseMateri = DatabaseMateri.waktu.filter(item => item.grp === activeGroup);
-        part1 = [...baseMateri].sort(() => Math.random() - 0.5);
-        part2 = [...baseMateri].sort(() => Math.random() - 0.5);
+        if (activeGroup === 'menit') baseMateri = BankSoalMenit;
+        else if (activeGroup === 'detik') baseMateri = BankSoalDetik;
+        else baseMateri = DatabaseMateri.waktu.filter(item => item.grp === activeGroup);
+    }
+
+    let shuffled = [...baseMateri].sort(() => Math.random() - 0.5);
+    
+    if (shuffled.length >= 20) { part1 = shuffled.slice(0, 10); part2 = shuffled.slice(10, 20); } 
+    else if (shuffled.length >= 10) { part1 = [...shuffled].slice(0, 10); part2 = [...shuffled].sort(() => Math.random() - 0.5).slice(0, 10); } 
+    else {
+        const fill10 = () => { let res = []; while(res.length < 10) { res.push(...[...shuffled].slice(0, 10 - res.length)); } return res; };
+        part1 = fill10(); part2 = fill10();
     }
 
     part1.forEach(item => {
         let manualQ = manualIsian.find(q => q.q.includes(`<b>${item.k}</b>`));
-        if (manualQ) {
-            if (!generated.some(g => g.q === manualQ.q)) {
-                generated.push({ q: manualQ.q, ans: manualQ.ans });
-            }
-        } else {
+        if (manualQ) { generated.push({ q: manualQ.q, ans: manualQ.ans }); } 
+        else {
             let ansArray = [item.r.replace(/[\s]/g, '')];
             if (item.alt) ansArray.push(item.alt.replace(/[\s]/g, ''));
             generated.push({ q: `Ketik hiragana dari:<br><span style="font-size:35px; color:var(--text-main);">${item.k}</span>`, ans: ansArray});
@@ -674,32 +864,43 @@ const Modul = {
 
     part2.forEach(item => {
         if (this.activeMode === 'angka') {
-            let ansArray = [];
-            let cleanA = item.a.toLowerCase();
-            
-            ansArray.push(cleanA.replace(/[\s]/g, ''));
-            ansArray.push(cleanA.replace(/[\s.]/g, '')); 
-            
-            if (cleanA.includes("nol")) { ansArray.push("0", "nol"); }
-            if (cleanA.includes("juta")) { 
-                let num = cleanA.replace(/[^\d]/g, '');
-                if(num) ansArray.push(num + "000000"); 
-            }
-            if (cleanA.includes("miliar")) { 
-                let num = cleanA.replace(/[^\d]/g, '');
-                if(num) ansArray.push(num + "000000000"); 
-            }
-            if (cleanA.includes("triliun")) { 
-                let num = cleanA.replace(/[^\d]/g, '');
-                if(num) ansArray.push(num + "000000000000"); 
+            let ansArray = []; let cleanA = item.a.toLowerCase();
+            ansArray.push(cleanA.replace(/[\s]/g, '')); ansArray.push(cleanA.replace(/[\s.]/g, '')); 
+            if (cleanA.includes("nol")) ansArray.push("0", "nol");
+            if (cleanA.includes("juta")) { let num = cleanA.replace(/[^\d]/g, ''); if(num) ansArray.push(num + "000000"); }
+            if (cleanA.includes("miliar")) { let num = cleanA.replace(/[^\d]/g, ''); if(num) ansArray.push(num + "000000000"); }
+            if (cleanA.includes("triliun")) { let num = cleanA.replace(/[^\d]/g, ''); if(num) ansArray.push(num + "000000000000"); }
+            generated.push({ q: `Ketik angka dari:<br><span style="font-size:35px; color:var(--warning);">${item.k}</span>`, ans: ansArray });
+        } else {
+            let ansArray = []; let cleanA = item.a.toLowerCase();
+            let cleanNoBracket = cleanA.replace(/\([^)]*\)/g, '').replace(/[?]/g, '').trim();
+            ansArray.push(cleanNoBracket.replace(/[\s-]/g, '')); 
+            if (cleanNoBracket.includes("jam")) ansArray.push(cleanNoBracket.replace(/jam/g, "pukul").replace(/[\s-]/g, ''));
+            let noDot = cleanNoBracket.replace(/\./g, '');
+            ansArray.push(noDot.replace(/[\s-]/g, ''));
+            if (noDot.includes("jam")) ansArray.push(noDot.replace(/jam/g, "pukul").replace(/[\s-]/g, ''));
+            let fullText = cleanA.replace(/[?()]/g, '').trim();
+            ansArray.push(fullText.replace(/[\s-]/g, ''));
+            if (fullText.includes("jam")) ansArray.push(fullText.replace(/jam/g, "pukul").replace(/[\s-]/g, ''));
+
+            if (item.grp === 'komb') {
+                let nums = item.a.match(/\d+/g);
+                if (nums) {
+                    let h = nums[0], m = nums[1] || "00", s = nums[2];
+                    ansArray.push(`${h}:${m}`, `${h}.${m}`, `${h.padStart(2,'0')}:${m.padStart(2,'0')}`, `${h.padStart(2,'0')}.${m.padStart(2,'0')}`);
+                    if(s) {
+                        ansArray.push(`${h}:${m}:${s}`, `${h}.${m}.${s}`, `${h.padStart(2,'0')}:${m.padStart(2,'0')}:${s.padStart(2,'0')}`, `${h.padStart(2,'0')}.${m.padStart(2,'0')}.${s.padStart(2,'0')}`);
+                        ansArray.push(`jam${h}lewat${m}menit${s}detik`, `jam${h}${m}menit${s}detik`, `pukul${h}lewat${m}menit${s}detik`, `pukul${h}${m}menit${s}detik`);
+                    } else {
+                        ansArray.push(`jam${h}lewat${m}menit`, `jam${h}${m}menit`, `pukul${h}lewat${m}menit`, `pukul${h}${m}menit`);
+                    }
+                }
             }
 
-            generated.push({ 
-                q: `Ketik angka dari:<br><span style="font-size:35px; color:var(--warning);">${item.k}</span>`, 
-                ans: ansArray 
-            });
-        } else {
-            generated.push({ q: `Ketik kanji/angka dari:<br><span style="font-size:25px; color:var(--warning);">${item.r}</span>`, ans: [item.k.replace(/[\s]/g, '')]});
+            if(item.k === "半") ansArray.push("setengah", "30menit", "tigapuluhmenit");
+            if(item.a === "A.M (Pagi)") ansArray.push("pagi", "am", "ampagi");
+            if(item.a === "P.M (Sore)") ansArray.push("sore", "pm", "malam", "pmsore");
+            generated.push({ q: `Apa arti dari:<br><span style="font-size:35px; color:var(--warning);">${item.r}</span>`, ans: ansArray });
         }
     });
 
@@ -735,10 +936,21 @@ const Modul = {
     }
 
     const item = this.activeArray[this.cardIdx];
+    let pageTitle = (this.activeMode === 'angka') ? `SESI ${this.activeSesi}` : `BAB ${this.activeSesiWaktu + 1}`;
+    
+    // Fitur Gelembung Narasi khusus Mode Waktu
+    let bubbleHTML = '';
+    if (this.activeMode === 'waktu' && BookPages[this.activeSesiWaktu].narasi) {
+        bubbleHTML = `
+            <button class="btn-bubble" onclick="document.getElementById('fc-popup-narasi').classList.toggle('show-popup')">💡</button>
+            <div id="fc-popup-narasi" class="bubble-popup">${BookPages[this.activeSesiWaktu].narasi}</div>
+        `;
+    }
     
     sec.innerHTML = `
-      <div class="progress-text" style="color:var(--primary);">HAFALAN (SESI ${this.activeSesi}): ${this.cardIdx+1} / ${this.activeArray.length}</div>
+      <div class="progress-text" style="color:var(--primary);">HAFALAN (${pageTitle}): ${this.cardIdx+1} / ${this.activeArray.length}</div>
       <div id="fc-content" class="content-hafalan">
+        ${bubbleHTML}
         <div class="hira-text hira-hide" id="fc-hira">${item.r}</div>
         <div class="kanji-text pulse-hint" id="fc-kanji" onclick="Modul.revealCard()">${item.k}</div>
         <div id="fc-hint" style="font-size:12px; color:var(--text-sub); margin-top:-10px; margin-bottom:10px;">(Sentuh Kanji untuk membuka)</div>
@@ -760,6 +972,7 @@ const Modul = {
     document.getElementById('fc-hint').style.display = 'none';
     if(document.getElementById('fc-note')) document.getElementById('fc-note').classList.replace('blur-hide', 'blur-show');
     if(document.getElementById('fc-alert')) document.getElementById('fc-alert').classList.replace('blur-hide', 'blur-show');
+    if(document.getElementById('fc-popup-narasi')) document.getElementById('fc-popup-narasi').classList.remove('show-popup');
   },
 
   nextCard: function() { 
@@ -771,55 +984,65 @@ const Modul = {
     const sec = document.getElementById('sec-hafalan');
     sec.style.padding = "15px 15px 5px 15px"; 
     
-    const pageData = BookPages[this.bookPage];
-    let html = `<div class="book-container" id="book-wrapper">`;
+    let title = "", narasi = "";
     
+    if (this.activeMode === 'angka') {
+        title = `Bab Angka - Sesi ${this.activeSesi}`;
+        narasi = ""; // Dikosongkan sesuai permintaan
+    } else {
+        title = BookPages[this.activeSesiWaktu].title;
+        narasi = BookPages[this.activeSesiWaktu].narasi;
+    }
+
+    let html = `<div class="book-container" id="book-wrapper">`;
     html += `<div class="book-page" id="book-page">`;
-    html += `<div class="book-title">${pageData.title}</div>`;
-    html += `<div class="book-narrative">${pageData.narasi}</div>`;
+    html += `<div class="book-title">${title}</div>`;
+    
+    if (narasi) {
+        html += `<div class="book-narrative">${narasi}</div>`;
+    }
     
     html += `<button id="btn-sensor" class="btn-sensor" onclick="Modul.toggleFurigana()">👁️ Tampilkan Semua Furigana</button>
              <div id="waktu-table-container">`;
 
-    pageData.groups.forEach(grp => {
-        html += `<table class="tabel-waktu"><tr><th>Kanji / Waktu</th><th>Arti</th></tr>`;
-        let items = DatabaseMateri.waktu.filter(x => x.grp === grp);
-        items.forEach(item => {
-            
-            let rubyHTML = '';
-            let k_arr = item.k.split(' ');
-            let r_arr = item.r.split(' ');
-            if(k_arr.length > 1 && k_arr.length === r_arr.length) {
-                k_arr.forEach((kanji, i) => {
-                    rubyHTML += `<ruby style="margin-right:4px;">${kanji}<rt class="furi-anim">${r_arr[i]}</rt></ruby>`;
-                });
-            } else {
-                rubyHTML = `<ruby>${item.k}<rt class="furi-anim">${item.r}</rt></ruby>`;
-            }
+    html += `<table class="tabel-waktu"><tr><th>Kanji / Teks</th><th>Arti</th></tr>`;
+    
+    this.activeArray.forEach(item => {
+        let rubyHTML = '';
+        let k_arr = item.k.split(' ');
+        let r_arr = item.r.split(' ');
+        
+        // Logika cadangan akan aman membungkus array angka yang tidak berspasi
+        if(k_arr.length > 1 && k_arr.length === r_arr.length) {
+            k_arr.forEach((kanji, i) => { rubyHTML += `<ruby style="margin-right:4px;">${kanji}<rt class="furi-anim">${r_arr[i]}</rt></ruby>`; });
+        } else {
+            rubyHTML = `<ruby>${item.k}<rt class="furi-anim">${item.r}</rt></ruby>`;
+        }
 
-            html += `<tr>
-                <td style="max-width: 50%;">
-                    <span class="ruby-item" onclick="this.classList.toggle('revealed')">
-                        ${rubyHTML}
-                    </span>
-                </td>
-                <td style="max-width: 50%;">
-                    <span class="t-arti">${item.a}</span>
-                    ${item.note ? `<div style="color:var(--success); font-size:11px; margin-top:3px;">💡 ${item.note}</div>` : ''}
-                    ${item.alert ? `<div style="color:var(--danger); font-size:11px; margin-top:3px;">⚠️ ${item.alert}</div>` : ''}
-                </td>
-            </tr>`;
-        });
-        html += `</table>`;
+        html += `<tr>
+            <td style="max-width: 50%;">
+                <span class="ruby-item" onclick="this.classList.toggle('revealed')">${rubyHTML}</span>
+            </td>
+            <td style="max-width: 50%;">
+                <span class="t-arti">${item.a}</span>
+                ${item.note ? `<div style="color:var(--success); font-size:11px; margin-top:3px;">💡 ${item.note}</div>` : ''}
+                ${item.alert ? `<div style="color:var(--danger); font-size:11px; margin-top:3px;">⚠️ ${item.alert}</div>` : ''}
+            </td>
+        </tr>`;
     });
-    html += `</div></div>`;
+    html += `</table></div></div>`;
 
-    let prevDis = (this.bookPage === 0) ? 'disabled' : '';
-    let nextDis = (this.bookPage === BookPages.length - 1) ? 'disabled' : '';
+    // Navigasi Bawah
+    let maxPage = (this.activeMode === 'angka') ? 5 : BookPages.length;
+    let currPage = (this.activeMode === 'angka') ? this.activeSesi : (this.activeSesiWaktu + 1);
+    
+    let prevDis = (currPage === 1) ? 'disabled' : '';
+    let nextDis = (currPage === maxPage) ? 'disabled' : '';
+    
     html += `
       <div class="book-nav">
         <button class="book-nav-btn" ${prevDis} onclick="Modul.turnPage(-1)">◀ Prev</button>
-        <span class="book-page-text">Hal ${this.bookPage + 1} dari ${BookPages.length}</span>
+        <span class="book-page-text">Hal ${currPage} dari ${maxPage}</span>
         <button class="book-nav-btn" ${nextDis} onclick="Modul.turnPage(1)">Next ▶</button>
       </div>
     </div>`;
@@ -828,32 +1051,24 @@ const Modul = {
 
     if (dir === 'right') this.triggerAnimation('book-page', 'slide-in-right');
     else if (dir === 'left') this.triggerAnimation('book-page', 'slide-in-left');
-    else this.triggerAnimation('book-wrapper', 'fade-in-up');
-
-    const wrapper = document.getElementById('book-wrapper');
-    wrapper.addEventListener('touchstart', e => { this.touchstartX = e.changedTouches[0].screenX; });
-    wrapper.addEventListener('touchend', e => { 
-        this.touchendX = e.changedTouches[0].screenX; 
-        if (this.touchendX < this.touchstartX - 50) this.turnPage(1);
-        if (this.touchendX > this.touchstartX + 50) this.turnPage(-1);
-    });
+    else if (dir !== 'none') this.triggerAnimation('book-wrapper', 'fade-in-up');
   },
 
   turnPage: function(step) {
-    let targetPage = this.bookPage + step;
-    if (targetPage >= 0 && targetPage < BookPages.length) {
-        let animOut = (step === 1) ? 'slide-out-left' : 'slide-out-right';
-        let dirIn = (step === 1) ? 'right' : 'left';
-        
-        this.triggerAnimation('book-page', animOut);
-        setTimeout(() => {
-            this.activeSesiWaktu = targetPage;
-            this.bookPage = targetPage;
-            
-            [1,2,3,4].forEach(i => document.getElementById('btn-sub-w'+i).classList.remove('active'));
-            document.getElementById('btn-sub-w'+(targetPage+1)).classList.add('active');
+    let maxPage = (this.activeMode === 'angka') ? 5 : BookPages.length;
+    let currPage = (this.activeMode === 'angka') ? this.activeSesi : (this.activeSesiWaktu + 1);
+    let targetPage = currPage + step;
 
-            this.renderBook(dirIn);
+    if (targetPage >= 1 && targetPage <= maxPage) {
+        let animOut = (step === 1) ? 'slide-out-left' : 'slide-out-right';
+        this.triggerAnimation('book-page', animOut);
+        
+        setTimeout(() => {
+            if (this.activeMode === 'angka') {
+                this.switchSesi(targetPage);
+            } else {
+                this.switchSesiWaktu(targetPage - 1);
+            }
         }, 250);
     }
   },
@@ -877,7 +1092,6 @@ const Modul = {
   renderPG: function(useSlideAnim = true) {
     const fb = document.getElementById('pg-feedback'); fb.innerHTML = ""; fb.style.opacity = "0";
     const pool = this.activePGData;
-    const wrapper = document.getElementById('pg-content-wrapper');
     
     if (this.idxPG >= pool.length) {
       document.getElementById('pg-q').innerHTML = `🎉 Kuis Selesai!<br>Skor: ${this.scorePG} / ${pool.length}`;
@@ -902,14 +1116,10 @@ const Modul = {
     const fb = document.getElementById('pg-feedback');
     document.querySelectorAll('.btn-opt').forEach(b => b.disabled = true);
     
-    fb.style.opacity = "1";
-    this.triggerAnimation('pg-feedback', 'pop-in');
+    fb.style.opacity = "1"; this.triggerAnimation('pg-feedback', 'pop-in');
 
-    if(sel === cor) { 
-      btn.classList.add('correct'); fb.innerHTML = "BENAR! ✅"; fb.style.color = "var(--success)"; this.scorePG++; 
-    } else { 
-      btn.classList.add('wrong'); fb.innerHTML = "SALAH! ❌"; fb.style.color = "var(--danger)"; 
-    }
+    if(sel === cor) { btn.classList.add('correct'); fb.innerHTML = "BENAR! ✅"; fb.style.color = "var(--success)"; this.scorePG++; } 
+    else { btn.classList.add('wrong'); fb.innerHTML = "SALAH! ❌"; fb.style.color = "var(--danger)"; }
 
     setTimeout(() => { 
       this.triggerAnimation('pg-content-wrapper', 'slide-out-left');
@@ -942,19 +1152,14 @@ const Modul = {
     document.getElementById('isian-progress').innerText = `${title}: ${this.idxIsian+1} / ${pool.length}`;
     document.getElementById('isian-q').innerHTML = target.q;
     
-    // Sesuaikan teks petunjuk input
     let hintTeks = document.getElementById('isian-hint-teks');
     hintTeks.classList.remove('hidden');
-    if (target.q.includes("Ketik angka")) {
-        hintTeks.innerText = "(Ketik menggunakan angka biasa, misal: 100)";
-        input.type = "tel"; // Menggunakan keyboard angka di HP
-    } else {
-        hintTeks.innerText = "(Gunakan keyboard Jepang untuk Hiragana/Kanji)";
-        input.type = "text";
-    }
+    
+    if (target.q.includes("Ketik angka")) { hintTeks.innerText = "(Ketik menggunakan angka biasa, misal: 100)"; input.type = "tel"; } 
+    else if (target.q.includes("Apa arti dari")) { hintTeks.innerText = "(Ketik terjemahannya, misal: jam 6)"; input.type = "text"; } 
+    else { hintTeks.innerText = "(Gunakan keyboard Jepang untuk Hiragana/Kanji)"; input.type = "text"; }
 
     input.classList.remove('hidden'); input.focus();
-
     if(useSlideAnim) this.triggerAnimation('isian-content-wrapper', 'slide-in-right');
   },
 
@@ -965,18 +1170,13 @@ const Modul = {
     if(!answer) return;
 
     input.disabled = true; document.getElementById('btn-submit-isian').classList.add('hidden');
-    
     const target = this.activeIsianData[this.idxIsian];
     const correctAns = target.ans.map(a => a.toLowerCase().replace(/[\s-]/g, ''));
 
-    fb.style.opacity = "1";
-    this.triggerAnimation('isian-feedback', 'pop-in');
+    fb.style.opacity = "1"; this.triggerAnimation('isian-feedback', 'pop-in');
 
-    if(correctAns.includes(answer)) { 
-      fb.innerHTML = "BENAR! ✅"; fb.style.color = "var(--success)"; this.scoreIsian++; 
-    } else { 
-      fb.innerHTML = `SALAH! ❌<br><span style="font-size:14px; color:var(--text-sub);">Kunci: ${target.ans[0]}</span>`; fb.style.color = "var(--danger)"; 
-    }
+    if(correctAns.includes(answer)) { fb.innerHTML = "BENAR! ✅"; fb.style.color = "var(--success)"; this.scoreIsian++; } 
+    else { fb.innerHTML = `SALAH! ❌<br><span style="font-size:14px; color:var(--text-sub);">Kunci: ${target.ans[0]}</span>`; fb.style.color = "var(--danger)"; }
 
     setTimeout(() => { 
       this.triggerAnimation('isian-content-wrapper', 'slide-out-left');
@@ -985,7 +1185,10 @@ const Modul = {
   }
 };
 
-window.onload = () => Modul.init();
+window.onload = () => {
+    ModulGenerator.init(); 
+    Modul.init();          
+};
 </script>
 </body>
 </html>

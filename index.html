@@ -184,15 +184,50 @@ button, .btn, .tab-btn, ruby, .multi-blank { touch-action: manipulation; }
   max-width: 100%; 
   word-wrap: break-word; 
 }
-ruby { cursor: pointer; user-select: none; transition: color 0.2s; ruby-position: over; position: relative; display: inline-block; }
+/* -- STYLING KANJI & FURIGANA INTERAKTIF -- */
+ruby { cursor: pointer; user-select: none; transition: color 0.3s; ruby-position: over; position: relative; display: inline-block; }
 ruby:hover { color: var(--primary); }
 ruby.pro-locked { cursor: default; pointer-events: none; }
-rt { display: block; font-size: 0.5em; color: var(--warning); opacity: 0; transition: opacity 0.2s ease; position: absolute; bottom: 85%; left: 50%; transform: translateX(-50%); white-space: nowrap; pointer-events: none; }
-ruby.show rt { opacity: 1; }
+
+/* 1. Efek Berkedip/Glow emas saat kanji belum diklik (HANYA DI TAB HAFALAN) */
+#card-main[data-tab="hafalan"] ruby:not(.show):not(.pro-locked) { animation: glowHint 2s infinite; }
+@keyframes glowHint {
+  0%, 100% { color: inherit; text-shadow: none; }
+  50% { color: var(--gold); text-shadow: 0 0 8px rgba(251, 191, 36, 0.6); }
+}
+
+/* 2. Posisi Awal Furigana (Sembunyi, turun ke bawah, dan mengecil) */
+rt { 
+  display: block; font-size: 0.5em; color: var(--warning); 
+  opacity: 0; 
+  /* Gabungan geser tengah (X) dengan posisi turun (Y) dan skala kecil */
+  transform: translateX(-50%) translateY(10px) scale(0.5); 
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Kunci animasi buka-tutup mulus */
+  position: absolute; bottom: 85%; left: 50%; white-space: nowrap; pointer-events: none; 
+}
+
+/* 3. Posisi Akhir Furigana saat Kanji diklik (Naik dan membesar) */
+ruby.show rt { 
+  opacity: 1; 
+  transform: translateX(-50%) translateY(0) scale(1); 
+}
+
+/* 4. Efek Membal sekejap pada huruf Kanji-nya saat diklik */
+ruby.show { 
+  animation: popKanji 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+  color: var(--primary); 
+}
+@keyframes popKanji { 
+  0% { transform: scale(1); } 
+  50% { transform: scale(1.15); } 
+  100% { transform: scale(1); } 
+}
+
+/* Tooltip Arti (Dipertahankan dari kode Anda) */
 ruby.pro-locked:hover { color: inherit; }
 ruby.pro-locked:hover rt { opacity: 0; }
-ruby .arti-hint { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); background-color: rgba(15, 23, 42, 0.95); color: var(--primary); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; z-index: 100; border: 1px solid var(--primary); box-shadow: 0 2px 8px rgba(0,0,0,0.5); }
-ruby.show .arti-hint { opacity: 1; }
+ruby .arti-hint { position: absolute; bottom: -30px; left: 50%; transform: translateX(-50%); background-color: rgba(15, 23, 42, 0.95); color: var(--primary); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: bold; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100; border: 1px solid var(--primary); box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+ruby.show .arti-hint { opacity: 1; transform: translateX(-50%) translateY(5px); } /* Efek turun sedikit pada tooltip */
 .u-line { border-bottom: 3px dashed var(--warning); padding-bottom: 4px; }
 .multi-blank { display: inline-block; min-width: 35px; border-bottom: 3px dashed var(--primary); color: var(--gold); text-align: center; cursor: pointer; padding: 0 5px; margin: 0 5px; transition: 0.2s; }
 .multi-blank:hover { border-color: var(--gold); }
@@ -2022,6 +2057,7 @@ nextDayFromResult: () => {
   },
     loadStep: () => {
     const t = Game.currentTab; const i = Game.currentIndex;
+    document.getElementById('card-main').setAttribute('data-tab', t); // <-- Tambahkan baris ini!
     if (!Game.hasShield) { 
         document.getElementById('card-main').classList.remove('shield-active'); 
     } else { 
