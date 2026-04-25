@@ -192,9 +192,12 @@
   </div>
 
   <div class="sub-nav fade-in-up hidden" id="sub-nav-relatif">
-    <button class="sub-btn active" id="btn-rel-0" onclick="Modul.switchSesi(0)">Sesi 1: Hari & Minggu</button>
-    <button class="sub-btn" id="btn-rel-1" onclick="Modul.switchSesi(1)">Sesi 2: Bulan & Tahun</button>
-    <button class="sub-btn" id="btn-rel-2" onclick="Modul.switchSesi(2)">Sesi 3: Pagi & Malam</button>
+    <button class="sub-btn active" id="btn-rel-0" onclick="Modul.switchSesi(0)">Sesi 1: Hari</button>
+    <button class="sub-btn" id="btn-rel-1" onclick="Modul.switchSesi(1)">Sesi 2: Minggu</button>
+    <button class="sub-btn" id="btn-rel-2" onclick="Modul.switchSesi(2)">Sesi 3: Bulan</button>
+    <button class="sub-btn" id="btn-rel-3" onclick="Modul.switchSesi(3)">Sesi 4: Tahun</button>
+    <button class="sub-btn" id="btn-rel-4" onclick="Modul.switchSesi(4)">Sesi 5: Pagi</button>
+    <button class="sub-btn" id="btn-rel-5" onclick="Modul.switchSesi(5)">Sesi 6: Malam</button>
   </div>
 
   <div id="sec-hafalan" class="content-section fade-in-up"></div>
@@ -319,12 +322,17 @@ const DB_Kalender = [
 ];
 
 const DB_Relatif = [
+  // --- KELOMPOK HARI ---
+  { k: "日", r: "にち", a: "hari", grp: "nichi" },
   { k: "一昨日", r: "おととい", a: "2 hari lalu", ex: "一昨日は雨でした。(Dua hari lalu hujan.)", grp: "nichi" },
   { k: "昨日", r: "きのう", a: "kemarin", ex: "昨日は忙しかったです。(Kemarin sibuk.)", grp: "nichi" },
   { k: "今日", r: "きょう", a: "hari ini", ex: "今日は月曜日です。(Hari ini hari Senin.)", grp: "nichi" },
   { k: "明日", r: "あす", alt: "あした", a: "besok", note: "Biasa dibaca あした (ashita)", ex: "明日は学校へ行きます。(Besok pergi ke sekolah.)", grp: "nichi" },
   { k: "明後日", r: "あさって", a: "2 hari lagi", ex: "明後日は休みです。(Dua hari lagi libur.)", grp: "nichi" },
   { k: "毎日", r: "まいにち", a: "setiap hari", ex: "毎日日本語を勉強します。(Setiap hari belajar bahasa Jepang.)", grp: "nichi" },
+
+  // --- KELOMPOK MINGGU ---
+  { k: "週", r: "しゅう", a: "minggu", grp: "shuu" },
   { k: "先々週", r: "せんせんしゅう", a: "2 minggu lalu", ex: "先々週、映画を見ました。(Dua minggu lalu menonton film.)", grp: "shuu" },
   { k: "先週", r: "せんしゅう", a: "minggu lalu", ex: "先週は暇でした。(Minggu lalu senggang.)", grp: "shuu" },
   { k: "今週", r: "こんしゅう", a: "minggu ini", ex: "今週はテストがあります。(Minggu ini ada ujian.)", grp: "shuu" },
@@ -332,12 +340,17 @@ const DB_Relatif = [
   { k: "再来週", r: "さらいしゅう", a: "2 minggu lagi", ex: "再来週のパーティーが楽しみです。(Menantikan pesta 2 minggu lagi.)", grp: "shuu" },
   { k: "毎週", r: "まいしゅう", a: "setiap minggu", ex: "毎週土曜日に買い物をします。(Setiap minggu hari Sabtu berbelanja.)", grp: "shuu" },
 
+  // --- KELOMPOK BULAN ---
+  { k: "月", r: "げつ", alt: "つき", a: "bulan", note: "Dalam konteks ini biasa dibaca つき (tsuki)", grp: "getsu" },
   { k: "先々月", r: "せんせんげつ", a: "2 bulan lalu", ex: "先々月、車を買いました。(Dua bulan lalu membeli mobil.)", grp: "getsu" },
   { k: "先月", r: "せんげつ", a: "bulan lalu", ex: "先月は暑かったです。(Bulan lalu panas.)", grp: "getsu" },
   { k: "今月", r: "こんげつ", a: "bulan ini", ex: "今月はお金がありません。(Bulan ini tidak ada uang.)", grp: "getsu" },
   { k: "来月", r: "らいげつ", a: "bulan depan", ex: "来月、友達が来ます。(Bulan depan teman akan datang.)", grp: "getsu" },
   { k: "再来月", r: "さらいげつ", a: "2 bulan lagi", ex: "再来月に旅行します。(Akan jalan-jalan 2 bulan lagi.)", grp: "getsu" },
   { k: "毎月", r: "まいつき", a: "setiap bulan", ex: "毎月本を三冊読みます。(Setiap bulan membaca 3 buku.)", grp: "getsu" },
+
+  // --- KELOMPOK TAHUN ---
+  { k: "年", r: "ねん", alt: "とし", a: "tahun", note: "Dalam konteks ini biasa dibaca とし (toshi)", grp: "nen" },
   { k: "一昨年", r: "おととし", a: "2 tahun lalu", ex: "一昨年に大学を卒業しました。(Dua tahun lalu lulus universitas.)", grp: "nen" },
   { k: "去年", r: "きょねん", a: "tahun lalu", ex: "去年、京都へ行きました。(Tahun lalu pergi ke Kyoto.)", grp: "nen" },
   { k: "今年", r: "ことし", a: "tahun ini", ex: "今年は二千二十六年です。(Tahun ini adalah tahun 2026.)", grp: "nen" },
@@ -345,13 +358,19 @@ const DB_Relatif = [
   { k: "再来年", r: "さらいねん", a: "2 tahun lagi", ex: "再来年、結婚します。(Dua tahun lagi akan menikah.)", grp: "nen" },
   { k: "毎年", r: "まいとし", a: "setiap tahun", ex: "毎年バリ島へ行きます。(Setiap tahun pergi ke Bali.)", grp: "nen" },
 
-  { k: "今朝", r: "けさ", a: "pagi ini", ex: "今朝、コーヒーを飲みました。(Pagi ini minum kopi.)", grp: "asa_ban" },
-  { k: "明朝", r: "みょうちょう", a: "besok pagi", ex: "明朝、会議があります。(Besok pagi ada rapat.)", grp: "asa_ban" },
-  { k: "毎朝", r: "まいあさ", a: "setiap pagi", ex: "毎朝六時に起きます。(Setiap pagi bangun jam 6.)", grp: "asa_ban" },
-  { k: "昨夜", r: "さくや", a: "malam lalu", ex: "昨夜はよく眠れました。(Malam lalu bisa tidur nyenyak.)", grp: "asa_ban" },
-  { k: "今晩", r: "こんばん", a: "malam ini", ex: "今晩、レストランで食べます。(Malam ini akan makan di restoran.)", grp: "asa_ban" },
-  { k: "明晩", r: "みょうばん", a: "besok malam", ex: "明晩、電話します。(Besok malam akan menelepon.)", grp: "asa_ban" },
-  { k: "毎晩", r: "まいばん", a: "setiap malam", ex: "毎晩テレビを見ます。(Setiap malam menonton TV.)", grp: "asa_ban" }
+  // --- KELOMPOK PAGI ---
+  { k: "朝", r: "あさ", a: "pagi", grp: "asa" },
+  { k: "今朝", r: "けさ", a: "pagi ini", ex: "今朝、コーヒーを飲みました。(Pagi ini minum kopi.)", grp: "asa" },
+  { k: "明朝", r: "みょうちょう", a: "besok pagi", ex: "明朝、会議があります。(Besok pagi ada rapat.)", grp: "asa" },
+  { k: "毎朝", r: "まいあさ", a: "setiap pagi", ex: "毎朝六時に起きます。(Setiap pagi bangun jam 6.)", grp: "asa" },
+
+  // --- KELOMPOK MALAM ---
+  { k: "夜", r: "よる", a: "malam", grp: "ban" },
+  { k: "晩", r: "ばん", a: "malam / petang", grp: "ban" },
+  { k: "昨夜", r: "さくや", a: "malam lalu", ex: "昨夜はよく眠れました。(Malam lalu bisa tidur nyenyak.)", grp: "ban" },
+  { k: "今晩", r: "こんばん", a: "malam ini", ex: "今晩、レストランで食べます。(Malam ini akan makan di restoran.)", grp: "ban" },
+  { k: "明晩", r: "みょうばん", a: "besok malam", ex: "明晩、電話します。(Besok malam akan menelepon.)", grp: "ban" },
+  { k: "毎晩", r: "まいばん", a: "setiap malam", ex: "毎晩テレビを見ます。(Setiap malam menonton TV.)", grp: "ban" }
 ];
 
 const Pages_Kalender = [
@@ -362,10 +381,14 @@ const Pages_Kalender = [
 ];
 
 const Pages_Relatif = [
-  { title: "BAB 1: Hari & Minggu", narasi: "Perhatikan pola emas kanji waktu:<br>• <b style='color:var(--danger)'>先 (Sen)</b> untuk Masa Lalu<br>• <b style='color:var(--primary)'>今 (Kon/Ima)</b> untuk Sekarang<br>• <b style='color:var(--success)'>来 (Rai)</b> untuk Masa Depan", groups: ["nichi", "shuu"] },
-  { title: "BAB 2: Bulan & Tahun", narasi: "Pola <i>Sen-Kon-Rai</i> tetap berlaku. Namun, untuk <b>Tahun (年)</b> ada anomali! 'Tahun ini' dibaca <b style='color:var(--gold)'>今年 (kotoshi)</b>. 'Tahun lalu' dibaca <b style='color:var(--warning)'>去年 (kyonen)</b>.", groups: ["getsu", "nen"] },
-  { title: "BAB 3: Pagi & Malam", narasi: "Hati-hati dengan anomali pembacaan! 'Pagi ini' dibaca <b style='color:var(--gold)'>今朝 (kesa)</b>. <i>Ban</i> (晩) adalah waktu aktif malam hari, sedangkan <i>Yoru</i> (夜) mencakup seluruh malam.", groups: ["asa_ban"] }
+  { title: "BAB 1: Keterangan Hari", narasi: "Perhatikan pola emas kanji waktu:<br>• <b style='color:var(--danger)'>先 (Sen)</b> untuk Masa Lalu<br>• <b style='color:var(--primary)'>今 (Kon/Ima)</b> untuk Sekarang<br>• <b style='color:var(--success)'>来 (Rai)</b> untuk Masa Depan", groups: ["nichi"] },
+  { title: "BAB 2: Keterangan Minggu", narasi: "Pola <i>Sen-Kon-Rai</i> berlaku secara berurutan di sini.", groups: ["shuu"] },
+  { title: "BAB 3: Keterangan Bulan", narasi: "Penyebutan bulan relatif sangat teratur mengikuti pola dasar.", groups: ["getsu"] },
+  { title: "BAB 4: Keterangan Tahun", narasi: "Pola <i>Sen-Kon-Rai</i> tetap berlaku. Namun, untuk <b>Tahun (年)</b> ada anomali! 'Tahun ini' dibaca <b style='color:var(--gold)'>今年 (kotoshi)</b>. 'Tahun lalu' dibaca <b style='color:var(--warning)'>去年 (kyonen)</b>.", groups: ["nen"] },
+  { title: "BAB 5: Keterangan Pagi", narasi: "Hati-hati dengan anomali pembacaan! 'Pagi ini' dibaca <b style='color:var(--gold)'>今朝 (kesa)</b>.", groups: ["asa"] },
+  { title: "BAB 6: Keterangan Malam", narasi: "<i>Ban</i> (晩) adalah waktu aktif malam hari, sedangkan <i>Yoru</i> (夜) mencakup seluruh malam.", groups: ["ban"] }
 ];
+
 
 // ==========================================
 // ENGINE MODUL
@@ -386,7 +409,7 @@ const Modul = {
     el.classList.add(animClass);
   },
 
-  switchMode: function(mode) {
+    switchMode: function(mode) {
     this.activeMode = mode;
     this.cardIdx = 0; 
     
@@ -396,8 +419,14 @@ const Modul = {
     let col = (mode === 'kalender') ? 'var(--primary)' : 'var(--success)';
     document.getElementById('btn-submit-isian').style.background = col;
     
-    document.getElementById('sub-nav-kalender').style.display = (mode === 'kalender') ? 'flex' : 'none';
-    document.getElementById('sub-nav-relatif').style.display = (mode === 'relatif') ? 'flex' : 'none';
+    // LOGIKA YANG DIPERBAIKI: Hapus & Tambah class 'hidden'
+    if (mode === 'kalender') {
+        document.getElementById('sub-nav-kalender').classList.remove('hidden');
+        document.getElementById('sub-nav-relatif').classList.add('hidden');
+    } else {
+        document.getElementById('sub-nav-kalender').classList.add('hidden');
+        document.getElementById('sub-nav-relatif').classList.remove('hidden');
+    }
     
     this.activeSesi = 0;
     this.switchTab('hafalan');
@@ -455,11 +484,13 @@ const Modul = {
     }
   },
 
-  switchSesi: function(s) {
+    switchSesi: function(s) {
     this.activeSesi = s;
     let prefix = this.activeMode === 'kalender' ? 'btn-kal-' : 'btn-rel-';
-    let max = this.activeMode === 'kalender' ? 4 : 3;
-    for(let i=0; i<max; i++) {
+    let pages = (this.activeMode === 'kalender') ? Pages_Kalender : Pages_Relatif;
+    
+    // Reset status tombol aktif sesuai jumlah bab/sesi otomatis
+    for(let i = 0; i < pages.length; i++) {
         let btn = document.getElementById(prefix + i);
         if(btn) btn.classList.remove('active');
     }
@@ -467,7 +498,6 @@ const Modul = {
     if(activeBtn) activeBtn.classList.add('active');
     
     let db = (this.activeMode === 'kalender') ? DB_Kalender : DB_Relatif;
-    let pages = (this.activeMode === 'kalender') ? Pages_Kalender : Pages_Relatif;
     let grps = pages[s].groups;
     this.activeArray = db.filter(item => grps.includes(item.grp));
     this.cardIdx = 0;
@@ -633,20 +663,11 @@ const Modul = {
     }
   },
 
+ 
   generatePG: function() {
     let db = (this.activeMode === 'kalender') ? DB_Kalender : DB_Relatif;
-    let groups = [];
-    
-    if(this.activeMode === 'kalender') {
-        if(this.activeSesi === 0) groups = ['hari'];
-        else if(this.activeSesi === 1) groups = ['tgl'];
-        else if(this.activeSesi === 2) groups = ['bln'];
-        else if(this.activeSesi === 3) groups = ['thn'];
-    } else {
-        if(this.activeSesi === 0) groups = ['nichi', 'shuu'];
-        else if(this.activeSesi === 1) groups = ['getsu', 'nen'];
-        else if(this.activeSesi === 2) groups = ['asa_ban'];
-    }
+    let pages = (this.activeMode === 'kalender') ? Pages_Kalender : Pages_Relatif;
+    let groups = pages[this.activeSesi].groups; // Sistem baca grup otomatis
     
     let pool = db.filter(item => groups.includes(item.grp));
     let limit = Math.min(10, pool.length);
@@ -655,8 +676,7 @@ const Modul = {
     let generated = [];
 
     part1.forEach(item => {
-        let ans = item.r.replace(/[\s]/g, '');
-        let opts = [ans]; 
+        let ans = item.r.replace(/[\s]/g, ''); let opts = [ans]; 
         let distractors = [...pool].sort(() => Math.random() - 0.5);
         for(let d of distractors) {
             let dText = d.r.replace(/[\s]/g, '');
@@ -667,8 +687,7 @@ const Modul = {
     });
 
     part2.forEach(item => {
-        let ans = item.k.replace(/[\s]/g, '');
-        let opts = [ans];
+        let ans = item.k.replace(/[\s]/g, ''); let opts = [ans];
         let distractors = [...pool].sort(() => Math.random() - 0.5);
         for(let d of distractors) {
             let dText = d.k.replace(/[\s]/g, '');
@@ -683,18 +702,8 @@ const Modul = {
 
   generateIsian: function() {
     let db = (this.activeMode === 'kalender') ? DB_Kalender : DB_Relatif;
-    let groups = [];
-    
-    if(this.activeMode === 'kalender') {
-        if(this.activeSesi === 0) groups = ['hari'];
-        else if(this.activeSesi === 1) groups = ['tgl'];
-        else if(this.activeSesi === 2) groups = ['bln'];
-        else if(this.activeSesi === 3) groups = ['thn'];
-    } else {
-        if(this.activeSesi === 0) groups = ['nichi', 'shuu'];
-        else if(this.activeSesi === 1) groups = ['getsu', 'nen'];
-        else if(this.activeSesi === 2) groups = ['asa_ban'];
-    }
+    let pages = (this.activeMode === 'kalender') ? Pages_Kalender : Pages_Relatif;
+    let groups = pages[this.activeSesi].groups; // Sistem baca grup otomatis
     
     let pool = db.filter(item => groups.includes(item.grp));
     let limit = Math.min(10, pool.length);
@@ -726,9 +735,8 @@ const Modul = {
         else if (sesi === 2) tip = "💡 TIPS: Hati-hati dengan bulan April (shi), Juli (shichi), dan September (ku)!";
         else tip = "💡 TIPS: Ingat, tahun 4 SELALU dibaca 'yo-nen', bukan yon-nen!";
     } else {
-        if (sesi === 0) tip = "💡 TIPS: Polanya: Sen (Lalu), Kon (Sekarang), Rai (Depan)!";
-        else if (sesi === 1) tip = "💡 TIPS: Awas jebakan 'Tahun ini' (kotoshi) dan 'Tahun lalu' (kyonen)!";
-        else tip = "💡 TIPS: Bedakan antara 'Yoru' (gelap) dan 'Ban' (waktu aktif malam hari).";
+        if (sesi <= 3) tip = "💡 TIPS: Polanya: Sen (Lalu), Kon (Sekarang), Rai (Depan)! Awas jebakan Kotoshi & Kyonen di Tahun.";
+        else tip = "💡 TIPS: Bedakan antara 'Yoru' (gelap) dan 'Ban' (waktu aktif malam hari), serta anomali Kesa (pagi ini).";
     }
     return `<div class="eval-box">💪 <b>TETAP SEMANGAT!</b><br>Jangan menyerah, coba ulangi lagi.<br><br><span style="color:var(--gold);">${tip}</span></div>`;
   },
