@@ -218,7 +218,7 @@
     <div class="content-hafalan" style="justify-content: center; width: 100%;">
       <div id="isian-content-wrapper" style="width: 100%;">
         <div class="kuis-q" id="isian-q">Memuat soal...</div>
-        <div style="font-size:12px; color:var(--text-sub); margin-top:-15px; margin-bottom:15px;">(Gunakan keyboard Jepang untuk Hiragana/Kanji)</div>
+        <div style="font-size:12px; color:var(--text-sub); margin-top:-15px; margin-bottom:15px;" id="isian-hint-teks">(Gunakan keyboard Jepang untuk Hiragana)</div>
         <input type="text" id="isian-input" class="input-box" placeholder="Ketik jawabanmu..." autocomplete="off" onkeypress="if(event.key==='Enter') Modul.checkIsian()">
         <button class="btn-submit" id="btn-submit-isian" onclick="Modul.checkIsian()">Kirim Jawaban</button>
       </div>
@@ -718,7 +718,30 @@ const Modul = {
     });
 
     part2.forEach(item => {
-        generated.push({ q: `Ketik kanji dari:<br><span style="font-size:25px; color:var(--warning);">${item.r}</span>`, ans: [item.k.replace(/[\s]/g, '')]});
+        let cleanA = item.a.toLowerCase();
+        let ansArray = [];
+
+        // 1. Jawaban standar tanpa spasi (misal: "hariminggu")
+        ansArray.push(cleanA.replace(/[\s-]/g, ''));
+
+        // 2. Toleransi "hari" (Jawaban "minggu" tetap benar)
+        if (cleanA.includes("hari ") && !cleanA.includes("lalu") && !cleanA.includes("lagi")) {
+            ansArray.push(cleanA.replace("hari ", "").replace(/[\s-]/g, '')); 
+        }
+        // 3. Toleransi "tanggal" (Jawaban "1" atau "tgl1" tetap benar)
+        if (cleanA.includes("tanggal ")) {
+            ansArray.push(cleanA.replace("tanggal ", "tgl").replace(/[\s-]/g, ''));
+            ansArray.push(cleanA.replace("tanggal ", "").replace(/[\s-]/g, ''));
+        }
+        // 4. Toleransi angka "2" (Jawaban "duaharilalu" tetap benar)
+        if (cleanA.includes("2")) {
+            ansArray.push(cleanA.replace(/2/g, "dua").replace(/[\s-]/g, ''));
+        }
+
+        generated.push({ 
+            q: `Apa arti dari kanji:<br><span style="font-size:35px; color:var(--warning);">${item.k}</span>`, 
+            ans: ansArray 
+        });
     });
 
     return generated;
@@ -797,10 +820,19 @@ const Modul = {
     }
 
     const target = pool[this.idxIsian];
-    document.getElementById('isian-progress').innerText = `KUIS ISIAN: ${this.idxIsian+1} / ${pool.length}`;
+        document.getElementById('isian-progress').innerText = `KUIS ISIAN: ${this.idxIsian+1} / ${pool.length}`;
     document.getElementById('isian-q').innerHTML = target.q;
+    
+    let hintTeks = document.getElementById('isian-hint-teks');
+    if (hintTeks) {
+        hintTeks.classList.remove('hidden');
+        if (target.q.includes("Apa arti")) { 
+            hintTeks.innerText = "(Ketik terjemahannya, misal: hari senin / 2 hari lalu)"; 
+        } else { 
+            hintTeks.innerText = "(Gunakan keyboard Jepang untuk Hiragana)"; 
+        }
+    }
     input.classList.remove('hidden'); input.focus();
-
     if(useSlideAnim) this.triggerAnimation('isian-content-wrapper', 'slide-in-right');
   },
 

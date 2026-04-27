@@ -900,7 +900,7 @@ const Modul = {
             if(item.k === "半") ansArray.push("setengah", "30menit", "tigapuluhmenit");
             if(item.a === "A.M (Pagi)") ansArray.push("pagi", "am", "ampagi");
             if(item.a === "P.M (Sore)") ansArray.push("sore", "pm", "malam", "pmsore");
-            generated.push({ q: `Apa arti dari:<br><span style="font-size:35px; color:var(--warning);">${item.r}</span>`, ans: ansArray });
+            generated.push({ q: `Apa arti dari kanji:<br><span style="font-size:35px; color:var(--warning);">${item.k}</span>`, ans: ansArray });
         }
     });
 
