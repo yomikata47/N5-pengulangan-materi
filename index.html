@@ -399,6 +399,27 @@ body.danger-mode { animation: pulseDanger 1.5s infinite; }
     transform: scale(1.15) !important;
   }
 }
+/* Batas kotak tips */
+#tips-modal > div {
+    max-height: 55vh; 
+    overflow-y: auto; 
+    padding-right: 10px; /* Sedikit jarak agar teks tidak menempel ke garis scroll */
+}
+/* --- KUSTOMISASI SCROLLBAR KEREN (Khusus Webkit/Chrome/Edge/Safari) --- */
+#tips-modal > div::-webkit-scrollbar {
+    width: 6px; /* Bikin tipis agar elegan */
+}
+#tips-modal > div::-webkit-scrollbar-track {
+    background: transparent; /* Background transparan */
+}
+#tips-modal > div::-webkit-scrollbar-thumb {
+    background: #334155; /* Warna abu-abu redup ala border Yomikata */
+    border-radius: 10px; /* Ujungnya membulat */
+}
+#tips-modal > div::-webkit-scrollbar-thumb:hover {
+    background: var(--primary); /* Berubah biru menyala (neon) saat disentuh mouse! */
+}
+
 </style>
 </head>
 <body>
@@ -1317,7 +1338,7 @@ const ManualDB = {
       {k: "海外", r: "かいがい", a: "luar negeri"}, {k: "テレビ", r: "テレビ", a: "televisi"}
     ],
     materi: [
-      {jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"ベッド", r:"ベッド"}, {text:"です。"} ], a: "Ini adalah kasur.", ansP: "は", ansA: "Ini adalah kasur."},
+      {jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"ベッド", r:"ベッド"}, {text:"です。"} ], a: "Ini adalah kasur.", ansP: ["は"], ansA: "Ini adalah kasur."},
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
         jp: [ 
@@ -1350,7 +1371,7 @@ const ManualDB = {
         ansA: "Ini adalah kopi (dari) Malaysia.", 
         qA: "Terjemahkanlah jawaban Ibu yang bergaris bawah!"
       },
-      {jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"鳥", r:"とり"}, {text:"です。"} ], a: "Itu (di sana) adalah burung.", ansP: "は", ansA: "Itu (di sana) adalah burung."},
+      {jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"鳥", r:"とり"}, {text:"です。"} ], a: "Itu (di sana) adalah burung.", ansP: ["は"], ansA: "Itu (di sana) adalah burung."},
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
         jp: [ {k:"あの", r:"あの"}, {k:"鳥", r:"とり"}, {text:"は", p:true}, {k:"マリさん", r:"マリさん"}, {text:"の", p:true}, {k:"鳥", r:"とり"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ], 
@@ -1559,13 +1580,13 @@ const ManualDB = {
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
-        jp: [ {k:"ここ", r:"ここ", u:true}, {text:"は", p:true, u:true}, {k:"日本", r:"にほん", u:true}, {text:"の", p:true, u:true}, {k:"ラーメン", r:"ラーメン", u:true}, {text:"じゃありません", u:true}, {text:"。", u:true} ], 
-        a: "Di sini bukan ramen Jepang. [Sopan]", ansP: ["は", "の"], ansA: "Di sini bukan ramen Jepang.", qA: "Terjemahkan keseluruhan kalimat!"
+        jp: [ {k:"日本", r:"にほん", u:true}, {text:"の", p:true, u:true}, {k:"ラーメン", r:"ラーメン", u:true}, {text:"は", p:true, u:true}, {k:"ここ", r:"ここ", u:true}, {text:"じゃありません", u:true}, {text:"。", u:true} ], 
+        a: "Ramen Jepang bukan di sini. [Sopan]", ansP: ["の", "は"], ansA: "Ramen Jepang bukan di sini.", qA: "Terjemahkan keseluruhan kalimat!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
-        jp: [ {k:"そこ", r:"そこ", u:true}, {text:"は", p:true, u:true}, {k:"母", r:"はは", u:true}, {text:"の", p:true, u:true}, {k:"料理", r:"りょうり", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true} ], 
-        a: "Di situ bukan masakan ibu. [Sangat Formal]", ansP: ["は", "の", "では"], ansA: "Di situ bukan masakan ibu.", qA: "Terjemahkan keseluruhan kalimat!"
+        jp: [ {k:"母", r:"はは", u:true}, {text:"の", p:true, u:true}, {k:"料理", r:"りょうり", u:true}, {text:"は", p:true, u:true}, {k:"そこ", r:"そこ", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true} ], 
+        a: "Masakan ibu bukan di situ. [Sangat Formal]", ansP: ["の", "は", "では"], ansA: "Masakan ibu bukan di situ.", qA: "Terjemahkan keseluruhan kalimat!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
@@ -1579,8 +1600,8 @@ const ManualDB = {
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
-        jp: [ {k:"あそこ", r:"あそこ", u:true}, {text:"は", p:true, u:true}, {k:"鳥", r:"とり", u:true}, {text:"の", p:true, u:true}, {k:"卵", r:"たまご", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
-        a: "Di sana (jauh) adalah telur burung.", ansP: ["は", "の"], ansA: "Di sana (jauh) adalah telur burung.", qA: "Terjemahkan keseluruhan kalimat!"
+        jp: [ {k:"鳥", r:"とり", u:true}, {text:"の", p:true, u:true}, {k:"卵", r:"たまご", u:true}, {text:"は", p:true, u:true}, {k:"あそこ", r:"あそこ", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
+        a: "Telur burung ada di sana (jauh).", ansP: ["の", "は"], ansA: "Telur burung ada di sana (jauh).", qA: "Terjemahkan keseluruhan kalimat!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
@@ -1600,8 +1621,8 @@ const ManualDB = {
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
-        jp: [ {k:"あそこ", r:"あそこ", u:true}, {text:"は", p:true, u:true}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"学校", r:"がっこう", u:true}, {text:"じゃない", u:true}, {text:"。 "}, {k:"私", r:"わたし"}, {text:"の"}, {k:"学校", r:"がっこう"}, {text:"は", p:true}, {k:"ここ", r:"ここ"}, {text:"です。"} ], 
-        a: "Di sana (jauh) bukan sekolah saya. Sekolah saya ada di sini. [Kasual]", ansP: ["は", "の", "は"], ansA: "Di sana (jauh) bukan sekolah saya.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+        jp: [ {k:"あそこ", r:"あそこ", u:true}, {text:"は", p:true, u:true}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"学校", r:"がっこう", u:true}, {text:"じゃありません", u:true}, {text:"。 "}, {k:"私", r:"わたし"}, {text:"の"}, {k:"学校", r:"がっこう"}, {text:"は", p:true}, {k:"ここ", r:"ここ"}, {text:"です。"} ], 
+        a: "Di sana (jauh) bukan sekolah saya. Sekolah saya ada di sini.", ansP: ["は", "の", "は"], ansA: "Di sana (jauh) bukan sekolah saya.", qA: "Terjemahkanlah kalimat bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
@@ -1615,8 +1636,8 @@ const ManualDB = {
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
-        jp: [ {k:"あちら", r:"あちら", u:true}, {text:"の", p:true, u:true}, {k:"人", r:"ひと", u:true}, {text:"は", p:true, u:true}, {k:"誰", r:"だれ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。"} ], 
-        a: "Orang di sebelah sana itu siapa?", ansP: ["の", "は", "か"], ansA: "Orang di sebelah sana itu siapa?", qA: "Terjemahkan keseluruhan kalimat!"
+        jp: [ {k:"あちら", r:"あちら", u:true}, {text:"の", p:true, u:true}, {k:"方", r:"かた", u:true}, {text:"は", p:true, u:true}, {k:"どなた", r:"どなた", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。"} ], 
+        a: "Beliau di sebelah sana itu siapa?", ansP: ["の", "は", "か"], ansA: "Beliau di sebelah sana itu siapa?", qA: "Terjemahkan keseluruhan kalimat!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
@@ -2308,6 +2329,74 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
           </div>`;
           UI.openModal('tips-modal');
       };
+      
+    } else if (Game.currentDay === 9 && t === 'belajar') {
+      btnTips.classList.remove('hidden');
+      
+      // Memunculkan bubble notifikasi di Materi 2 (saat kata 'kochira' pertama kali muncul)
+      if (i === 1 && !Game.kokoKochiraTipSeen) {
+          tipsBubble.classList.remove('hidden');
+      }
+      
+      btnTips.onclick = () => {
+          Game.kokoKochiraTipSeen = true; 
+          tipsBubble.classList.add('hidden'); 
+          
+          tipsH2.innerHTML = "💡 KELUARGA KOSOADO (TEMPAT & ARAH)";
+          tipsContent.innerHTML = `
+          <div id="slide-kosoado9-1" class="slide-page">
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:10px;">
+                  Setelah belajar menunjuk benda di Hari 8, sekarang kita akan menunjuk <b>Lokasi</b> dan <b>Arah</b>.<br><br>
+                  Mari kita kenalan dengan <b style="color:var(--primary);">Kelompok 3: Penunjuk Tempat</b>.<br>
+                  Digunakan murni untuk menunjukkan lokasi di mana Anda atau suatu benda berada.
+              </span>
+              <table style="width:100%; border-collapse: collapse; font-size: 13px; text-align:left; background:rgba(255,255,255,0.05); border-radius:8px; overflow:hidden;">
+                  <tr style="background:rgba(56, 189, 248, 0.2);">
+                      <th style="padding:8px; border:1px solid #334155;">Jepang</th>
+                      <th style="padding:8px; border:1px solid #334155;">Arti</th>
+                      <th style="padding:8px; border:1px solid #334155;">Contoh</th>
+                  </tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>ここ (Koko)</b></td><td style="padding:8px; border:1px solid #334155;">Di sini</td><td style="padding:8px; border:1px solid #334155;"><b>ここ</b>は学校です。</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>そこ (Soko)</b></td><td style="padding:8px; border:1px solid #334155;">Di situ</td><td style="padding:8px; border:1px solid #334155;">トイレは<b>そこ</b>です。</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>あそこ (Asoko)</b></td><td style="padding:8px; border:1px solid #334155;">Di sana (jauh)</td><td style="padding:8px; border:1px solid #334155;"><b>あそこ</b>は病院です。</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155; color:var(--warning);"><b>どこ (Doko)</b></td><td style="padding:8px; border:1px solid #334155; color:var(--warning);">Di mana</td><td style="padding:8px; border:1px solid #334155; color:var(--warning);">学校は<b>どこ</b>ですか。</td></tr>
+              </table>
+              <div style="background:rgba(239, 68, 68, 0.1); padding:8px; border-left:3px solid var(--danger); margin:15px 0 8px 0; font-size:12px;">
+                  <b>⚠️ AWAS JEBAKAN LOGIKA!</b><br>
+                  Tempat tidak bisa berubah menjadi benda. <br>
+                  ❌ <b>ここ</b>はラーメンです。 <i>(Salah: Di sini adalah ramen??)</i><br>
+                  ✅ ラーメンは<b>ここ</b>です。 <i>(Benar: Ramen ada di sini)</i><br>
+              </div>
+              <button class="btn" style="padding:8px 12px; font-size:13px; margin:15px 0 0 0; background:var(--gold); width:100%;" onclick="document.getElementById('slide-kosoado9-1').style.display='none'; document.getElementById('slide-kosoado9-2').style.display='block';">Lanjut ke Level Sopan ➡️</button>
+          </div>
+          
+          <div id="slide-kosoado9-2" class="slide-page" style="display:none;">
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:10px;">
+                   <b style="color:var(--success);">Kelompok 4: Penunjuk Arah & Kesopanan</b>.<br>
+                  Fungsi aslinya adalah untuk menunjuk <b>Arah</b> (Sebelah sini/sana). Namun, orang Jepang menggunakannya sebagai <b>bentuk sangat sopan</b> pengganti <i>Kore, Koko,</i> dan untuk menunjuk <i>Orang</i>!
+              </span>
+              <table style="width:100%; border-collapse: collapse; font-size: 13px; text-align:left; background:rgba(255,255,255,0.05); border-radius:8px; overflow:hidden;">
+                  <tr style="background:rgba(34, 197, 94, 0.2);">
+                      <th style="padding:8px; border:1px solid #334155;">Jepang</th>
+                      <th style="padding:8px; border:1px solid #334155;">Arti Harfiah</th>
+                      <th style="padding:8px; border:1px solid #334155;">Fungsi Sopan</th>
+                  </tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>こちら (Kochira)</b></td><td style="padding:8px; border:1px solid #334155;">Sebelah sini</td><td style="padding:8px; border:1px solid #334155;">Ini / Di sini / <b>Beliau ini</b></td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>そちら (Sochira)</b></td><td style="padding:8px; border:1px solid #334155;">Sebelah situ</td><td style="padding:8px; border:1px solid #334155;">Itu / Di situ / <b>Pihak Anda</b></td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>あちら (Achira)</b></td><td style="padding:8px; border:1px solid #334155;">Sebelah sana</td><td style="padding:8px; border:1px solid #334155;">Itu / Di sana / <b>Beliau itu</b></td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155; color:var(--warning);"><b>どちら (Dochira)</b></td><td style="padding:8px; border:1px solid #334155; color:var(--warning);">Sebelah mana</td><td style="padding:8px; border:1px solid #334155; color:var(--warning);">Di mana / <b>Siapa (Sopan)</b></td></tr>
+              </table>
+              <div style="background:rgba(34, 197, 94, 0.1); padding:8px; border-left:3px solid var(--success); margin:15px 0 8px 0; font-size:12px;">
+                  <b>💡 INFO BUDAYA:</b><br>
+                  Saat memperkenalkan orang lain (misal atasan atau guru), <b>JANGAN</b> gunakan <i>Kore</i> atau <i>Kono hito</i>, karena terdengar kasar seolah menunjuk barang. Gunakanlah <b>Kochira</b>!<br>
+                  ✅ <b>こちら</b>は山田先生です。 <i>(Beliau ini adalah Guru Yamada).</i>
+              </div>
+              <button class="btn btn-alt" style="padding:8px 12px; font-size:13px; width:100%;" onclick="document.getElementById('slide-kosoado9-2').style.display='none'; document.getElementById('slide-kosoado9-1').style.display='block';">⬅️ Kembali ke Slide 1</button>
+          </div>`;
+          UI.openModal('tips-modal');
+      };
+
+      
     } else { btnTips.classList.add('hidden'); }
     if (t === 'dungeon') {
         document.getElementById('stage-indicator').innerText = `🔥 SKOR SURVIVAL: ${Game.dungeonScore}`;
