@@ -1729,7 +1729,7 @@ const ManualDB = {
       {k: "健康", r: "けんこう", a: "sehat"}, {k: "花", r: "はな", a: "bunga"},
       {k: "音楽", r: "おんがく", a: "musik"}, {k: "人", r: "ひと", a: "orang"}
     ],
-    materi: [
+        materi: [
       // FASE 1: Sifat Sebagai Predikat Positif (Kalimat Pendek) (1-5)
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
@@ -1760,12 +1760,12 @@ const ManualDB = {
       // FASE 2: Sifat Sebagai Predikat Negatif (Kalimat Pendek) (6-10)
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
-        jp: [ {k:"この", r:"この"}, {k:"時計", r:"とけい"}, {text:"は", p:true}, {text:"高"}, {text:"く", p:true}, {text:"ありません。"} ],
+        jp: [ {k:"この", r:"この"}, {k:"時計", r:"とけい"}, {text:"は", p:true}, {k:"高", r:"たか"}, {text:"く", p:true}, {text:"ありません。"} ],
         a: "Jam ini tidak mahal.", ansP: ["は", "く"], ansA: "Jam ini tidak mahal."
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
-        jp: [ {k:"その", r:"その"}, {k:"料理", r:"りょうり"}, {text:"は", p:true}, {text:"辛"}, {text:"く", p:true}, {text:"ありません。"} ],
+        jp: [ {k:"その", r:"その"}, {k:"料理", r:"りょうり"}, {text:"は", p:true}, {k:"辛", r:"から"}, {text:"く", p:true}, {text:"ありません。"} ],
         a: "Masakan itu (di dekatmu) tidak pedas.", ansP: ["は", "く"], ansA: "Masakan itu (di dekatmu) tidak pedas."
       },
       {
@@ -1813,7 +1813,7 @@ const ManualDB = {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
         jp: [ 
           {text:"<b>アグス:</b> "}, {k:"この", r:"この"}, {k:"カメラ", r:"カメラ"}, {text:"は", p:true}, {k:"新しい", r:"あたらしい"}, {text:"です。"}, {k:"その", r:"その"}, {k:"カメラ", r:"カメラ"}, {text:"も", p:true}, {k:"新しい", r:"あたらしい"}, {text:"ですか。<br><b>ケン:</b> いいえ、"},
-          {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {text:"新し"}, {text:"く", p:true, u:true}, {text:"ありません。", u:true}, {text:" "}, {k:"古い", r:"ふるい"}, {k:"カメラ", r:"カメラ"}, {text:"です。"}
+          {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {k:"新し", r:"あたらし", u:true}, {text:"く", p:true, u:true}, {text:"ありません。", u:true}, {text:" "}, {k:"古い", r:"ふるい"}, {k:"カメラ", r:"カメラ"}, {text:"です。"}
         ],
         a: "<b>Agus:</b> Kamera ini baru. Apakah kamera itu (di dekatmu) juga baru?<br><b>Ken:</b> Tidak, ini tidak baru. (Ini) kamera lama.", ansP: ["は", "も", "は", "く"], ansA: "Ini tidak baru.", qA: "Terjemahkan bagian kalimat Ken yang bergaris bawah!"
       },
@@ -1842,7 +1842,7 @@ const ManualDB = {
         a: "<b>Dewi:</b> Apakah musik di sana itu adalah musik (yang) tenang?<br><b>Sinta:</b> Tidak, musik di sana itu tidak tenang.", ansP: ["は", "な", "か", "は", "では"], ansA: "Musik di sana itu tidak tenang.", qA: "Terjemahkan kalimat Sinta yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な', 'はい'],
         jp: [ 
           {text:"<b>サクラ:</b> "}, {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"真面目", r:"まじめ"}, {text:"な", p:true}, {k:"人", r:"ひと"}, {text:"ですか。<br><b>リン:</b> "},
           {text:"はい", p:true, u:true}, {text:"、そうです。", u:true}, {text:" "}, {k:"彼", r:"かれ", u:true}, {text:"は", p:true, u:true}, {k:"真面目", r:"まじめ", u:true}, {text:"です", u:true}, {text:"。", u:true} 
@@ -1861,7 +1861,7 @@ const ManualDB = {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
         jp: [ 
           {text:"<b>シンタ:</b> "}, {k:"この", r:"この"}, {k:"食べ物", r:"たべもの"}, {text:"は", p:true}, {k:"甘い", r:"あまい"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>マリ:</b> いいえ、"},
-          {k:"それ", r:"それ", u:true}, {text:"は", p:true, u:true}, {text:"甘"}, {text:"く", p:true, u:true}, {text:"ありません。", u:true}, {text:" "}, {k:"辛い", r:"からい"}, {k:"食べ物", r:"たべもの"}, {text:"です。"} 
+          {k:"それ", r:"それ", u:true}, {text:"は", p:true, u:true}, {k:"甘", r:"あま", u:true}, {text:"く", p:true, u:true}, {text:"ありません。", u:true}, {text:" "}, {k:"辛い", r:"からい"}, {k:"食べ物", r:"たべもの"}, {text:"です。"} 
         ],
         a: "<b>Sinta:</b> Apakah makanan ini manis?<br><b>Mari:</b> Tidak, itu (di dekatmu) tidak manis. (Itu) makanan pedas.", ansP: ["は", "か", "は", "く"], ansA: "Itu (di dekatmu) tidak manis.", qA: "Terjemahkan bagian kalimat Mari yang bergaris bawah!"
       }
@@ -1874,7 +1874,7 @@ const ManualDB = {
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
-        jp: [ {k:"この", r:"この"}, {k:"お茶", r:"おちゃ"}, {text:"は", p:true}, {text:"甘"}, {text:"く", p:true}, {text:"ありません。"} ],
+        jp: [ {k:"この", r:"この"}, {k:"お茶", r:"おちゃ"}, {text:"は", p:true}, {k:"甘", r:"あま"}, {text:"く", p:true}, {text:"ありません。"} ],
         a: "Teh (hijau) ini tidak manis.", ansP: ["は", "く"], ansA: "Teh (hijau) ini tidak manis."
       },
       {
@@ -1893,7 +1893,7 @@ const ManualDB = {
         a: "Di sebelah sana adalah kota (yang) tidak praktis.", ansP: ["は", "な"], ansA: "Di sebelah sana adalah kota (yang) tidak praktis."
       }
     ],
-    proKuisExtra: []
+proKuisExtra: []
   },
 
 };
@@ -1972,7 +1972,14 @@ const RPG = {
   },
   updateUI: function() {
     document.getElementById('ui-lvl').innerText = `Lv.${this.level} ${this.getTitle()}`;
-    document.getElementById('ui-exp').innerText = this.exp; document.getElementById('ui-coin').innerText = this.coins; document.getElementById('shop-coin-display').innerText = this.coins;
+    document.getElementById('ui-exp').innerText = this.exp; 
+    
+    // --- MODE ADMIN: KOIN INFINITY ---
+    let displayCoin = Game.adminMode ? "∞" : this.coins;
+    document.getElementById('ui-coin').innerText = displayCoin; 
+    document.getElementById('shop-coin-display').innerText = displayCoin;
+    // ---------------------------------
+
     const cUI = document.getElementById('ui-combo');
     if(this.combo >= 2) { 
         let dispCombo = Math.min(this.combo, 15);
@@ -1982,7 +1989,9 @@ const RPG = {
         cUI.classList.remove('hidden'); cUI.classList.add('active'); 
     } else { cUI.classList.add('hidden'); cUI.classList.remove('active'); }
   },
-          addReward: function(baseExp, baseCoin, evt) {
+  
+  // 👇 INI FUNGSI YANG KEMARIN TIDAK SENGAJA TERHAPUS WKWK
+  addReward: function(baseExp, baseCoin, evt) {
     let multi = this.combo >= 2 ? Math.min(this.combo, 15) : 1; 
     let earnedExp = baseExp * multi; let earnedCoin = baseCoin * multi;
     this.exp += earnedExp; this.coins += earnedCoin;
@@ -1992,10 +2001,10 @@ const RPG = {
     this.spawnFloatingText(`+${earnedExp} EXP ✨`, "var(--primary)", evt, -20, 0);
     setTimeout(() => { this.spawnFloatingText(`+${earnedCoin} 🪙`, "var(--gold)", evt, 20, 20); }, 150);
     if(this.exp >= nextLvlExp) { 
-        let gelarLama = this.getTitle(); // Ingat gelar sebelum naik level
+        let gelarLama = this.getTitle(); 
         this.level++; 
         this.exp -= nextLvlExp; 
-        let gelarBaru = this.getTitle(); // Cek gelar setelah naik level
+        let gelarBaru = this.getTitle(); 
         if (gelarLama !== gelarBaru) {
             document.getElementById('promo-rank').innerText = gelarBaru.replace(/[^a-zA-Z\s]/g, '').trim();
             UI.openModal('promotion-screen');
@@ -2008,16 +2017,19 @@ const RPG = {
   },
   
   buyItem: function(type, cost) {
-    if(this.coins >= cost) {
+    let hasAccess = Game.adminMode || this.coins >= cost;
+
+    if(hasAccess) {
       if(type === 'hp' && Game.hp < 3) { 
-          this.coins -= cost; Game.hp++; localStorage.setItem('yk_hp', Game.hp); UI.renderHP(); UI.showToast("Nano-Repair Diaktifkan! +1 HP", "success"); 
-          // --- MATIKAN DARAH SEKARAT KALAU HABIS BELI HP ---
+          if(!Game.adminMode) this.coins -= cost; 
+          Game.hp++; localStorage.setItem('yk_hp', Game.hp); UI.renderHP(); UI.showToast("Nano-Repair Diaktifkan! +1 HP", "success"); 
           if (Game.hp > 1) document.body.classList.remove('danger-mode');
       } else if (type === 'shield') {
           let t = Game.currentTab;
           if(t === 'partikel' || t === 'arti') {
               if(!Game.hasShield) {
-                  this.coins -= cost; Game.hasShield = true;
+                  if(!Game.adminMode) this.coins -= cost; 
+                  Game.hasShield = true;
                   document.getElementById('card-main').classList.add('shield-active');
                   UI.showToast("Aegis Shield Aktif! Melindungi 1x kesalahan.", "success");
               } else { UI.showToast("Shield sudah aktif!", "error"); return; }
@@ -2026,7 +2038,8 @@ const RPG = {
           let t = Game.currentTab;
           if(t === 'partikel') {
               if(!Game.intelActive) {
-                  this.coins -= cost; Game.intelActive = true;
+                  if(!Game.adminMode) this.coins -= cost; 
+                  Game.intelActive = true;
                   let itm = Game.sessionData[t][Game.currentIndex];
                   let intelBox = document.createElement('div');
                   intelBox.className = 'intel-box'; intelBox.innerHTML = `<b>Intel Arti:</b> ${itm.a}`;
@@ -2035,74 +2048,80 @@ const RPG = {
               } else { UI.showToast("Intel sudah terbuka!", "error"); return; }
           } else { UI.showToast("Sinyal Ditolak: Hanya untuk Tab Partikel.", "error"); return; }
         } else if (type === 'pandora') {
-          this.coins -= cost;
+          if(!Game.adminMode) this.coins -= cost;
           let rng = Math.random();
-          if (rng < 0.1) { // 10% Peluang: Full HP
+          if (rng < 0.1) { 
               Game.hp = 3; localStorage.setItem('yk_hp', Game.hp); UI.renderHP();
               UI.showToast("JACKPOT! HP Pulih Sepenuhnya!", "success");
               document.body.classList.remove('danger-mode');
-          } else if (rng < 0.4) { // 30% Peluang: Shield
+          } else if (rng < 0.4) { 
               if(!Game.hasShield) {
                   Game.hasShield = true; document.getElementById('card-main').classList.add('shield-active');
                   UI.showToast("Beruntung! Aegis Shield Aktif.", "success");
               } else {
-                  this.coins += 50; // Cashback kalau udah punya shield
+                  this.coins += 50; 
                   UI.showToast("Sudah punya Shield! Cashback 50 Koin.", "warning");
               }
-          } else if (rng < 0.8) { // 40% Peluang: Zonk
+          } else if (rng < 0.8) { 
               UI.showToast("ZONK! Kotaknya kosong melompong wkwkwk.", "warning");
-          } else { // 20% Peluang: Trap / Jebakan
+          } else { 
               UI.showToast("JEBAKAN BATMAN! Terkena Racun -1 HP!", "error");
               Game.decreaseHP(null); 
           }
-    } else if (type === 'skip') {
+      } else if (type === 'skip') {
           let t = Game.currentTab;
           if(t === 'partikel' || t === 'arti') {
-              this.coins -= cost; UI.showToast("Mata Kensei: Bypass Berhasil!", "success");
+              if(!Game.adminMode) this.coins -= cost; 
+              UI.showToast("Mata Kensei: Bypass Berhasil!", "success");
               UI.closeModal('shop-modal');
               UI.showResult(true, "", null, true); 
           } else { UI.showToast("Sinyal Ditolak: Hanya untuk Zona Tempur.", "error"); return; }
       } else { UI.showToast("Sinyal Ditolak: Transaksi tidak valid / HP Penuh.", "error"); return; }
+      
       this.save(); this.updateUI();
     } else UI.showToast("Kredit tidak memadai.", "error");
   },
+
   buyUnlock: function(cost) {
-    if(this.coins >= cost) {
-      this.coins -= cost; Game.unlockedDay++; localStorage.setItem('yk_unlocked', Game.unlockedDay);
+    if(this.coins >= cost || Game.adminMode) {
+      if(!Game.adminMode) this.coins -= cost; 
+      Game.unlockedDay++; localStorage.setItem('yk_unlocked', Game.unlockedDay);
       UI.renderMap(); UI.showToast("Peta Baru Terbuka! Akses Hari " + Game.unlockedDay, "success");
       this.save(); this.updateUI();
     } else { UI.showToast("Kredit tidak memadai.", "error"); }
   },
-      adminUnlock: function() {
+
+  adminUnlock: function() {
     if (Game.adminMode) {
         Game.adminMode = false;
         Game.unlockedDay = parseInt(localStorage.getItem('yk_unlocked')) || 1;
         if (Game.currentDay > Game.unlockedDay) Game.currentDay = Game.unlockedDay;
         UI.closeModal('shop-modal');
         UI.showToast("Mode Admin Dinonaktifkan.", "warning");
+        RPG.updateUI(); 
         UI.renderMap();
-        UI.loadStep(); // Refresh tampilan untuk membuang tombol Bypass
+        UI.loadStep(); 
         return;
     }
 
     let pwd = prompt("Sandi Otorisasi Dev:");
     if(pwd === "Zajuli123") {
       Game.adminMode = true;
-      Game.unlockedDay = 99; // Membuka seluruh hari di Peta Navigasi secara instan
+      Game.unlockedDay = 99; 
       UI.closeModal('shop-modal');
-      UI.showToast("Override Diterima. Mode Admin Aktif!", "success");
+      UI.showToast("Override Diterima. Koin Tak Terbatas Aktif!", "success");
+      RPG.updateUI(); 
       UI.renderMap();
-      UI.loadStep(); // Refresh tampilan untuk memunculkan tombol Bypass
+      UI.loadStep(); 
     } else if (pwd !== null) { 
       UI.showToast("Akses Ditolak.", "error"); 
     }
   },
-    spawnFloatingText: function(text, color, evt, offsetX = 0, offsetY = 0) {
+
+  spawnFloatingText: function(text, color, evt, offsetX = 0, offsetY = 0) {
     const el = document.createElement('div'); el.className = 'floating-text'; el.style.color = color; el.innerText = text;
     
     let x, y;
-    // Kalau diklik pakai mouse/jari, teks muncul di titik klik.
-    // Kalau tekan Enter, teks muncul persis dari tengah Kartu Kuis!
     if (evt && evt.clientX && evt.clientX > 0) {
         x = evt.clientX; y = evt.clientY;
     } else {
@@ -2117,6 +2136,7 @@ const RPG = {
   },
   save: function() { localStorage.setItem('yk_lvl', this.level); localStorage.setItem('yk_exp', this.exp); localStorage.setItem('yk_coins', this.coins); }
 };
+
 
 const Game = {
   adminMode: false, 
@@ -2675,8 +2695,6 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
           </div>`;
           UI.openModal('tips-modal');
       };
-
-
       
     } else { btnTips.classList.add('hidden'); }
     if (t === 'dungeon') {
