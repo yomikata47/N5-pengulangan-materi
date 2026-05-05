@@ -255,6 +255,25 @@ ruby.show .arti-hint { opacity: 1; transform: translateX(-50%) translateY(5px); 
 .hardcore-mode rt { display: none !important; }
 .hardcore-mode .arti-hint { display: none !important; }
 
+/* --- EFEK BLUR HARDCORE MODE (BERSIH) --- */
+.hardcore-mode .arti-text {
+  filter: blur(6px);
+  opacity: 0.5;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.3s ease;
+}
+.hardcore-mode .arti-text:hover {
+  opacity: 0.8; 
+}
+.hardcore-mode .arti-text.revealed {
+  filter: blur(0);
+  opacity: 1;
+}
+
+
+.hardcore-mode .arti-hint { display: none !important; }
+
 .shield-active { border: 2px solid var(--primary) !important; box-shadow: 0 0 20px var(--primary) !important; }
 .intel-box { margin-top: 10px; padding: 10px; background: rgba(56, 189, 248, 0.1); border-radius: 8px; border: 1px dashed var(--primary); font-size: 14px; color: var(--primary); font-style: italic; animation: slideUp 0.3s ease; text-align: left; line-height: 1.5; }
 .shop-item b { color: var(--text-main); }
@@ -591,6 +610,7 @@ body.danger-mode { animation: pulseDanger 1.5s infinite; }
     <div style="border-top: 1px dashed rgba(148, 163, 184, 0.5); margin: 20px 0 15px 0;"></div>
     <div style="font-size:11px; color:var(--text-sub); margin-bottom:10px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">📚 Referensi Buku Saku</div>
     
+    <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--primary); background: rgba(56, 189, 248, 0.05); width: 100%; box-sizing: border-box; margin-bottom:10px; cursor:pointer;" onclick="window.location.href='kata sifat.html'">🪧 Kata Sifat</button>
     <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--primary); background: rgba(56, 189, 248, 0.05); width: 100%; box-sizing: border-box; margin-bottom:10px; cursor:pointer;" onclick="window.location.href='nomor.html'">🔢 Angka & Waktu</button>
     <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--success); background: rgba(34, 197, 94, 0.05); width: 100%; box-sizing: border-box; cursor:pointer;" onclick="window.location.href='tanggal.html'">📅 Kalender & Ket. Waktu</button>
   </div>
@@ -641,7 +661,7 @@ body.danger-mode { animation: pulseDanger 1.5s infinite; }
       <div id="stage-indicator"></div>
       
       <div class="jp-text" id="ui-jp"></div>
-      <div class="arti-text" id="ui-arti"></div>
+      <div class="arti-text" id="ui-arti" onclick="this.classList.toggle('revealed')"></div>
       <div id="input-area" style="width:100%;"></div>
       <div class="feedback" id="ui-feedback"></div>
       <button class="btn btn-alt hidden" id="btn-next" style="margin-top:20px;">Lanjut →</button>
@@ -1542,11 +1562,15 @@ const ManualDB = {
         jp: [ 
           {text:"<b>ハル:</b> "}, {k:"私", r:"わたし"}, {text:"は"}, {k:"リン", r:"リン"}, {text:"の"}, {k:"父", r:"ちち"}, {text:"です。 "}, 
           {k:"こちら", r:"こちら"}, {text:"は", p:true}, {k:"リン", r:"リン"}, {text:"の", p:true}, {k:"母", r:"はは"}, {text:"です。 "}, 
-          {k:"あなた", r:"あなた", u:true}, {text:"は", p:true, u:true}, {k:"どちら様", r:"どちらさま", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, 
-          {text:"<br><b>サクラ:</b> "}, {k:"初めまして", r:"はじめまして"}, {text:"。"}, {k:"私", r:"わたし"}, {text:"は"}, {k:"リンさん", r:"リンさん"}, {text:"の"}, {k:"友達", r:"ともだち"}, {text:"です。よろしく "}, {k:"お願いします", r:"おねがいします"}, {text:"。"} 
+          {k:"あなた", r:"あなた"}, {text:"は", p:true}, {k:"どちら様", r:"どちらさま"}, {text:"です"}, {text:"か", p:true}, {text:"。"}, 
+          {text:"<br><b>サクラ:</b> "}, {k:"初めまして", r:"はじめまして"}, {text:"。"}, 
+          {k:"私", r:"わたし", u:true}, {text:"は", p:true, u:true}, {k:"リンさん", r:"リンさん", u:true}, {text:"の", p:true, u:true}, {k:"友達", r:"ともだち", u:true}, {text:"です", u:true}, {text:"。", u:true}, 
+          {text:"よろしく "}, {k:"お願いします", r:"おねがいします"}, {text:"。"} 
         ], 
         a: "<b>Haru:</b> Saya ayahnya Rin. Ini ibunya Rin. Anda siapa, ya? [Sopan]<br><b>Sakura:</b> Salam kenal. Saya adalah teman Rin. Mohon bantuannya.", 
-        ansP: ["は", "の", "は", "か"], ansA: "Anda siapa, ya?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+        ansP: ["は", "の", "は", "か", "は", "の"], 
+        ansA: "Saya adalah teman Rin.", 
+        qA: "Terjemahkanlah kalimat bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
@@ -1556,7 +1580,7 @@ const ManualDB = {
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
         jp: [ {k:"こちら", r:"こちら", u:true}, {text:"は", p:true, u:true}, {k:"音楽", r:"おんがく", u:true}, {text:"の", p:true, u:true}, {k:"先生", r:"せんせい", u:true}, {text:"です", u:true}, {text:"。", u:true} ], 
-        a: "Orang ini adalah guru musik.", ansP: ["は", "の"], ansA: "Orang ini adalah guru musik.", qA: "Terjemahkan keseluruhan kalimat!"
+        a: "Beliau ini adalah guru musik.", ansP: ["は", "の"], ansA: "Beliau ini adalah guru musik.", qA: "Terjemahkan keseluruhan kalimat!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
@@ -1593,10 +1617,13 @@ const ManualDB = {
         jp: [ 
           {text:"<b>リン:</b> "}, {k:"こちら", r:"こちら"}, {text:"は", p:true}, {k:"今年", r:"ことし"}, {text:"の"}, {k:"写真", r:"しゃしん"}, {text:"です。<br><b>デウィ:</b> えっ、そうですか。じゃあ、"}, 
           {k:"あちら", r:"あちら", u:true}, {text:"も", p:true, u:true}, {k:"今年", r:"ことし", u:true}, {text:"の", p:true, u:true}, {k:"写真", r:"しゃしん", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true}, 
-          {text:"<br><b>リン:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。"}, {k:"あちら", r:"あちら"}, {text:"は"}, {k:"去年", r:"きょねん"}, {text:"の"}, {k:"写真", r:"しゃしん"}, {text:"です。"}, {k:"今年", r:"ことし"}, {text:"の"}, {k:"写真", r:"しゃしん"}, {text:"では"}, {text:"ありません。"} 
+          {text:"<br><b>リン:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。"}, 
+          {k:"あちら", r:"あちら"}, {text:"は", p:true}, {k:"去年", r:"きょねん"}, {text:"の", p:true}, {k:"写真", r:"しゃしん"}, {text:"です。"}, {k:"今年", r:"ことし"}, {text:"の"}, {k:"写真", r:"しゃしん"}, {text:"では"}, {text:"ありません。"} 
         ], 
         a: "<b>Rin:</b> Sebelah sini adalah foto tahun ini.<br><b>Dewi:</b> Eh? Benarkah? Kalau begitu, apakah di sebelah sana juga foto tahun ini?<br><b>Rin:</b> Bukan, kamu salah. Di sebelah sana adalah foto tahun lalu. Bukan foto tahun ini.", 
-        ansP: ["は", "も", "の", "か"], ansA: "Apakah di sebelah sana juga foto tahun ini?", qA: "Terjemahkanlah kalimat bergaris bawah!"
+        ansP: ["は", "も", "の", "か", "は", "の"], 
+        ansA: "Apakah di sebelah sana juga foto tahun ini?", 
+        qA: "Terjemahkanlah kalimat bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
@@ -1607,13 +1634,15 @@ const ManualDB = {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
         jp: [ 
           {text:"<b>アリ:</b> "}, {k:"この", r:"この"}, {k:"料理", r:"りょうり"}, {text:"は", p:true}, {k:"海外", r:"かいがい"}, {text:"の"}, {k:"料理", r:"りょうり"}, {text:"です。<br><b>マリ:</b> あれ？"}, {k:"違います", r:"ちがいます"}, {text:"。"}, 
-          {k:"この", r:"この"}, {k:"料理", r:"りょうり"}, {text:"は"}, {k:"大阪", r:"おおさか"}, {text:"の"}, {k:"料理", r:"りょうり"}, {text:"です。"}, 
+          {k:"この", r:"この"}, {k:"料理", r:"りょうり"}, {text:"は", p:true}, {k:"大阪", r:"おおさか"}, {text:"の", p:true}, {k:"料理", r:"りょうり"}, {text:"です。"}, 
           {k:"その", r:"その", u:true}, {k:"料理", r:"りょうり", u:true}, {text:"も", p:true, u:true}, {k:"大阪", r:"おおさか", u:true}, {text:"の", p:true, u:true}, {k:"料理", r:"りょうり", u:true}, {text:"です", u:true}, {text:"。", u:true}, 
           {text:"<br><b>アリ:</b> えっ？そうですか。ごめんなさい。"} 
         ], 
         a: "<b>Ali:</b> Masakan ini adalah masakan luar negeri.<br><b>Mari:</b> Eh? Salah. Masakan ini adalah masakan Osaka. Masakan itu (di dekatmu) juga masakan Osaka.<br><b>Ali:</b> Eh? Begitu ya. Maaf.", 
-        ansP: ["は", "も", "の"], ansA: "Masakan itu juga masakan Osaka.", qA: "Terjemahkanlah kalimat bergaris bawah!"
-      },
+        ansP: ["は", "は", "の", "も", "の"], 
+        ansA: "Masakan itu (di dekatmu) juga masakan Osaka.", 
+        qA: "Terjemahkanlah kalimat bergaris bawah!"
+      },      
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
         jp: [ {text:"<b>シンタ:</b> "}, {k:"トイレ", r:"トイレ"}, {text:"は", p:true}, {k:"どこ", r:"どこ", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。<br><b>デウィ:</b> "}, {k:"あそこ", r:"あそこ"}, {text:"です。"} ], 
@@ -1622,7 +1651,7 @@ const ManualDB = {
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
         jp: [ {k:"あそこ", r:"あそこ", u:true}, {text:"は", p:true, u:true}, {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"学校", r:"がっこう", u:true}, {text:"じゃありません", u:true}, {text:"。 "}, {k:"私", r:"わたし"}, {text:"の"}, {k:"学校", r:"がっこう"}, {text:"は", p:true}, {k:"ここ", r:"ここ"}, {text:"です。"} ], 
-        a: "Di sana (jauh) bukan sekolah saya. Sekolah saya ada di sini.", ansP: ["は", "の", "は"], ansA: "Di sana (jauh) bukan sekolah saya.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+        a: "Di sana (jauh) bukan sekolah saya. Sekolah saya ada di sini. [Sopan]", ansP: ["は", "の", "は"], ansA: "Di sana (jauh) bukan sekolah saya.", qA: "Terjemahkanlah kalimat bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
@@ -1631,8 +1660,14 @@ const ManualDB = {
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
-        jp: [ {k:"あなた", r:"あなた"}, {text:"の"}, {k:"ペン", r:"ペン"}, {text:"は"}, {k:"ここ", r:"ここ"}, {text:"です。 "}, {text:"でも、"}, {k:"あなた", r:"あなた", u:true}, {text:"の", p:true, u:true}, {k:"本", r:"ほん", u:true}, {text:"は", p:true, u:true}, {k:"シンタさん", r:"シンタさん", u:true}, {text:"の", p:true, u:true}, {k:"教室", r:"きょうしつ", u:true}, {text:"です", u:true}, {text:"。"} ], 
-        a: "Pena Anda ada di sini. Tetapi, buku Anda ada di ruang kelas Sinta.", ansP: ["の", "は", "の"], ansA: "buku Anda ada di ruang kelas Sinta.", qA: "Terjemahkanlah kalimat bergaris bawah!"
+        jp: [ 
+          {k:"あなた", r:"あなた"}, {text:"の", p:true}, {k:"ペン", r:"ペン"}, {text:"は", p:true}, {k:"ここ", r:"ここ"}, {text:"です。 "}, {text:"でも、"}, 
+          {k:"あなた", r:"あなた", u:true}, {text:"の", p:true, u:true}, {k:"本", r:"ほん", u:true}, {text:"は", p:true, u:true}, {k:"シンタさん", r:"シンタさん", u:true}, {text:"の", p:true, u:true}, {k:"教室", r:"きょうしつ", u:true}, {text:"です", u:true}, {text:"。"} 
+        ], 
+        a: "Penamu ada di sini. Tetapi, bukumu ada di ruang kelas Sinta.", 
+        ansP: ["の", "は", "の", "は", "の"], 
+        ansA: "bukumu ada di ruang kelas Sinta.", 
+        qA: "Terjemahkanlah kalimat bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では'],
@@ -2084,7 +2119,19 @@ nextDayFromResult: () => {
     } else { 
         document.getElementById('card-main').classList.add('shield-active'); 
     }
-    ['ui-jp', 'ui-arti', 'ui-feedback', 'input-area'].forEach(id => document.getElementById(id).innerHTML = ''); document.getElementById('btn-next').classList.add('hidden');
+['ui-jp', 'ui-arti', 'ui-feedback', 'input-area'].forEach(id => document.getElementById(id).innerHTML = ''); 
+
+// --- FIX BLUR BOCOR ---
+let artiEl = document.getElementById('ui-arti');
+artiEl.style.transition = 'none'; // 1. Matikan animasi sementara
+artiEl.classList.remove('revealed'); // 2. Kembalikan ke mode Blur secara instan
+artiEl.offsetHeight; // 3. Paksa browser me-render perubahan detik ini juga (Reflow)
+artiEl.style.transition = ''; // 4. Nyalakan lagi animasinya untuk sentuhan berikutnya
+// ----------------------
+
+document.getElementById('btn-next').classList.add('hidden');
+
+
     const isPro = (Game.mode === 'pro');
     const btnTips = document.getElementById('btn-tips'); const tipsModal = document.getElementById('tips-modal');
 const tipsH2 = tipsModal.querySelector('h2'); const tipsContent = tipsModal.querySelector('div');
@@ -2333,14 +2380,7 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
     } else if (Game.currentDay === 9 && t === 'belajar') {
       btnTips.classList.remove('hidden');
       
-      // Memunculkan bubble notifikasi di Materi 2 (saat kata 'kochira' pertama kali muncul)
-      if (i === 1 && !Game.kokoKochiraTipSeen) {
-          tipsBubble.classList.remove('hidden');
-      }
-      
       btnTips.onclick = () => {
-          Game.kokoKochiraTipSeen = true; 
-          tipsBubble.classList.add('hidden'); 
           
           tipsH2.innerHTML = "💡 KELUARGA KOSOADO (TEMPAT & ARAH)";
           tipsContent.innerHTML = `
