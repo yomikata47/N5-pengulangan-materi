@@ -1715,6 +1715,187 @@ const ManualDB = {
     proKuisExtra: []
   },
   
+    // --- HARI 10 ---
+  day10: {
+    hafalan: [
+      {k: "高い", r: "たかい", a: "mahal / tinggi"}, {k: "安い", r: "やすい", a: "murah"},
+      {k: "暑い", r: "あつい", a: "panas (suhu/udara)"}, {k: "熱い", r: "あつい", a: "panas (untuk benda)"},
+      {k: "冷たい", r: "つめたい", a: "dingin (untuk benda)"}, {k: "寒い", r: "さむい", a: "dingin (suhu/udara)"},
+      {k: "辛い", r: "からい", a: "pedas"}, {k: "甘い", r: "あまい", a: "manis"},
+      {k: "古い", r: "ふるい", a: "lama / tua"}, {k: "新しい", r: "あたらしい", a: "baru"},
+      {k: "静か", r: "しずか", a: "tenang"}, {k: "賑やか", r: "にぎやか", a: "ramai"},
+      {k: "有名", r: "ゆうめい", a: "terkenal"}, {k: "便利", r: "べんり", a: "praktis"},
+      {k: "不便", r: "ふべん", a: "tidak praktis"}, {k: "真面目", r: "まじめ", a: "serius / rajin"},
+      {k: "健康", r: "けんこう", a: "sehat"}, {k: "花", r: "はな", a: "bunga"},
+      {k: "音楽", r: "おんがく", a: "musik"}, {k: "人", r: "ひと", a: "orang"}
+    ],
+    materi: [
+      // FASE 1: Sifat Sebagai Predikat Positif (Kalimat Pendek) (1-5)
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
+        jp: [ {k:"この", r:"この"}, {k:"時計", r:"とけい"}, {text:"は", p:true}, {k:"高い", r:"たかい"}, {text:"です。"} ],
+        a: "Jam ini mahal.", ansP: ["は"], ansA: "Jam ini mahal."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
+        jp: [ {k:"その", r:"その"}, {k:"料理", r:"りょうり"}, {text:"は", p:true}, {k:"辛い", r:"からい"}, {text:"です。"} ],
+        a: "Masakan itu (di dekatmu) pedas.", ansP: ["は"], ansA: "Masakan itu (di dekatmu) pedas."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
+        jp: [ {k:"あの", r:"あの"}, {k:"花", r:"はな"}, {text:"は", p:true}, {k:"有名", r:"ゆうめい", u:true}, {text:"です", u:true}, {text:"。"} ],
+        a: "Bunga di sana itu terkenal.", ansP: ["は"], ansA: "Terkenal.", qA: "Terjemahkanlah kata bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
+        jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"健康", r:"けんこう", u:true}, {text:"です", u:true}, {text:"。"} ],
+        a: "Dia (laki-laki) sehat.", ansP: ["は"], ansA: "Sehat.", qA: "Terjemahkanlah kata bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
+        jp: [ {k:"この", r:"この"}, {k:"町", r:"まち"}, {text:"は", p:true}, {k:"賑やか", r:"にぎやか"}, {text:"です。"} ],
+        a: "Kota ini ramai.", ansP: ["は"], ansA: "Kota ini ramai."
+      },
+
+      // FASE 2: Sifat Sebagai Predikat Negatif (Kalimat Pendek) (6-10)
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
+        jp: [ {k:"この", r:"この"}, {k:"時計", r:"とけい"}, {text:"は", p:true}, {text:"高"}, {text:"く", p:true}, {text:"ありません。"} ],
+        a: "Jam ini tidak mahal.", ansP: ["は", "く"], ansA: "Jam ini tidak mahal."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
+        jp: [ {k:"その", r:"その"}, {k:"料理", r:"りょうり"}, {text:"は", p:true}, {text:"辛"}, {text:"く", p:true}, {text:"ありません。"} ],
+        a: "Masakan itu (di dekatmu) tidak pedas.", ansP: ["は", "く"], ansA: "Masakan itu (di dekatmu) tidak pedas."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
+        jp: [ {k:"あの", r:"あの"}, {k:"花", r:"はな"}, {text:"は", p:true}, {k:"有名", r:"ゆうめい"}, {text:"では", p:true}, {text:"ありません。"} ],
+        a: "Bunga di sana itu tidak terkenal.", ansP: ["は", "では"], ansA: "Bunga di sana itu tidak terkenal."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
+        jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"健康", r:"けんこう"}, {text:"では", p:true}, {text:"ありません。"} ],
+        a: "Dia (laki-laki) tidak sehat.", ansP: ["は", "では"], ansA: "Dia (laki-laki) tidak sehat."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        jp: [ {k:"この", r:"この"}, {k:"音楽", r:"おんがく"}, {text:"は", p:true}, {k:"静か", r:"しずか"}, {text:"では", p:true}, {text:"ありません。"} ],
+        a: "Musik ini tidak tenang.", ansP: ["は", "では"], ansA: "Musik ini tidak tenang."
+      },
+
+      // FASE 3: Full Dialog (Modifikasi Sifat + Predikat Positif/Negatif) (11-20)
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
+        jp: [ 
+          {text:"<b>アグス:</b> "}, {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"高い", r:"たかい"}, {k:"時計", r:"とけい"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>ケン:</b> いいえ、"}, 
+          {k:"それ", r:"それ", u:true}, {text:"は", p:true, u:true}, {k:"安い", r:"やすい", u:true}, {k:"時計", r:"とけい", u:true}, {text:"です", u:true}, {text:"。", u:true} 
+        ],
+        a: "<b>Agus:</b> Apakah ini adalah jam (yang) mahal?<br><b>Ken:</b> Bukan, itu (di dekatmu) adalah jam (yang) murah.", ansP: ["は", "か", "は"], ansA: "Itu (di dekatmu) adalah jam (yang) murah.", qA: "Terjemahkan jawaban Ken yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        jp: [ 
+          {text:"<b>リン:</b> "}, {k:"この", r:"この"}, {k:"町", r:"まち"}, {text:"は", p:true}, {k:"賑やか", r:"にぎやか"}, {text:"です。"}, {k:"ケンさん", r:"ケンさん"}, {text:"の", p:true}, {k:"町", r:"まち"}, {text:"も", p:true}, {k:"賑やか", r:"にぎやか"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>ケン:</b> いいえ、"}, {k:"違います", r:"ちがいます"}, {text:"。 "},
+          {k:"この", r:"この", u:true}, {k:"町", r:"まち", u:true}, {text:"は", p:true, u:true}, {k:"賑やか", r:"にぎやか", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true}
+        ],
+        a: "<b>Rin (menelepon):</b> Kota ini ramai. Apakah kota Ken juga ramai?<br><b>Ken:</b> Bukan, kamu salah. Kota ini tidak ramai.", ansP: ["は", "の", "も", "か", "は", "では"], ansA: "Kota ini tidak ramai.", qA: "Terjemahkan kalimat Ken yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        jp: [ 
+          {text:"<b>サクラ:</b> "}, {k:"あちら", r:"あちら", u:true}, {text:"の", p:true, u:true}, {k:"方", r:"かた", u:true}, {text:"は", p:true, u:true}, {k:"有名", r:"ゆうめい", u:true}, {text:"な", p:true, u:true}, {k:"先生", r:"せんせい", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。", u:true},
+          {text:"<br><b>デウィ:</b> はい、そうです。"}, {k:"あちら", r:"あちら"}, {text:"の"}, {k:"方", r:"かた"}, {text:"の"}, {k:"名前", r:"なまえ"}, {text:"は"}, {k:"田中勇志さん", r:"たなかゆうしさん"}, {text:"です。"} 
+        ],
+        a: "<b>Sakura:</b> Apakah beliau di sebelah sana itu guru (yang) terkenal?<br><b>Dewi:</b> Ya, benar. Nama beliau di sebelah sana itu adalah Bapak Tanaka Yushi.", ansP: ["の", "は", "な", "か"], ansA: "Apakah beliau di sebelah sana itu guru (yang) terkenal?", qA: "Terjemahkan pertanyaan Sakura keseluruhan!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        jp: [ 
+          {text:"<b>アグス:</b> "}, {k:"この", r:"この"}, {k:"カメラ", r:"カメラ"}, {text:"は", p:true}, {k:"新しい", r:"あたらしい"}, {text:"です。"}, {k:"その", r:"その"}, {k:"カメラ", r:"カメラ"}, {text:"も", p:true}, {k:"新しい", r:"あたらしい"}, {text:"ですか。<br><b>ケン:</b> いいえ、"},
+          {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {text:"新し"}, {text:"く", p:true, u:true}, {text:"ありません。", u:true}, {text:" "}, {k:"古い", r:"ふるい"}, {k:"カメラ", r:"カメラ"}, {text:"です。"}
+        ],
+        a: "<b>Agus:</b> Kamera ini baru. Apakah kamera itu (di dekatmu) juga baru?<br><b>Ken:</b> Tidak, ini tidak baru. (Ini) kamera lama.", ansP: ["は", "も", "は", "く"], ansA: "Ini tidak baru.", qA: "Terjemahkan bagian kalimat Ken yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        jp: [ 
+          {text:"<b>リン:</b> "}, {k:"あなた", r:"あなた"}, {text:"の"}, {k:"国", r:"くに"}, {text:"は"}, {k:"暑い", r:"あつい"}, {text:"ですか、"}, {k:"寒い", r:"さむい"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>デウィ:</b> "},
+          {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"国", r:"くに", u:true}, {text:"は", p:true, u:true}, {k:"暑い", r:"あつい", u:true}, {text:"です", u:true}, {text:"。", u:true} 
+        ],
+        a: "<b>Rin:</b> Negaramu panas (suhunya) atau dingin?<br><b>Dewi:</b> Negaraku panas.", ansP: ["か", "の", "は"], ansA: "Negaraku panas.", qA: "Terjemahkan jawaban Dewi!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        jp: [ 
+          {text:"<b>ケン:</b> "}, {k:"それ", r:"それ"}, {text:"は", p:true}, {k:"冷たい", r:"つめたい"}, {k:"紅茶", r:"こうちゃ"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>アグス:</b> いいえ、違います。"},
+          {k:"これ", r:"これ", u:true}, {text:"は", p:true, u:true}, {k:"熱い", r:"あつい", u:true}, {k:"紅茶", r:"こうちゃ", u:true}, {text:"です", u:true}, {text:"。", u:true} 
+        ],
+        a: "<b>Ken:</b> Apakah itu (di dekatmu) adalah teh (yang) dingin?<br><b>Agus:</b> Bukan, kamu salah. Ini adalah teh panas.", ansP: ["は", "か", "は"], ansA: "Ini adalah teh panas.", qA: "Terjemahkan kalimat Agus yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        jp: [ 
+          {text:"<b>デウィ:</b> "}, {k:"あの", r:"あの"}, {k:"音楽", r:"おんがく"}, {text:"は", p:true}, {k:"静か", r:"しずか"}, {text:"な", p:true}, {k:"音楽", r:"おんがく"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>シンタ:</b> いいえ、"},
+          {k:"あの", r:"あの", u:true}, {k:"音楽", r:"おんがく", u:true}, {text:"は", p:true, u:true}, {k:"静か", r:"しずか", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true} 
+        ],
+        a: "<b>Dewi:</b> Apakah musik di sana itu adalah musik (yang) tenang?<br><b>Sinta:</b> Tidak, musik di sana itu tidak tenang.", ansP: ["は", "な", "か", "は", "では"], ansA: "Musik di sana itu tidak tenang.", qA: "Terjemahkan kalimat Sinta yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        jp: [ 
+          {text:"<b>サクラ:</b> "}, {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"真面目", r:"まじめ"}, {text:"な", p:true}, {k:"人", r:"ひと"}, {text:"ですか。<br><b>リン:</b> "},
+          {text:"はい", p:true, u:true}, {text:"、そうです。", u:true}, {text:" "}, {k:"彼", r:"かれ", u:true}, {text:"は", p:true, u:true}, {k:"真面目", r:"まじめ", u:true}, {text:"です", u:true}, {text:"。", u:true} 
+        ],
+        a: "<b>Sakura:</b> Apakah dia (laki-laki) adalah orang (yang) serius?<br><b>Rin:</b> Ya, benar. Dia (laki-laki) serius.", ansP: ["は", "な", "はい", "は"], ansA: "Ya, benar. Dia (laki-laki) serius.", qA: "Terjemahkan seluruh jawaban Rin!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        jp: [ 
+          {text:"<b>アグス:</b> "}, {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"便利", r:"べんり"}, {text:"な", p:true}, {k:"車", r:"くるま"}, {text:"ですか。<br><b>ケン:</b> いいえ、"},
+          {k:"あれ", r:"あれ", u:true}, {text:"は", p:true, u:true}, {k:"便利", r:"べんり", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true}, {text:" "}, {k:"不便", r:"ふべん"}, {text:"な"}, {k:"車", r:"くるま"}, {text:"です。"} 
+        ],
+        a: "<b>Agus:</b> Apakah itu (di sana) adalah mobil (yang) praktis?<br><b>Ken:</b> Tidak, itu (di sana) tidak praktis. (Itu) mobil yang tidak praktis.", ansP: ["は", "な", "は", "では"], ansA: "Itu (di sana) tidak praktis.", qA: "Terjemahkan bagian Ken yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
+        jp: [ 
+          {text:"<b>シンタ:</b> "}, {k:"この", r:"この"}, {k:"食べ物", r:"たべもの"}, {text:"は", p:true}, {k:"甘い", r:"あまい"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>マリ:</b> いいえ、"},
+          {k:"それ", r:"それ", u:true}, {text:"は", p:true, u:true}, {text:"甘"}, {text:"く", p:true, u:true}, {text:"ありません。", u:true}, {text:" "}, {k:"辛い", r:"からい"}, {k:"食べ物", r:"たべもの"}, {text:"です。"} 
+        ],
+        a: "<b>Sinta:</b> Apakah makanan ini manis?<br><b>Mari:</b> Tidak, itu (di dekatmu) tidak manis. (Itu) makanan pedas.", ansP: ["は", "か", "は", "く"], ansA: "Itu (di dekatmu) tidak manis.", qA: "Terjemahkan bagian kalimat Mari yang bergaris bawah!"
+      }
+    ],
+    kuisExtra: [
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
+        jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"便利", r:"べんり"}, {text:"な", p:true}, {k:"車", r:"くるま"}, {text:"です。"} ],
+        a: "Itu (yang di sana) adalah mobil (yang) praktis.", ansP: ["は", "な"], ansA: "Itu (yang di sana) adalah mobil (yang) praktis."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
+        jp: [ {k:"この", r:"この"}, {k:"お茶", r:"おちゃ"}, {text:"は", p:true}, {text:"甘"}, {text:"く", p:true}, {text:"ありません。"} ],
+        a: "Teh (hijau) ini tidak manis.", ansP: ["は", "く"], ansA: "Teh (hijau) ini tidak manis."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
+        jp: [ {k:"あの", r:"あの"}, {k:"病院", r:"びょういん"}, {text:"は", p:true}, {k:"便利", r:"べんり"}, {text:"では", p:true}, {text:"ありません。"} ],
+        a: "Rumah sakit di sana itu tidak praktis.", ansP: ["は", "では"], ansA: "Rumah sakit di sana itu tidak praktis."
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
+        jp: [ {k:"これ", r:"これ"}, {text:"は", p:true}, {k:"高い", r:"たかい"}, {k:"パソコン", r:"パソコン"}, {text:"です"}, {text:"か", p:true}, {text:"。"} ],
+        a: "Apakah ini PC mahal?", ansP: ["は", "か"], ansA: "Apakah ini PC mahal?"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
+        jp: [ {k:"あちら", r:"あちら"}, {text:"は", p:true}, {k:"不便", r:"ふべん"}, {text:"な", p:true}, {k:"町", r:"まち"}, {text:"です。"} ],
+        a: "Di sebelah sana adalah kota (yang) tidak praktis.", ansP: ["は", "な"], ansA: "Di sebelah sana adalah kota (yang) tidak praktis."
+      }
+    ],
+    proKuisExtra: []
+  },
+
 };
 
 const Engine = {
@@ -2435,6 +2616,66 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
           </div>`;
           UI.openModal('tips-modal');
       };
+    } else if (Game.currentDay === 10 && t === 'belajar') {
+      btnTips.classList.remove('hidden');
+
+      // Tampilkan notifikasi saat pertama kali masuk materi Predikat Negatif (Soal ke-6 / indeks 5)
+      if (i === 5 && !Game.keiyoushiTipSeen) {
+          tipsBubble.classList.remove('hidden');
+      }
+
+      btnTips.onclick = () => {
+          Game.keiyoushiTipSeen = true;
+          tipsBubble.classList.add('hidden');
+
+          tipsH2.innerHTML = "💡 RAHASIA KATA SIFAT (KEIYOUSHI)";
+          tipsContent.innerHTML = `
+          <div id="slide-ks-1" class="slide-page">
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:10px;">
+                  Sifat benda terbagi menjadi dua kelompok besar: <b>KS-i</b> dan <b>KS-na</b>. Cara mereka menempel pada kata benda sangat berbeda, lho!<br><br>
+                  <b style="color:var(--primary); font-size:14px;">1. Saat Menempel pada Kata Benda</b><br>
+                  Pola dasarnya selalu: <b style="color:white;">Sifat + Benda</b>.
+              </span>
+              <table style="width:100%; border-collapse: collapse; font-size: 13px; text-align:left; background:rgba(255,255,255,0.05); border-radius:8px; overflow:hidden;">
+                  <tr style="background:rgba(56, 189, 248, 0.2);">
+                      <th style="padding:8px; border:1px solid #334155;">Tipe</th>
+                      <th style="padding:8px; border:1px solid #334155;">Aturan</th>
+                      <th style="padding:8px; border:1px solid #334155;">Contoh</th>
+                  </tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>KS-i</b></td><td style="padding:8px; border:1px solid #334155;">Nempel Langsung</td><td style="padding:8px; border:1px solid #334155;">赤<b>い</b>花<br><i>(Aka-i hana)</i></td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;"><b>KS-na</b></td><td style="padding:8px; border:1px solid #334155;">Wajib pakai "na"</td><td style="padding:8px; border:1px solid #334155;">有名<b>な</b>本<br><i>(Yuumee-na hon)</i></td></tr>
+              </table>
+              <div style="background:rgba(234, 179, 8, 0.1); padding:8px; border-left:3px solid var(--warning); margin:15px 0 8px 0; font-size:12px;">
+                  <b>💡 Kenapa disebut KS-na?</b><br>
+                  Karena partikel <b>"na"</b> ini ibarat lem. Suku kata "na" HANYA muncul saat ia bertugas menempelkan kata sifat ke kata benda di depannya!
+              </div>
+              <button class="btn" style="padding:8px 12px; font-size:13px; margin:15px 0 0 0; background:var(--gold); width:100%;" onclick="document.getElementById('slide-ks-1').style.display='none'; document.getElementById('slide-ks-2').style.display='block';">Lanjut ke Bentuk Negatif ➡️</button>
+          </div>
+
+          <div id="slide-ks-2" class="slide-page" style="display:none;">
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:10px;">
+                  <b style="color:var(--success); font-size:14px;">2. Merubah Sifat Jadi Negatif ("Tidak...")</b><br>
+                  Saat kata sifat berdiri sendiri sebagai predikat di akhir kalimat, aturannya:
+              </span>
+              <span style="color:var(--primary); font-weight:bold; font-size:13px;">Kelompok KS-i</span><br>
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:10px;">
+                  Buang huruf <b>"i"</b> terakhir, ganti dengan <b>"ku arimasen"</b>.<br>
+                  • 高<b>い</b> (Taka-i) -> 高<b>くありません</b> (Taka-ku arimasen)
+              </span>
+              <span style="color:var(--success); font-weight:bold; font-size:13px;">Kelompok KS-na</span><br>
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block;">
+                  Karena tidak pakai lem "na" (ia tidak menempel pada benda lain), langsung tambahkan <b>"dewa arimasen"</b>.<br>
+                  • 有名 (Yuumee) -> 有名<b>ではありません</b> (Yuumee dewa arimasen)
+              </span>
+              <div style="background:rgba(239, 68, 68, 0.1); padding:8px; border-left:3px solid var(--danger); margin:15px 0 8px 0; font-size:12px;">
+                  <b>⚠️ AWAS JEBAKAN:</b><br>
+                  KS-na yang berakhiran bunyi "i" (seperti Kiree / Yuumee) sering dikira KS-i. Mereka tetap masuk kelompok KS-na!
+              </div>
+              <button class="btn btn-alt" style="padding:8px 12px; font-size:13px; width:100%;" onclick="document.getElementById('slide-ks-2').style.display='none'; document.getElementById('slide-ks-1').style.display='block';">⬅️ Kembali</button>
+          </div>`;
+          UI.openModal('tips-modal');
+      };
+
 
       
     } else { btnTips.classList.add('hidden'); }
