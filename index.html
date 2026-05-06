@@ -1749,7 +1749,7 @@ const ManualDB = {
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
         jp: [ {k:"彼", r:"かれ"}, {text:"は", p:true}, {k:"健康", r:"けんこう", u:true}, {text:"です", u:true}, {text:"。"} ],
-        a: "Dia (laki-laki) sehat.", ansP: ["は"], ansA: "Sehat.", qA: "Terjemahkanlah kata bergaris bawah!"
+        a: "Dia (laki-laki) sehat.", ansP: ["は"], ansA: "Sehat.", qA: "Terjemahkanlah kata bergaris bawah (termasuk です)!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
@@ -1836,10 +1836,13 @@ const ManualDB = {
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な'],
         jp: [ 
-          {text:"<b>デウィ:</b> "}, {k:"あの", r:"あの"}, {k:"音楽", r:"おんがく"}, {text:"は", p:true}, {k:"静か", r:"しずか"}, {text:"な", p:true}, {k:"音楽", r:"おんがく"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>シンタ:</b> いいえ、"},
-          {k:"あの", r:"あの", u:true}, {k:"音楽", r:"おんがく", u:true}, {text:"は", p:true, u:true}, {k:"静か", r:"しずか", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true} 
+          {text:"<b>デウィ:</b> "}, {k:"その", r:"その"}, {k:"音楽", r:"おんがく"}, {text:"は", p:true}, {k:"静か", r:"しずか"}, {text:"な", p:true}, {k:"音楽", r:"おんがく"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>シンタ:</b> いいえ、"},
+          {k:"この", r:"この", u:true}, {k:"音楽", r:"おんがく", u:true}, {text:"は", p:true, u:true}, {k:"静か", r:"しずか", u:true}, {text:"では", p:true, u:true}, {text:"ありません。", u:true} 
         ],
-        a: "<b>Dewi:</b> Apakah musik di sana itu adalah musik (yang) tenang?<br><b>Sinta:</b> Tidak, musik di sana itu tidak tenang.", ansP: ["は", "な", "か", "は", "では"], ansA: "Musik di sana itu tidak tenang.", qA: "Terjemahkan kalimat Sinta yang bergaris bawah!"
+        a: "<b>Dewi:</b> Apakah musik itu (yang kamu dengar) adalah musik (yang) tenang?<br><b>Sinta:</b> Tidak, musik ini tidak tenang.", 
+        ansP: ["は", "な", "か", "は", "では"], 
+        ansA: "Musik ini tidak tenang.", 
+        qA: "Terjemahkan kalimat Sinta yang bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'な', 'はい'],
@@ -1870,7 +1873,7 @@ const ManualDB = {
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
         jp: [ {k:"あれ", r:"あれ"}, {text:"は", p:true}, {k:"便利", r:"べんり"}, {text:"な", p:true}, {k:"車", r:"くるま"}, {text:"です。"} ],
-        a: "Itu (yang di sana) adalah mobil (yang) praktis.", ansP: ["は", "な"], ansA: "Itu (yang di sana) adalah mobil (yang) praktis."
+        a: "Itu (yang di sana) adalah mobil yang praktis (penggunaan/sistemnya).", ansP: ["は", "な"], ansA: "Itu (yang di sana) adalah mobil yang praktis (penggunaan/sistemnya)."
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
@@ -1880,7 +1883,9 @@ const ManualDB = {
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く'],
         jp: [ {k:"あの", r:"あの"}, {k:"病院", r:"びょういん"}, {text:"は", p:true}, {k:"便利", r:"べんり"}, {text:"では", p:true}, {text:"ありません。"} ],
-        a: "Rumah sakit di sana itu tidak praktis.", ansP: ["は", "では"], ansA: "Rumah sakit di sana itu tidak praktis."
+        a: "Rumah sakit di sana itu tidak praktis (akses/sistemnya).", 
+        ansP: ["は", "では"], 
+        ansA: "Rumah sakit di sana itu tidak praktis (akses/sistemnya)."
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
@@ -1890,7 +1895,9 @@ const ManualDB = {
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'な'],
         jp: [ {k:"あちら", r:"あちら"}, {text:"は", p:true}, {k:"不便", r:"ふべん"}, {text:"な", p:true}, {k:"町", r:"まち"}, {text:"です。"} ],
-        a: "Di sebelah sana adalah kota (yang) tidak praktis.", ansP: ["は", "な"], ansA: "Di sebelah sana adalah kota (yang) tidak praktis."
+        a: "Di sebelah sana adalah kota (yang) tidak praktis (fasilitas/aksesnya).", 
+        ansP: ["は", "な"], 
+        ansA: "Di sebelah sana adalah kota (yang) tidak praktis (fasilitas/aksesnya)."
       }
     ],
 proKuisExtra: []
@@ -2105,7 +2112,7 @@ const RPG = {
     }
 
     let pwd = prompt("Sandi Otorisasi Dev:");
-    if(pwd === "Zajuli123") {
+    if(pwd === "Gozaru") {
       Game.adminMode = true;
       Game.unlockedDay = 99; 
       UI.closeModal('shop-modal');
@@ -2638,11 +2645,6 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
       };
     } else if (Game.currentDay === 10 && t === 'belajar') {
       btnTips.classList.remove('hidden');
-
-      // Tampilkan notifikasi saat pertama kali masuk materi Predikat Negatif (Soal ke-6 / indeks 5)
-      if (i === 5 && !Game.keiyoushiTipSeen) {
-          tipsBubble.classList.remove('hidden');
-      }
 
       btnTips.onclick = () => {
           Game.keiyoushiTipSeen = true;
