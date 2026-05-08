@@ -1953,13 +1953,13 @@ proKuisExtra: []
       },
       {
         isMulti: true, opts: ['は', 'も', 'の', 'では', 'く', 'でした', 'かった'],
-        jp: [ {k:"昨日", r:"きのう"}, {text:"の", p:true}, {k:"朝食", r:"ちょうしょく"}, {text:"は", p:true}, {k:"美味", r:"おいし"}, {text:"く", p:true}, {text:"ありませんでした。"} ],
+        jp: [ {k:"昨日", r:"きのう"}, {text:"の", p:true}, {k:"朝食", r:"ちょうしょく"}, {text:"は", p:true}, {k:"美味し", r:"おいし"}, {text:"く", p:true}, {text:"ありませんでした。"} ],
         a: "Sarapan kemarin tidak enak.", ansP: ["の", "は", "く"], ansA: "Sarapan kemarin tidak enak."
       },
       {
         isMulti: true, opts: ['は', 'も', 'の', 'では', 'く', 'でした', 'かった'],
-        jp: [ {k:"あの", r:"あの"}, {k:"映画", r:"えいが"}, {text:"は", p:true}, {k:"面白", r:"おもしろ"}, {text:"く", p:true}, {text:"ありませんでした。"} ],
-        a: "Film itu (di sana) tidak menarik.", ansP: ["は", "く"], ansA: "Film itu (di sana) tidak menarik."
+        jp: [ {k:"昨日", r:"きのう"}, {text:"の", p:true}, {k:"映画", r:"えいが"}, {text:"は", p:true}, {k:"面白", r:"おもしろ"}, {text:"く", p:true}, {text:"ありませんでした。"} ],
+        a: "Film kemarin tidak menarik.", ansP: ["の", "は", "く"], ansA: "Film kemarin tidak menarik."
       },
       {
         isMulti: true, opts: ['は', 'も', 'の', 'では', 'く', 'でした', 'かった'],
@@ -1985,17 +1985,25 @@ proKuisExtra: []
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'でした', 'かった'],
         jp: [ 
           {text:"<b>デウィ:</b> "}, {k:"昨日", r:"きのう"}, {text:"の"}, {k:"テスト", r:"テスト"}, {text:"は", p:true}, {k:"簡単", r:"かんたん"}, {text:"でした", p:true}, {text:"か", p:true}, {text:"。<br><b>シンタ:</b> いいえ、"}, 
-          {k:"簡単", r:"かんたん", u:true}, {text:"では", p:true, u:true}, {text:"ありませんでした。", u:true}, {text:" "}, {k:"難し", r:"むずかし"}, {text:"かった"}, {text:"です。"} 
+          {k:"簡単", r:"かんたん", u:true}, {text:"では", p:true, u:true}, {text:"ありません", u:true}, {text:"でした", p:true, u:true}, {text:"。", u:true}, {text:" "}, 
+          {k:"難し", r:"むずかし"}, {text:"かった", p:true}, {text:"です。"} 
         ],
-        a: "<b>Dewi:</b> Apakah tes kemarin mudah?<br><b>Sinta:</b> Tidak, tidak mudah. Susah.", ansP: ["は", "でした", "か", "では"], ansA: "Tidak mudah.", qA: "Terjemahkan bagian kalimat Sinta yang bergaris bawah!"
+        a: "<b>Dewi:</b> Apakah tes kemarin mudah?<br><b>Sinta:</b> Tidak, tidak mudah. Susah.", 
+        ansP: ["は", "でした", "か", "では", "でした", "かった"], 
+        ansA: "Tidak mudah.", 
+        qA: "Terjemahkan bagian kalimat Sinta yang bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'でした', 'かった'],
         jp: [ 
-          {text:"<b>リン:</b> "}, {k:"あの", r:"あの"}, {k:"映画", r:"えいが"}, {text:"は", p:true}, {k:"面白", r:"おもしろ"}, {text:"かった", p:true}, {text:"ですか。<br><b>サクラ:</b> いいえ、"}, 
-          {k:"面白", r:"おもしろ", u:true}, {text:"く", p:true, u:true}, {text:"ありませんでした。", u:true}, {text:" "}, {k:"つまらな", r:"つまらな"}, {text:"かった"}, {text:"です。"} 
+          {text:"<b>リン:</b> "}, {k:"昨日", r:"きのう"}, {text:"の", p:true}, {k:"映画", r:"えいが"}, {text:"は", p:true}, {k:"面白", r:"おもしろ"}, {text:"かった", p:true}, {text:"ですか。<br><b>サクラ:</b> いいえ、"}, 
+          {k:"面白", r:"おもしろ", u:true}, {text:"く", p:true, u:true}, {text:"ありません", u:true}, {text:"でした", p:true, u:true}, {text:"。", u:true}, {text:" "}, 
+          {k:"つまらな", r:"つまらな"}, {text:"かった", p:true}, {text:"です。"} 
         ],
-        a: "<b>Rin:</b> Apakah film itu (di sana) menarik?<br><b>Sakura:</b> Tidak, tidak menarik. Membosankan.", ansP: ["は", "かった", "く"], ansA: "Tidak menarik.", qA: "Terjemahkan bagian kalimat Sakura yang bergaris bawah!"
+        a: "<b>Rin:</b> Apakah film kemarin menarik?<br><b>Sakura:</b> Tidak, tidak menarik. Membosankan.", 
+        ansP: ["の", "は", "かった", "く", "でした", "かった"], 
+        ansA: "Tidak menarik.", 
+        qA: "Terjemahkan bagian kalimat Sakura yang bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'でした', 'かった'],
@@ -2008,8 +2016,8 @@ proKuisExtra: []
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'でした', 'かった'],
         jp: [ 
-          {text:"<b>サクラ:</b> "}, {k:"昨日", r:"きのう"}, {text:"の"}, {k:"朝食", r:"ちょうしょく"}, {text:"は", p:true}, {k:"美味", r:"おいし"}, {text:"かった", p:true}, {text:"ですか。<br><b>リン:</b> "}, 
-          {text:"はい、"}, {k:"美味", r:"おいし", u:true}, {text:"かった", p:true, u:true}, {text:"です", u:true}, {text:"。", u:true} 
+          {text:"<b>サクラ:</b> "}, {k:"昨日", r:"きのう"}, {text:"の"}, {k:"朝食", r:"ちょうしょく"}, {text:"は", p:true}, {k:"美味し", r:"おいし"}, {text:"かった", p:true}, {text:"ですか。<br><b>リン:</b> "}, 
+          {text:"はい、"}, {k:"美味し", r:"おいし", u:true}, {text:"かった", p:true, u:true}, {text:"です", u:true}, {text:"。", u:true} 
         ],
         a: "<b>Sakura:</b> Apakah sarapan kemarin enak?<br><b>Rin:</b> Ya, enak.", ansP: ["は", "かった", "かった"], ansA: "Enak.", qA: "Terjemahkan jawaban Rin yang bergaris bawah!"
       },
@@ -2024,10 +2032,14 @@ proKuisExtra: []
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'でした', 'かった'],
         jp: [ 
-          {text:"<b>マリ:</b> "}, {k:"以前", r:"いぜん"}, {text:"、"}, {k:"この", r:"この"}, {k:"町", r:"まち"}, {text:"は", p:true}, {k:"賑やか", r:"にぎやか"}, {text:"でした", p:true}, {text:"ですか。<br><b>アリ:</b> いいえ、"}, 
-          {k:"賑やか", r:"にぎやか", u:true}, {text:"では", p:true, u:true}, {text:"ありませんでした。", u:true}, {text:" "}, {k:"静か", r:"しずか"}, {text:"でした。"} 
+          {text:"<b>マリ:</b> "}, {k:"以前", r:"いぜん"}, {text:"、"}, {k:"この", r:"この"}, {k:"町", r:"まち"}, {text:"は", p:true}, {k:"賑やか", r:"にぎやか"}, {text:"でした", p:true}, {text:"か", p:true}, {text:"。<br><b>アリ:</b> いいえ、"}, 
+          {k:"賑やか", r:"にぎやか", u:true}, {text:"では", p:true, u:true}, {text:"ありません", u:true}, {text:"でした", p:true, u:true}, {text:"。", u:true}, {text:" "}, 
+          {k:"静か", r:"しずか"}, {text:"でした", p:true}, {text:"。"} 
         ],
-        a: "<b>Mari:</b> Dulu, apakah kota ini ramai?<br><b>Ali:</b> Tidak, tidak ramai. (Dulu) tenang.", ansP: ["は", "でした", "では"], ansA: "Tidak ramai.", qA: "Terjemahkan bagian kalimat Ali yang bergaris bawah!"
+        a: "<b>Mari:</b> Dulu, apakah kota ini ramai?<br><b>Ali:</b> Tidak, tidak ramai. (Dulu) tenang.", 
+        ansP: ["は", "でした", "か", "では", "でした", "でした"], 
+        ansA: "Tidak ramai.", 
+        qA: "Terjemahkan bagian kalimat Ali yang bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'でした', 'かった'],
@@ -2040,10 +2052,10 @@ proKuisExtra: []
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'でした', 'かった'],
         jp: [ 
-          {text:"<b>アグス:</b> "}, {k:"以前", r:"いぜん"}, {text:"、"}, {k:"あの", r:"あの"}, {k:"社長", r:"しゃちょう"}, {text:"は", p:true}, {k:"貧乏", r:"びんぼう"}, {text:"でした", p:true}, {text:"ですか。<br><b>ケン:</b> "}, 
+          {text:"<b>アグス:</b> "}, {k:"以前", r:"いぜん"}, {text:"、"}, {k:"あの", r:"あの"}, {k:"社長", r:"しゃちょう"}, {text:"は", p:true}, {k:"貧乏", r:"びんぼう"}, {text:"でした", p:true}, {text:"か", p:true}, {text:"。<br><b>ケン:</b> "}, 
           {text:"はい、"}, {k:"彼", r:"かれ", u:true}, {text:"は", p:true, u:true}, {k:"貧乏", r:"びんぼう", u:true}, {text:"でした", p:true, u:true}, {text:"。", u:true} 
         ],
-        a: "<b>Agus:</b> Dulu, apakah Bapak Presiden Direktur itu miskin?<br><b>Ken:</b> Ya, dia miskin.", ansP: ["は", "でした", "は", "でした"], ansA: "Dia miskin.", qA: "Terjemahkan jawaban Ken yang bergaris bawah!"
+        a: "<b>Agus:</b> Dulu, apakah Bapak Presiden Direktur itu miskin?<br><b>Ken:</b> Ya, dia miskin.", ansP: ["は", "でした", "か", "は", "でした"], ansA: "Dia miskin.", qA: "Terjemahkan jawaban Ken yang bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'でした', 'かった'],
@@ -2062,8 +2074,8 @@ proKuisExtra: []
       },
       {
         isMulti: true, opts: ['は', 'も', 'の', 'では', 'く', 'でした', 'かった'],
-        jp: [ {k:"あの", r:"あの"}, {k:"映画", r:"えいが"}, {text:"は", p:true}, {k:"つまらな", r:"つまらな"}, {text:"く", p:true}, {text:"ありませんでした。"} ],
-        a: "Film itu (di sana) tidak membosankan.", ansP: ["は", "く"], ansA: "Film itu (di sana) tidak membosankan."
+        jp: [ {k:"昨日", r:"きのう"}, {text:"の", p:true}, {k:"映画", r:"えいが"}, {text:"は", p:true}, {k:"つまらな", r:"つまらな"}, {text:"く", p:true}, {text:"ありませんでした。"} ],
+        a: "Film kemarin tidak membosankan.", ansP: ["の", "は", "く"], ansA: "Film kemarin tidak membosankan."
       },
       {
         isMulti: true, opts: ['は', 'も', 'の', 'では', 'く', 'でした', 'かった'],
@@ -2072,13 +2084,17 @@ proKuisExtra: []
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'では', 'く', 'でした', 'かった'],
-        jp: [ {k:"昨日", r:"きのう"}, {text:"は", p:true}, {k:"暇", r:"ひま"}, {text:"でした", p:true}, {text:"か", p:true}, {text:"。"} ],
-        a: "Apakah kemarin senggang?", ansP: ["は", "でした", "か"], ansA: "Apakah kemarin senggang?"
+        jp: [ {k:"昨日", r:"きのう"}, {text:"は", p:true}, {k:"休み", r:"やすみ"}, {text:"でした", p:true}, {text:"か", p:true}, {text:"。"} ],
+        a: "Apakah kemarin libur?", 
+        ansP: ["は", "でした", "か"], 
+        ansA: "Apakah kemarin libur?"
       },
       {
         isMulti: true, opts: ['は', 'も', 'の', 'では', 'く', 'でした', 'かった'],
-        jp: [ {k:"あの", r:"あの"}, {k:"時計", r:"とけい"}, {text:"は", p:true}, {k:"安", r:"やす"}, {text:"く", p:true}, {text:"ありませんでした。"} ],
-        a: "Jam itu (di sana) tidak murah.", ansP: ["は", "く"], ansA: "Jam itu (di sana) tidak murah."
+        jp: [ {k:"以前", r:"いぜん"}, {text:"、"}, {k:"あの", r:"あの"}, {k:"時計", r:"とけい"}, {text:"は", p:true}, {k:"安", r:"やす"}, {text:"く", p:true}, {text:"ありませんでした。"} ],
+        a: "Dulu, jam itu (di sana) tidak murah.", 
+        ansP: ["は", "く"], 
+        ansA: "Dulu, jam itu (di sana) tidak murah."
       }
     ],
     proKuisExtra: []
