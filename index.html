@@ -535,8 +535,8 @@ body.danger-mode { animation: pulseDanger 1.5s infinite; }
     </div>
 
     <div class="shop-item">
-      <div><b>👁️ Mata Kensei</b><br><small style="color:var(--text-sub);">Skip Soal (Tanpa Reward)</small></div>
-      <button class="btn btn-shop" style="width:auto; margin:0;" onclick="RPG.buyItem('skip', 500)">500 🪙</button>
+      <div><b>👁️ Mata Kensei</b><br><small style="color:var(--text-sub);">Buka Teks Jepang (Tab Arti)</small></div>
+      <button class="btn btn-shop" style="width:auto; margin:0;" onclick="RPG.buyItem('mata', 500)">500 🪙</button>
     </div>
 
     <div class="shop-item">
@@ -2173,12 +2173,15 @@ proKuisExtra: []
       },
 
       // FASE 3: Wa vs Ga dalam Dialog [11-15]
-      {
+       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'に', 'が', 'では'],
         jp: [ 
-          {text:"<b>デウィ:</b> あれ！"}, {k:"机", r:"つくえ"}, {text:"の", p:true}, {k:"上", r:"うえ"}, {text:"に", p:true}, {k:"ピザ", r:"ピザ"}, {text:"が", p:true}, {text:"ありません！<br><b>ケン:</b> ああ、あの"}, {k:"ピザ", r:"ピザ", u:true}, {text:"は", p:true, u:true}, {k:"冷蔵庫", r:"れいぞうこ", u:true}, {text:"の", p:true, u:true}, {k:"中", r:"なか", u:true}, {text:"に", p:true, u:true}, {text:"あります", u:true}, {text:"。"} 
+          {text:"<b>デウィ:</b> あれ！"}, {k:"机", r:"つくえ"}, {text:"の", p:true}, {k:"上", r:"うえ"}, {text:"に", p:true}, {k:"ピザ", r:"ピザ"}, {text:"が", p:true}, {text:"ありません！<br><b>ケン:</b> ああ、"}, {text:"あの", u:true}, {k:"ピザ", r:"ピザ", u:true}, {text:"は", p:true, u:true}, {k:"冷蔵庫", r:"れいぞうこ", u:true}, {text:"の", p:true, u:true}, {k:"中", r:"なか", u:true}, {text:"に", p:true, u:true}, {text:"あります", u:true}, {text:"。"} 
         ],
-        a: "<b>Dewi:</b> Aduh! Tidak ada pizza di atas meja!<br><b>Ken:</b> Oh, pizza itu... Pizzanya ada di dalam kulkas.", ansP: ["の", "に", "が", "は", "の", "に"], ansA: "Pizzanya ada di dalam kulkas.", qA: "Terjemahkan kalimat jawaban Ken yang bergaris bawah!"
+        a: "<b>Dewi:</b> Aduh! Tidak ada pizza di atas meja!<br><b>Ken:</b> Oh, pizza itu... Pizzanya ada di dalam kulkas.", 
+        ansP: ["の", "に", "が", "は", "の", "に"], 
+        ansA: "Pizzanya ada di dalam kulkas.", 
+        qA: "Terjemahkan kalimat jawaban Ken yang bergaris bawah!"
       },
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'に', 'が', 'では'],
@@ -2195,12 +2198,15 @@ proKuisExtra: []
         a: "<b>Sakura:</b> Apakah Mari ada di perpustakaan?<br><b>Ken:</b> Tidak, Mari ada di ruang kelas.", ansP: ["は", "に", "か", "は", "に"], ansA: "Mari ada di ruang kelas.", qA: "Terjemahkan jawaban Ken yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'も', 'か', 'の', 'に', 'が', 'では'],
+        isMulti: true, opts: ['は', 'も', 'か', 'の', 'に', 'が', 'な', 'では'],
         jp: [ 
-          {text:"<b>リン:</b> "}, {k:"ケンさん", r:"ケンさん"}, {text:"の", p:true}, {k:"隣", r:"となり"}, {text:"に", p:true}, {k:"誰", r:"だれ"}, {text:"が", p:true}, {text:"います"}, {text:"か", p:true}, {text:"。<br><b>アグス:</b> "}, {k:"ケンさん", r:"ケンさん", u:true}, {text:"の", p:true, u:true}, {k:"隣", r:"となり", u:true}, {text:"に", p:true, u:true}, {k:"デウィさん", r:"デウィさん", u:true}, {text:"が", p:true, u:true}, {text:"います", u:true}, {text:"。"} 
+          {text:"<b>リン:</b> "}, {k:"ケンさん", r:"ケンさん"}, {text:"の", p:true}, {k:"左側", r:"ひだりがわ"}, {text:"に", p:true}, {k:"あの人", r:"あのひと"}, {text:"が", p:true}, {text:"います。"}, {k:"あの人", r:"あのひと"}, {text:"は", p:true}, {k:"誰", r:"だれ"}, {text:"ですか。"}, {k:"有名", r:"ゆうめい"}, {text:"な", p:true}, {k:"人", r:"ひと"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>デウィ:</b> "}, {text:"あの", u:true}, {k:"方", r:"かた", u:true}, {text:"は", p:true, u:true}, {k:"私達", r:"わたしたち", u:true}, {text:"の", p:true, u:true}, {k:"社長", r:"しゃちょう", u:true}, {text:"です", u:true}, {text:"。"}, {k:"会社", r:"かいしゃ"}, {text:"で とても "}, {k:"有名", r:"ゆうめい"}, {text:"ですよ！"} 
         ],
-        a: "<b>Rin:</b> Di sebelah Ken ada siapa?<br><b>Agus:</b> Di sebelah Ken ada Dewi.", ansP: ["の", "に", "が", "か", "の", "に", "が"], ansA: "Di sebelah Ken ada Dewi.", qA: "Terjemahkan jawaban Agus!"
-      },
+        a: "<b>Rin:</b> Di sebelah kiri Ken ada orang itu. Orang itu siapa? Orang yang terkenal kah?<br><b>Dewi:</b> Beliau adalah presiden direktur kita. Beliau sangat terkenal di kantor lho!", 
+        ansP: ["の", "に", "が", "は", "な", "か", "は", "の"], 
+        ansA: "Beliau adalah presiden direktur kita.", 
+        qA: "Terjemahkan jawaban Dewi yang bergaris bawah!"
+      }, 
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'に', 'が', 'では'],
         jp: [ 
@@ -2293,11 +2299,11 @@ proKuisExtra: []
       {
         isMulti: true, opts: ['は', 'も', 'か', 'の', 'に', 'が', 'な', 'では'],
         jp: [ 
-          {text:"<b>シンタ:</b> "}, {k:"私", r:"わたし"}, {text:"の", p:true}, {k:"高い", r:"たかい"}, {k:"時計", r:"とけい"}, {text:"が", p:true}, {text:"ありません！<br><b>アグス:</b> "}, {k:"あなた", r:"あなた", u:true}, {text:"の", p:true, u:true}, {k:"時計", r:"とけい", u:true}, {text:"は", p:true, u:true}, {k:"あの", r:"あの", u:true}, {k:"大きい", r:"おおきい", u:true}, {k:"ベッド", r:"ベッド", u:true}, {text:"の", p:true, u:true}, {k:"下", r:"した", u:true}, {text:"に", p:true, u:true}, {text:"あります", u:true}, {text:"よ。"} 
+          {text:"<b>シンタ:</b> "}, {k:"私", r:"わたし"}, {text:"の", p:true}, {k:"高い", r:"たかい"}, {k:"時計", r:"とけい"}, {text:"が", p:true}, {text:"ありません！<br><b>アグス:</b> "}, {k:"あなた", r:"あなた", u:true}, {text:"の", p:true, u:true}, {k:"時計", r:"とけい", u:true}, {text:"は", p:true, u:true}, {k:"あの", r:"あの", u:true}, {k:"大きい", r:"おおきい", u:true}, {k:"ベッド", r:"ベッド", u:true}, {text:"の", p:true, u:true}, {k:"下", r:"した", u:true}, {text:"に", p:true, u:true}, {text:"あります", u:true}
         ],
-        a: "<b>Sinta:</b> Jam mahalku tidak ada!<br><b>Agus:</b> Jammu ada di bawah kasur yang besar itu lho.", 
+        a: "<b>Sinta:</b> Jam mahalku tidak ada!<br><b>Agus:</b> Jammu ada di bawah kasur yang besar itu.", 
         ansP: ["の", "が", "の", "は", "の", "に"], 
-        ansA: "Jammu ada di bawah kasur yang besar itu lho.", 
+        ansA: "Jammu ada di bawah kasur yang besar itu.", 
         qA: "Terjemahkan jawaban Agus yang bergaris bawah!"
       },
       {
@@ -2654,16 +2660,32 @@ const RPG = {
               UI.showToast("JEBAKAN BATMAN! Terkena Racun -1 HP!", "error");
               Game.decreaseHP(null); 
           }
-      } else if (type === 'skip') {
+      } else if (type === 'mata') {
           let t = Game.currentTab;
-          if(t === 'partikel' || t === 'arti') {
-              if(!Game.adminMode) this.coins -= cost; 
-              UI.showToast("Mata Kensei: Bypass Berhasil!", "success");
-              UI.closeModal('shop-modal');
-              UI.showResult(true, "", null, true); 
-          } else { UI.showToast("Sinyal Ditolak: Hanya untuk Zona Tempur.", "error"); return; }
-      } else { UI.showToast("Sinyal Ditolak: Transaksi tidak valid / HP Penuh.", "error"); return; }
-      
+          if(t === 'arti') {
+              if(!Game.mataActive) {
+                  if(!Game.adminMode) this.coins -= cost; 
+                  Game.mataActive = true;
+                  
+                  // Tarik kunci jawaban yang sudah disiapkan di UI.loadStep
+                  let jpText = Game.displayKanji !== Game.displayHiragana ? 
+                               `${Game.displayKanji} (${Game.displayHiragana})` : 
+                               Game.displayKanji;
+
+                  let mataBox = document.createElement('div');
+                  mataBox.className = 'intel-box'; 
+                  // Berikan warna emas agar berbeda dengan Intel Arti
+                  mataBox.style.borderColor = 'var(--gold)'; 
+                  mataBox.style.color = 'var(--gold)';
+                  mataBox.innerHTML = `<b>Mata Kensei:</b> ${jpText}`;
+                  
+                  document.getElementById('input-area').prepend(mataBox);
+                  UI.showToast("Mata Kensei Aktif! Teks Jepang terungkap.", "success");
+                  UI.closeModal('shop-modal'); // Tutup modal otomatis agar langsung terlihat
+              } else { UI.showToast("Mata Kensei sudah aktif!", "error"); return; }
+          } else { UI.showToast("Sinyal Ditolak: Hanya untuk Tab Arti.", "error"); return; }
+      } // <--- INI DIA KURUNG KURAWAL YANG TADI HILANG!
+
       this.save(); this.updateUI();
     } else UI.showToast("Kredit tidak memadai.", "error");
   },
@@ -3384,6 +3406,12 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
               <br><i>Contoh: 庭に 犬が <b>います</b> (Di taman ada anjing).</i>
               <br>• <b>あります (Arimasu)</b>: Untuk benda mati atau yang menancap di tanah (Benda, Kendaraan, Tanaman).
               <br><i>Contoh: 庭に ひまわりが <b>あります</b> (Di taman ada bunga matahari).</i></span>
+
+              <span style="color:var(--danger); font-weight:bold;">4. Tonari vs Yoko vs Soba</span><br>
+              <span style="color:var(--text-sub); font-size:13px; display:block; margin-bottom:10px;">Ketiganya berarti "di sebelah/dekat", tapi beda penggunaannya lho:
+              <br>• <b>隣 (Tonari)</b>: Bersebelahan, tapi <b>harus satu jenis/kategori</b>. (Contoh: Rumah di sebelah rumah, Budi di sebelah Andi).
+              <br>• <b>横 (Yoko)</b>: Di samping (sumbu horizontal kiri/kanan). <b>Bebas beda jenis</b>. (Contoh: Kucing di samping meja).
+              <br>• <b>そば (Soba)</b>: Di dekat. Jaraknya sangat dekat (bisa dijangkau), dan posisinya bebas tidak harus di samping.</span>
               
               <div style="background:rgba(255, 215, 0, 0.1); padding:10px; border-left:3px solid var(--gold); margin-top:15px; font-size:12px;">
                   <b>🐟 TRIVIA: Ikan & Hantu 👻</b><br><br>
@@ -3391,7 +3419,7 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
                   • Ikan di akuarium pakai <b>います</b> (karena hidup), tapi ikan yang dijual di pasar/supermarket pakai <b>あります (ari-masu)</b> karena sudah menjadi benda mati!
               </div>`;
               UI.openModal('tips-modal');
-          };
+          };          
       } else {
           // FASE 3 & 4 (i >= 10): Pertarungan Wa vs Ga & Ga sebagai "Tapi"
           if (i < 15 && !Game.waGaTipSeen) {
@@ -3528,10 +3556,50 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
         
         document.getElementById('input-area').innerHTML = `<input type="text" id="answer-box" class="input-box" placeholder="Ketik Hiragana / Kanji..." autocomplete="off"><button class="btn" id="btn-submit">EKSEKUSI</button>`;
         setTimeout(() => { document.getElementById('answer-box').focus(); document.getElementById('btn-submit').onclick = Action.checkInput; }, 100);
+        
+        // --- TAMBAHKAN KODE INI DI SINI ---
+        if (Game.mataActive) {
+            let jpText = Game.displayKanji !== Game.displayHiragana ? 
+                         `${Game.displayKanji} (${Game.displayHiragana})` : 
+                         Game.displayKanji;
+            let mataBox = `<div class="intel-box" style="margin-bottom:15px; border-color:var(--gold); color:var(--gold);"><b>Mata Kensei:</b> ${jpText}</div>`;
+            document.getElementById('input-area').insertAdjacentHTML('afterbegin', mataBox);
+        }
+        // ----------------------------------
       }
-      if (Game.adminMode && t !== 'hafalan' && t !== 'dungeon' && t !== 'belajar' && i < Game.sessionData[t].length) {
-          let adminBtn = `<button class="btn" style="background:var(--danger); color:white; margin-top:15px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);" onclick="UI.showResult(true, 'ADMIN BYPASS', null, true)">⏩ Bypass Soal (Admin)</button>`;
-          document.getElementById('input-area').insertAdjacentHTML('beforeend', adminBtn);
+      
+      // --- SISTEM ADMIN CHEAT & BYPASS ---
+      if (Game.adminMode && t !== 'dungeon') {
+          let cheatAnswer = "";
+
+          // Tentukan jawaban berdasarkan tab yang sedang aktif
+          if (t === 'partikel') {
+              if (itm.isMulti) {
+                  cheatAnswer = Game.targetMultiAns.join(" & ");
+              } else {
+                  cheatAnswer = Game.currentAns;
+              }
+          } else if (t === 'arti') {
+              cheatAnswer = `${Game.displayKanji} / ${Game.displayHiragana}`;
+          } else if (t === 'hafalan') {
+              // Cek apakah ini sedang di sesi Kuis Dadakan (Pengayaan)
+              const tHaf = Game.sessionData.hafalan.length;
+              if (i >= tHaf && i < tHaf + Game.sessionData.pengayaan.length) {
+                  cheatAnswer = Game.sessionData.pengayaan[i - tHaf].a;
+              }
+          }
+
+          // Render kotak jawaban (jika ada jawaban yang disembunyikan)
+          if (cheatAnswer) {
+              let cheatUI = `<div style="margin-top: 15px; padding: 10px; background: rgba(239, 68, 68, 0.15); border: 1px dashed var(--danger); border-radius: 8px; color: var(--danger); font-size: 14px; font-weight: bold; text-align: center; animation: slideUp 0.3s ease;">🔑 Kunci Admin: ${cheatAnswer}</div>`;
+              document.getElementById('input-area').insertAdjacentHTML('beforeend', cheatUI);
+          }
+
+          // Render tombol Bypass hanya untuk zona kuis (bukan materi murni)
+          if (t !== 'hafalan' && t !== 'belajar' && i < Game.sessionData[t].length) {
+              let adminBtn = `<button class="btn" style="background:var(--danger); color:white; margin-top:10px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);" onclick="UI.showResult(true, 'ADMIN BYPASS', null, true)">⏩ Bypass Soal (Admin)</button>`;
+              document.getElementById('input-area').insertAdjacentHTML('beforeend', adminBtn);
+          }
       }
       
     }
@@ -3542,6 +3610,7 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
     b.innerText = txt; b.classList.remove('hidden'); 
     b.onclick = () => UI.triggerNextAnim(() => { 
         Game.intelActive = false; 
+        Game.mataActive = false;
         
         Game.currentIndex++; 
         UI.loadStep(); 
