@@ -2677,6 +2677,523 @@ proKuisExtra: []
     proKuisExtra: []
   },
 
+  // --- HARI 14 ---
+  day14: {
+    hafalan: [
+      {k: "起きます", r: "おきます", a: "bangun tidur"}, {k: "寝ます", r: "ねます", a: "tidur"},
+      {k: "働きます", r: "はたらきます", a: "bekerja"}, {k: "勉強します", r: "べんきょうします", a: "belajar"},
+      {k: "休みます", r: "やすみます", a: "beristirahat"}, {k: "休み", r: "やすみ", a: "hari libur / istirahat"},
+      {k: "毎朝", r: "まいあさ", a: "setiap pagi"}, {k: "毎晩", r: "まいばん", a: "setiap malam"},
+      {k: "昨夜", r: "さくや", a: "tadi malam"}, {k: "朝", r: "あさ", a: "pagi"},
+      {k: "晩", r: "ばん", a: "malam"}, {k: "夕方", r: "ゆうがた", a: "sore"},
+      {k: "早く", r: "はやく", a: "dengan cepat / lebih awal"}, {k: "遅い", r: "おそい", a: "lambat / larut"},
+      {k: "たくさん", r: "たくさん", a: "banyak"}, {k: "ゆっくり", r: "ゆっくり", a: "dengan santai / perlahan"},
+      {k: "本当", r: "ほんとう", a: "sungguh / benar"}, {k: "素晴らしい", r: "すばらしい", a: "luar biasa"},
+      {k: "すごい", r: "すごい", a: "hebat"}, {k: "お疲れ様", r: "おつかれさま", a: "terima kasih atas kerja kerasnya"}
+    ],
+    materi: [
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "が", "を"],
+    "jp": [
+      {"k": "毎朝", "r": "まいあさ"},
+      {"text": "、"},
+      {"k": "六時", "r": "ろくじ"},
+      {"text": "に", "p": true},
+      {"k": "起きます", "r": "おきます"},
+      {"text": "。"}
+    ],
+    "a": "Setiap pagi, bangun tidur jam 6.",
+    "ansP": ["に"],
+    "ansA": "Setiap pagi, bangun tidur jam 6."
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "が", "を"],
+    "jp": [
+      {"k": "毎晩", "r": "まいばん"},
+      {"text": "、"},
+      {"k": "十時半", "r": "じゅうじはん"},
+      {"text": "に", "p": true},
+      {"k": "寝ます", "r": "ねます"},
+      {"text": "。"}
+    ],
+    "a": "Setiap malam, tidur jam 10 setengah.",
+    "ansP": ["に"],
+    "ansA": "Setiap malam, tidur jam 10 setengah."
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "が", "を"],
+    "jp": [
+      {"k": "月曜日", "r": "げつようび"},
+      {"text": "から", "p": true},
+      {"k": "金曜日", "r": "きんようび"},
+      {"text": "まで", "p": true},
+      {"k": "働きます", "r": "はたらきます"},
+      {"text": "。"}
+    ],
+    "a": "Bekerja dari hari Senin sampai hari Jumat.",
+    "ansP": ["から", "まで"],
+    "ansA": "Bekerja dari hari Senin sampai hari Jumat."
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "が", "を"],
+    "jp": [
+      {"k": "朝", "r": "あさ"},
+      {"text": "から", "p": true},
+      {"k": "晩", "r": "ばん"},
+      {"text": "まで", "p": true},
+      {"k": "勉強します", "r": "べんきょうします"},
+      {"text": "。"}
+    ],
+    "a": "Belajar dari pagi sampai malam.",
+    "ansP": ["から", "まで"],
+    "ansA": "Belajar dari pagi sampai malam."
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "が", "を"],
+    "jp": [
+      {"k": "明日", "r": "あした"},
+      {"text": "は", "p": true},
+      {"k": "五時", "r": "ごじ"},
+      {"text": "に", "p": true},
+      {"k": "起きません", "r": "おきません"},
+      {"text": "。"}
+    ],
+    "a": "Besok tidak bangun tidur jam 5.",
+    "ansP": ["は", "に"],
+    "ansA": "Besok tidak bangun tidur jam 5."
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "が", "を"],
+    "jp": [
+      {"k": "今日", "r": "きょう"},
+      {"text": "は", "p": true},
+      {"k": "働きません", "r": "はたらきません"},
+      {"text": "。"},
+      {"k": "休み", "r": "やすみ", "u": true},
+      {"text": "です", "u": true},
+      {"text": "。", "u": true}
+    ],
+    "a": "Hari ini tidak bekerja. Libur.",
+    "ansP": ["は"],
+    "ansA": "Libur.",
+    "qA": "Terjemahkan kalimat yang bergaris bawah!"
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "が", "を"],
+    "jp": [
+      {"k": "今朝", "r": "けさ"},
+      {"text": "は", "p": true},
+      {"k": "七時", "r": "しちじ"},
+      {"text": "に", "p": true},
+      {"k": "起きました", "r": "おきました"},
+      {"text": "。"}
+    ],
+    "a": "Tadi pagi bangun tidur jam 7.",
+    "ansP": ["は", "に"],
+    "ansA": "Tadi pagi bangun tidur jam 7."
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "が", "を"],
+    "jp": [
+      {"k": "昨日", "r": "きのう"},
+      {"text": "は", "p": true},
+      {"k": "午後", "r": "ごご"},
+      {"k": "六時", "r": "ろくじ"},
+      {"text": "から", "p": true},
+      {"k": "九時", "r": "くじ"},
+      {"text": "まで", "p": true},
+      {"k": "勉強しました", "r": "べんきょうしました"},
+      {"text": "。"}
+    ],
+    "a": "Kemarin belajar dari jam 6 sore sampai jam 9.",
+    "ansP": ["は", "から", "まで"],
+    "ansA": "Kemarin belajar dari jam 6 sore sampai jam 9."
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "が", "を"],
+    "jp": [
+      {"k": "昨夜", "r": "さくや"},
+      {"text": "は", "p": true},
+      {"k": "十一時", "r": "じゅういちじ"},
+      {"text": "に", "p": true},
+      {"k": "寝ませんでした", "r": "ねませんでした"},
+      {"text": "。"}
+    ],
+    "a": "Tadi malam tidak tidur jam 11.",
+    "ansP": ["は", "に"],
+    "ansA": "Tadi malam tidak tidur jam 11."
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "が", "と"],
+    "jp": [
+      {"k": "土曜日", "r": "どようび"},
+      {"text": "と", "p": true},
+      {"k": "日曜日", "r": "にちようび"},
+      {"text": "は", "p": true},
+      {"k": "勉強しませんでした", "r": "べんきょうしませんでした"},
+      {"text": "。"}
+    ],
+    "a": "Hari Sabtu dan hari Minggu tidak belajar.",
+    "ansP": ["と", "は"],
+    "ansA": "Hari Sabtu dan hari Minggu tidak belajar."
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "か", "と"],
+    "jp": [
+      {"text": "<b>アグス:</b> "},
+      {"k": "毎朝", "r": "まいあさ"},
+      {"k": "何時", "r": "なんじ"},
+      {"text": "に", "p": true},
+      {"k": "起きます", "r": "おきます"},
+      {"text": "か", "p": true},
+      {"text": "。<br><b>ケン:</b> "},
+      {"k": "私", "r": "わたし"},
+      {"text": "は", "p": true},
+      {"k": "毎朝", "r": "まいあさ"},
+      {"k": "五時", "r": "ごじ"},
+      {"text": "に", "p": true},
+      {"k": "起きます", "r": "おきます"},
+      {"text": "。"},
+      {"k": "アグスさん", "r": "アグスさん"},
+      {"text": "は", "p": true},
+      {"text": "。<br><b>アグス:</b> "},
+      {"k": "私", "r": "わたし", "u": true},
+      {"text": "は", "p": true, "u": true},
+      {"k": "六時半", "r": "ろくじはん", "u": true},
+      {"text": "に", "p": true, "u": true},
+      {"k": "起きます", "r": "おきます", "u": true},
+      {"text": "。", "u": true}
+    ],
+    "a": "<b>Agus:</b> Setiap pagi bangun tidur jam berapa?<br><b>Ken:</b> Saya setiap pagi bangun tidur jam 5. Kalau Agus?<br><b>Agus:</b> Saya bangun tidur jam 6 setengah.",
+    "ansP": ["に", "か", "は", "に", "は", "は", "に"],
+    "ansA": "Saya bangun tidur jam 6 setengah.",
+    "qA": "Terjemahkan kalimat terakhir Agus yang bergaris bawah!"
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "か", "と"],
+    "jp": [
+      {"text": "<b>デウィ:</b> "},
+      {"k": "毎日", "r": "まいにち"},
+      {"k": "働きます", "r": "はたらきます"},
+      {"text": "か", "p": true},
+      {"text": "。<br><b>ハルカ:</b> いいえ、"},
+      {"k": "月曜日", "r": "げつようび", "u": true},
+      {"text": "から", "p": true, "u": true},
+      {"k": "金曜日", "r": "きんようび", "u": true},
+      {"text": "まで", "p": true, "u": true},
+      {"k": "働きます", "r": "はたらきます", "u": true},
+      {"text": "。", "u": true},
+      {"k": "土曜日", "r": "どようび"},
+      {"text": "は", "p": true},
+      {"k": "働きません", "r": "はたらきません"},
+      {"text": "。<br><b>デウィ:</b> そうですか。"},
+      {"k": "分か", "r": "わか"},
+      {"text": "りました。"}
+    ],
+    "a": "<b>Dewi:</b> Apakah kamu bekerja setiap hari?<br><b>Haruka:</b> Tidak, saya bekerja dari hari Senin sampai hari Jumat. Hari Sabtu tidak bekerja.<br><b>Dewi:</b> Begitu ya. Saya mengerti.",
+    "ansP": ["か", "から", "まで", "は"],
+    "ansA": "saya bekerja dari hari Senin sampai hari Jumat.",
+    "qA": "Terjemahkan kalimat Haruka yang bergaris bawah!"
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "か", "と"],
+    "jp": [
+      {"text": "<b>シンタ:</b> "},
+      {"k": "サクラさん", "r": "サクラさん"},
+      {"text": "、"},
+      {"k": "昨夜", "r": "さくや"},
+      {"text": "は", "p": true},
+      {"k": "勉強しました", "r": "べんきょうしました"},
+      {"text": "か", "p": true},
+      {"text": "。<br><b>サクラ:</b> はい、"},
+      {"k": "勉強しました", "r": "べんきょうしました"},
+      {"text": "。"},
+      {"k": "午後", "r": "ごご", "u": true},
+      {"k": "七時", "r": "しちじ", "u": true},
+      {"text": "から", "p": true, "u": true},
+      {"k": "十時", "r": "じゅうじ", "u": true},
+      {"text": "まで", "p": true, "u": true},
+      {"k": "勉強しました", "r": "べんきょうしました", "u": true},
+      {"text": "。", "u": true},
+      {"text": "<br><b>シンタ:</b> すごいですね！"}
+    ],
+    "a": "<b>Sinta:</b> Sakura, apakah tadi malam kamu belajar?<br><b>Sakura:</b> Ya, saya belajar. Saya belajar dari jam 7 sore sampai jam 10.<br><b>Sinta:</b> Hebat ya!",
+    "ansP": ["は", "か", "から", "まで"],
+    "ansA": "Saya belajar dari jam 7 sore sampai jam 10.",
+    "qA": "Terjemahkan kalimat Sakura yang bergaris bawah!"
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "か", "と"],
+    "jp": [
+      {"text": "<b>リン:</b> "},
+      {"k": "アグスさん", "r": "アグスさん"},
+      {"text": "、"},
+      {"k": "昨日", "r": "きのう"},
+      {"text": "は", "p": true},
+      {"k": "何時", "r": "なんじ"},
+      {"text": "に", "p": true},
+      {"k": "寝ました", "r": "ねました"},
+      {"text": "か", "p": true},
+      {"text": "。<br><b>アグス:</b> "},
+      {"k": "昨日", "r": "きのう"},
+      {"text": "は", "p": true},
+      {"k": "十時", "r": "じゅうじ"},
+      {"text": "に", "p": true},
+      {"k": "寝ませんでした", "r": "ねませんでした"},
+      {"text": "。"},
+      {"k": "午前", "r": "ごぜん", "u": true},
+      {"k": "一時", "r": "いちじ", "u": true},
+      {"text": "に", "p": true, "u": true},
+      {"k": "寝ました", "r": "ねました", "u": true},
+      {"text": "。", "u": true},
+      {"text": "<br><b>リン:</b> ええ！"},
+      {"k": "遅い", "r": "おそい"},
+      {"text": "ですね。"}
+    ],
+    "a": "<b>Rin:</b> Agus, kemarin tidur jam berapa?<br><b>Agus:</b> Kemarin saya tidak tidur jam 10. Saya tidur jam 1 pagi.<br><b>Rin:</b> Eh! Larut sekali ya.",
+    "ansP": ["は", "に", "か", "は", "に", "に"],
+    "ansA": "Saya tidur jam 1 pagi.",
+    "qA": "Terjemahkan kalimat terakhir Agus yang bergaris bawah!"
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "か", "と"],
+    "jp": [
+      {"text": "<b>ケン:</b> "},
+      {"k": "デウィさん", "r": "デウィさん"},
+      {"text": "、"},
+      {"k": "日曜日", "r": "にちようび"},
+      {"text": "は", "p": true},
+      {"k": "働きました", "r": "はたらきました"},
+      {"text": "か", "p": true},
+      {"text": "。<br><b>デウィ:</b> いいえ、"},
+      {"k": "働きませんでした", "r": "はたらきませんでした"},
+      {"text": "。"},
+      {"k": "ケンさん", "r": "ケンさん"},
+      {"text": "は", "p": true},
+      {"text": "。<br><b>ケン:</b> "},
+      {"k": "私", "r": "わたし", "u": true},
+      {"text": "は", "p": true, "u": true},
+      {"k": "朝", "r": "あさ", "u": true},
+      {"text": "から", "p": true, "u": true},
+      {"k": "夕方", "r": "ゆうがた", "u": true},
+      {"text": "まで", "p": true, "u": true},
+      {"k": "働きました", "r": "はたらきました", "u": true},
+      {"text": "よ。", "u": true}
+    ],
+    "a": "<b>Ken:</b> Dewi, apakah hari Minggu kamu bekerja?<br><b>Dewi:</b> Tidak, saya tidak bekerja. Kalau Ken?<br><b>Ken:</b> Saya bekerja dari pagi sampai sore lho.",
+    "ansP": ["は", "か", "は", "は", "から", "まで"],
+    "ansA": "Saya bekerja dari pagi sampai sore lho.",
+    "qA": "Terjemahkan jawaban Ken yang bergaris bawah!"
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "か", "と"],
+    "jp": [
+      {"text": "<b>サクラ:</b> "},
+      {"k": "ハルカさん", "r": "ハルカさん"},
+      {"text": "、"},
+      {"k": "明日", "r": "あした"},
+      {"text": "は", "p": true},
+      {"k": "勉強します", "r": "べんきょうします"},
+      {"text": "か", "p": true},
+      {"text": "。<br><b>ハルカ:</b> いいえ、"},
+      {"k": "明日", "r": "あした"},
+      {"text": "は", "p": true},
+      {"k": "勉強しません", "r": "べんきょうしません"},
+      {"text": "。"},
+      {"k": "休みます", "r": "やすみます", "u": true},
+      {"text": "。", "u": true},
+      {"text": "<br><b>サクラ:</b> いいですね。"},
+      {"k": "ゆっくり", "r": "ゆっくり"},
+      {"k": "休んで", "r": "やすんで"},
+      {"text": "ください。"}
+    ],
+    "a": "<b>Sakura:</b> Haruka, apakah besok kamu akan belajar?<br><b>Haruka:</b> Tidak, besok saya tidak akan belajar. Saya akan beristirahat.<br><b>Sakura:</b> Baguslah. Silakan beristirahat dengan santai.",
+    "ansP": ["は", "か", "は"],
+    "ansA": "Saya akan beristirahat.",
+    "qA": "Terjemahkan kalimat terakhir Haruka yang bergaris bawah!"
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "か", "と"],
+    "jp": [
+      {"text": "<b>アグス:</b> "},
+      {"k": "シンタさん", "r": "シンタさん"},
+      {"text": "、"},
+      {"k": "今朝", "r": "けさ"},
+      {"text": "は", "p": true},
+      {"k": "早く", "r": "はやく"},
+      {"k": "起きました", "r": "おきました"},
+      {"text": "か", "p": true},
+      {"text": "。<br><b>シンタ:</b> いいえ、"},
+      {"k": "今朝", "r": "けさ"},
+      {"text": "は", "p": true},
+      {"k": "六時", "r": "ろくじ"},
+      {"text": "に", "p": true},
+      {"k": "起きませんでした", "r": "おきませんでした"},
+      {"text": "。"},
+      {"k": "八時", "r": "はちじ", "u": true},
+      {"text": "に", "p": true, "u": true},
+      {"k": "起きました", "r": "おきました", "u": true},
+      {"text": "。", "u": true},
+      {"text": "<br><b>アグス:</b> ははは、"},
+      {"k": "たくさん", "r": "たくさん"},
+      {"k": "寝ました", "r": "ねました"},
+      {"text": "ね。"}
+    ],
+    "a": "<b>Agus:</b> Sinta, apakah tadi pagi bangun cepat?<br><b>Sinta:</b> Tidak, tadi pagi saya tidak bangun jam 6. Saya bangun jam 8.<br><b>Agus:</b> Hahaha, kamu tidur banyak ya.",
+    "ansP": ["は", "か", "は", "に", "に"],
+    "ansA": "Saya bangun jam 8.",
+    "qA": "Terjemahkan kalimat terakhir Sinta yang bergaris bawah!"
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "か", "を"],
+    "jp": [
+      {"text": "<b>リン:</b> "},
+      {"k": "ケンさん", "r": "ケンさん"},
+      {"text": "は", "p": true},
+      {"k": "毎日", "r": "まいにち"},
+      {"k": "日本語", "r": "にほんご"},
+      {"text": "を", "p": true},
+      {"k": "勉強します", "r": "べんきょうします"},
+      {"text": "か", "p": true},
+      {"text": "。<br><b>ケン:</b> はい、"},
+      {"k": "毎日", "r": "まいにち", "u": true},
+      {"k": "朝", "r": "あさ", "u": true},
+      {"text": "から", "p": true, "u": true},
+      {"k": "晩", "r": "ばん", "u": true},
+      {"text": "まで", "p": true, "u": true},
+      {"k": "勉強します", "r": "べんきょうします", "u": true},
+      {"text": "。", "u": true},
+      {"text": "<br><b>リン:</b> "},
+      {"k": "本当", "r": "ほんとう"},
+      {"text": "ですか。"},
+      {"k": "素晴らしい", "r": "すばらしい"},
+      {"text": "です。"}
+    ],
+    "a": "<b>Rin:</b> Apakah Ken setiap hari belajar bahasa Jepang?<br><b>Ken:</b> Ya, setiap hari saya belajar dari pagi sampai malam.<br><b>Rin:</b> Benarkah? Luar biasa.",
+    "ansP": ["は", "を", "か", "から", "まで"],
+    "ansA": "setiap hari saya belajar dari pagi sampai malam.",
+    "qA": "Terjemahkan jawaban Ken yang bergaris bawah!"
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "か", "と"],
+    "jp": [
+      {"text": "<b>デウィ:</b> "},
+      {"k": "アグスさん", "r": "アグスさん"},
+      {"text": "、"},
+      {"k": "昨日", "r": "きのう"},
+      {"text": "は", "p": true},
+      {"k": "何時", "r": "なんじ"},
+      {"text": "まで", "p": true},
+      {"k": "働きました", "r": "はたらきました"},
+      {"text": "か", "p": true},
+      {"text": "。<br><b>アグス:</b> "},
+      {"k": "昨夜", "r": "さくや", "u": true},
+      {"text": "は", "p": true, "u": true},
+      {"k": "午後", "r": "ごご", "u": true},
+      {"k": "十時", "r": "じゅうじ", "u": true},
+      {"text": "まで", "p": true, "u": true},
+      {"k": "働きました", "r": "はたらきました", "u": true},
+      {"text": "。", "u": true},
+      {"text": "<br><b>デウィ:</b> "},
+      {"k": "十時", "r": "じゅうじ"},
+      {"text": "までですか！"},
+      {"k": "お疲れ様でした", "r": "おつかれさまでした"},
+      {"text": "。"}
+    ],
+    "a": "<b>Dewi:</b> Agus, kemarin bekerja sampai jam berapa?<br><b>Agus:</b> Tadi malam saya bekerja sampai jam 10 sore (malam).<br><b>Dewi:</b> Sampai jam 10?! Terima kasih atas kerja kerasnya.",
+    "ansP": ["は", "まで", "か", "は", "まで"],
+    "ansA": "Tadi malam saya bekerja sampai jam 10 sore (malam).",
+    "qA": "Terjemahkan jawaban Agus!"
+  },
+  {
+    "isMulti": true,
+    "opts": ["に", "は", "から", "まで", "か", "と"],
+    "jp": [
+      {"text": "<b>ハルカ:</b> "},
+      {"k": "サクラさん", "r": "サクラさん"},
+      {"text": "、"},
+      {"k": "昨日", "r": "きのう"},
+      {"text": "は", "p": true},
+      {"k": "働きました", "r": "はたらきました"},
+      {"text": "か", "p": true},
+      {"text": "。<br><b>サクラ:</b> はい、"},
+      {"k": "午前", "r": "ごぜん"},
+      {"k": "九時", "r": "くじ"},
+      {"text": "から", "p": true},
+      {"k": "午後", "r": "ごご"},
+      {"k": "五時", "r": "ごじ"},
+      {"text": "まで", "p": true},
+      {"k": "働きました", "r": "はたらきました"},
+      {"text": "。それから、"},
+      {"k": "七時", "r": "しちじ", "u": true},
+      {"text": "から", "p": true, "u": true},
+      {"k": "九時", "r": "くじ", "u": true},
+      {"text": "まで", "p": true, "u": true},
+      {"k": "勉強しました", "r": "べんきょうしました", "u": true},
+      {"text": "。", "u": true},
+      {"text": "<br><b>ハルカ:</b> "},
+      {"k": "仕事", "r": "しごと"},
+      {"text": "と"},
+      {"k": "勉強", "r": "べんきょう"},
+      {"text": "ですか。"},
+      {"k": "頑張りました", "r": "がんばりました"},
+      {"text": "ね！"}
+    ],
+    "a": "<b>Haruka:</b> Sakura, apakah kemarin kamu bekerja?<br><b>Sakura:</b> Ya, saya bekerja dari jam 9 pagi sampai jam 5 sore. Setelah itu, saya belajar dari jam 7 sampai jam 9.<br><b>Haruka:</b> Kerja dan belajar ya? Kamu sudah berjuang keras!",
+    "ansP": ["は", "か", "から", "まで", "から", "まで"],
+    "ansA": "saya belajar dari jam 7 sampai jam 9.",
+    "qA": "Terjemahkan kalimat terakhir Sakura yang bergaris bawah!"
+  }
+    ],
+    kuisExtra: [
+      {
+        isMulti: true, opts: ['に', 'は', 'から', 'まで', 'が', 'を'],
+        jp: [ {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"毎朝", r:"まいあさ"}, {text:"、"}, {k:"六時", r:"ろくじ"}, {text:"に", p:true}, {k:"起きます", r:"おきます"}, {text:"。"} ],
+        a: "Saya setiap pagi bangun tidur jam 6.", ansP: ["は", "に"], ansA: "Saya setiap pagi bangun tidur jam 6."
+      },
+      {
+        isMulti: true, opts: ['に', 'は', 'から', 'まで', 'が', 'を'],
+        jp: [ {k:"昨日", r:"きのう"}, {text:"は", p:true}, {k:"午後", r:"ごご"}, {k:"七時", r:"しちじ"}, {text:"から", p:true}, {k:"九時", r:"くじ"}, {text:"まで", p:true}, {k:"勉強しました", r:"べんきょうしました"}, {text:"。"} ],
+        a: "Kemarin belajar dari jam 7 sore sampai jam 9.", ansP: ["は", "から", "まで"], ansA: "Kemarin belajar dari jam 7 sore sampai jam 9."
+      },
+      {
+        isMulti: true, opts: ['ます', 'ません', 'ました', 'ませんでした', 'です'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"昨日", r:"きのう"}, {text:"は"}, {k:"働きました", r:"はたらきました"}, {text:"か。<br><b>A:</b> いいえ、"}, {k:"働き", r:"はたらき", u:true}, {text:"ませんでした", p:true, u:true}, {text:"。", u:true} ],
+        a: "<b>Q:</b> Apakah kemarin bekerja?<br><b>A:</b> Tidak, saya tidak bekerja.", ansP: ["ませんでした"], ansA: "saya tidak bekerja.", qA: "Lengkapi jawaban dengan bentuk waktu yang tepat!"
+      },
+      {
+        isMulti: true, opts: ['ます', 'ません', 'ました', 'ませんでした', 'です'],
+        jp: [ {text:"<b>Q:</b> "}, {k:"明日", r:"あした"}, {text:"は"}, {k:"勉強します", r:"べんきょうします"}, {text:"か。<br><b>A:</b> いいえ、"}, {k:"勉強し", r:"べんきょうし", u:true}, {text:"ません", p:true, u:true}, {text:"。", u:true} ],
+        a: "<b>Q:</b> Apakah besok akan belajar?<br><b>A:</b> Tidak, saya tidak akan belajar.", ansP: ["ません"], ansA: "saya tidak akan belajar.", qA: "Lengkapi jawaban dengan bentuk waktu yang tepat!"
+      },
+      {
+        isMulti: true, opts: ['に', 'は', 'から', 'まで', 'が', 'を'],
+        jp: [ {k:"今朝", r:"けさ"}, {text:"は", p:true}, {k:"五時", r:"ごじ"}, {text:"に", p:true}, {k:"起きませんでした", r:"おきませんでした"}, {text:"。"}, {k:"八時", r:"はちじ", u:true}, {text:"に", p:true, u:true}, {k:"起きました", r:"おきました", u:true}, {text:"。", u:true} ],
+        a: "Tadi pagi saya tidak bangun jam 5. Saya bangun jam 8.", ansP: ["は", "に", "に"], ansA: "Saya bangun jam 8.", qA: "Terjemahkan kalimat yang bergaris bawah!"
+      }
+    ],
+    proKuisExtra: []
+  },
+
 };
 
 const Engine = {
@@ -3672,6 +4189,76 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
               <span style="color:var(--gold); font-weight:bold;">⚠️ URUTAN WAKTU JEPANG</span><br>
               <span style="color:var(--text-sub); font-size:13px; display:block;">Ingat, urutan kalender di Jepang terbalik dari Indonesia! Susunannya harus dari yang TERBESAR ke TERKECIL.<br><b style="color:var(--gold);">Tahun ➔ Bulan ➔ Tanggal ➔ Hari</b>.<br><i>(Contoh: 来年の三月 / Maret tahun depan).</i></span>
           `;
+          UI.openModal('tips-modal');
+      };
+      
+    } else if (Game.currentDay === 14 && t === 'belajar') {
+      btnTips.classList.remove('hidden');
+
+      btnTips.onclick = () => {
+          Game.waktuTipSeen = true;
+          tipsBubble.classList.add('hidden');
+
+          tipsH2.innerHTML = "💡 WAKTU & RAHASIA PARTIKEL";
+          tipsContent.innerHTML = `
+          <div id="slide-waktu-1" class="slide-page">
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:15px;">
+                  Di Hari ke-14 ini, kita mulai menggunakan keterangan waktu. Tapi awas, ada aturan ketat tentang kapan kamu boleh menggunakan partikel <b>に (ni)</b> pada waktu!
+              </span>
+
+              <span style="color:var(--success); font-weight:bold;">1. Waktu Mutlak (WAJIB pakai に)</span><br>
+              <span style="color:var(--text-sub); font-size:13px; display:block; margin-bottom:10px;">
+                  Waktu yang memiliki <b>angka pasti</b> atau nama hari di kalender.<br>
+                  ✅ 6時<b>に</b>起きます (Bangun <b>pada</b> jam 6)<br>
+                  ✅ 日曜日<b>に</b>働きます (Bekerja <b>pada</b> hari Minggu)
+              </span>
+
+              <span style="color:var(--danger); font-weight:bold;">2. Waktu Relatif (HARAM pakai に)</span><br>
+              <span style="color:var(--text-sub); font-size:13px; display:block; margin-bottom:15px;">
+                  Waktu yang berubah-ubah posisinya tergantung kapan kamu berbicara (Besok, Kemarin, Hari ini, Setiap hari). Kata-kata ini <b>tidak boleh</b> ditempel partikel に.<br>
+                  ❌ 昨日<b>に</b>勉強しました (SALAH TOTAL!)<br>
+                  ✅ <b>昨日、</b>勉強しました (Benar: Kemarin, belajar)<br>
+                  ✅ <b>昨日 は</b>勉強しました (Benar: Kemarin belajar - <i>sebagai topik</i>)
+              </span>
+              <button class="btn" style="padding:8px 12px; font-size:13px; margin:15px 0 0 0; background:var(--gold); width:100%;" onclick="document.getElementById('slide-waktu-1').style.display='none'; document.getElementById('slide-waktu-2').style.display='block';">Lanjut: Wajah Ganda Partikel NI ➡️</button>
+          </div>
+
+          <div id="slide-waktu-2" class="slide-page" style="display:none;">
+              <span style="color:var(--primary); font-weight:bold; font-size: 15px;">💡 Wajah Ganda Partikel に (Ni)</span><br>
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-top:8px;">
+                  Kamu mungkin menyadari, partikel <b>に (ni)</b> yang kita pakai hari ini terasa berbeda dengan yang kita pelajari di Hari 12. Yap, partikel ini memang punya banyak wajah!<br><br>
+                  <b style="color:var(--warning);">Fungsi 1: Menandakan LOKASI (Di)</b><br>
+                  Dipelajari di Hari 12 (bersama imasu/arimasu).<br>
+                  <i>Contoh: 部屋<b>に</b> 猫が います。<br>(Ada kucing <b>DI</b> kamar).</i><br><br>
+                  <b style="color:var(--success);">Fungsi 2: Menandakan WAKTU (Pada)</b><br>
+                  Dipelajari hari ini di Hari 14.<br>
+                  <i>Contoh: 6時<b>に</b> 起きます。<br>(Bangun <b>PADA</b> jam 6).</i>
+              </span>
+
+              <div style="display:flex; gap:10px; margin-top:25px;">
+                  <button class="btn btn-alt" style="padding:8px 12px; font-size:13px; flex:1;" onclick="document.getElementById('slide-waktu-2').style.display='none'; document.getElementById('slide-waktu-1').style.display='block';">⬅️ Kembali</button>
+                  <button class="btn" style="padding:8px 12px; font-size:13px; background:var(--gold); flex:1;" onclick="document.getElementById('slide-waktu-2').style.display='none'; document.getElementById('slide-waktu-3').style.display='block';">Lanjut: Partikel WO/O ➡️</button>
+              </div>
+          </div>
+          
+          <div id="slide-waktu-3" class="slide-page" style="display:none;">
+              <span style="color:var(--warning); font-weight:bold; font-size: 15px;">💡 Penampakan Partikel を (Wo/O)</span><br>
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-top:8px;">
+                  Mungkin kamu menyadari di salah satu dialog tadi ada partikel <b>を (dibaca "o")</b>. Yap, dia sudah mulai menampakkan diri!<br><br>
+                  Fungsi utamanya sangat sederhana: sebagai <b>Penanda Objek</b> yang dikenai tindakan/aksi. Partikel ini bertugas menjembatani kata benda dengan kata kerja.<br>
+                  <i>Contoh: 日本語 <b>を</b> 勉強します。<br>(Belajar <b>[objek:]</b> bahasa Jepang).</i>
+              </span>
+
+              <div style="background:rgba(56, 189, 248, 0.1); padding:10px; border-left:3px solid var(--primary); margin-top:15px; font-size:12px;">
+                  <b>🚀 BOCORAN MISI HARI KE-15:</b><br>
+                  Persiapkan dirimu! Di misi infiltrasi besok, kita akan fokus secara khusus untuk menjinakkan partikel <b>で (de)</b>, <b>と (to)</b>, dan mengupas fungsi <b>に (ni)</b> lainnya. Kumpulkan terus EXP-mu, Kensei! 🥷
+              </div>
+
+              <div style="display:flex; gap:10px; margin-top:15px;">
+                  <button class="btn btn-alt" style="padding:8px 12px; font-size:13px; flex:1;" onclick="document.getElementById('slide-waktu-3').style.display='none'; document.getElementById('slide-waktu-2').style.display='block';">⬅️ Kembali</button>
+                  <button class="btn" style="padding:8px 12px; font-size:13px; background:var(--success); color:#000; flex:1;" onclick="document.getElementById('slide-waktu-3').style.display='none'; document.getElementById('slide-waktu-1').style.display='block'; UI.closeModal('tips-modal');">Siapp! ✅</button>
+              </div>
+          </div>`;
           UI.openModal('tips-modal');
       };
 
