@@ -3615,6 +3615,265 @@ proKuisExtra: []
     proKuisExtra: []
   },
 
+  // --- HARI 17 ---
+  day17: {
+    hafalan: [
+      {k: "食べます", r: "たべます", a: "makan"}, {k: "飲みます", r: "のみます", a: "minum"},
+      {k: "見ます", r: "みます", a: "melihat / menonton"}, {k: "読みます", r: "よみます", a: "membaca"},
+      {k: "聞きます", r: "ききます", a: "mendengar / mendengarkan"}, {k: "します", r: "します", a: "melakukan / bermain"},
+      {k: "朝ごはん", r: "あさごはん", a: "sarapan"}, {k: "牛乳", r: "ぎゅうにゅう", a: "susu"},
+      {k: "新聞", r: "しんぶん", a: "koran"}, {k: "雑誌", r: "ざっし", a: "majalah"},
+      {k: "映画", r: "えいが", a: "film"}, {k: "音楽", r: "おんがく", a: "musik"},
+      {k: "仕事", r: "しごと", a: "pekerjaan / bekerja"}, {k: "皿洗い", r: "さらあらい", a: "mencuci piring"},
+      {k: "運動", r: "うんどう", a: "olahraga / gerak badan"}, {k: "練習", r: "れんしゅう", a: "latihan"},
+      {k: "連休", r: "れんきゅう", a: "libur beruntun"}, {k: "食事会", r: "しょくじかい", a: "acara makan bersama"},
+      {k: "最近", r: "さいきん", a: "akhir-akhir ini"}, {k: "珍しい", r: "めずらしい", a: "langka / unik"}
+    ],
+    materi: [
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>Q:</b> "}, {"k": "毎日", "r": "まいにち"}, {"text": "、"}, {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "食べます", "r": "たべます"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"k": "パン", "r": "パン"}, {"text": "を", "p": true}, {"k": "食べます", "r": "たべます"}, {"text": "。"}
+    ],
+    "a": "<b>Q:</b> Setiap hari makan apa?<br><b>A:</b> Makan roti.",
+    "ansP": ["を", "か", "を"], "ansA": "Makan roti.",
+    "qA": "Terjemahkan jawaban A!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>Q:</b> "}, {"k": "毎晩", "r": "まいばん"}, {"text": "、"}, {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "飲みます", "r": "のみます"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"k": "牛乳", "r": "ぎゅうにゅう"}, {"text": "を", "p": true}, {"k": "飲みます", "r": "のみます"}, {"text": "。"}
+    ],
+    "a": "<b>Q:</b> Setiap malam minum apa?<br><b>A:</b> Minum susu.",
+    "ansP": ["を", "か", "を"], "ansA": "Minum susu.",
+    "qA": "Terjemahkan jawaban A!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>Q:</b> "}, {"k": "新聞", "r": "しんぶん"}, {"text": "を", "p": true}, {"k": "読みます", "r": "よみます"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"text": "いいえ、読みません。"}, {"k": "雑誌", "r": "ざっし", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "読みます", "r": "よみます", "u": true}, {"text": "。", "u": true}
+    ],
+    "a": "<b>Q:</b> Apakah membaca koran?<br><b>A:</b> Tidak, tidak membaca. Membaca majalah.",
+    "ansP": ["を", "か", "を"], "ansA": "Membaca majalah.",
+    "qA": "Terjemahkan frasa yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "の", "は", "か"],
+    "jp": [
+      {"text": "<b>Q:</b> "}, {"k": "昨日", "r": "きのう"}, {"text": "の", "p": true}, {"k": "夜", "r": "よる"}, {"text": "、"}, {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "見ました", "r": "みました"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"k": "映画", "r": "えいが", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "見ました", "r": "みました", "u": true}, {"text": "。", "u": true}
+    ],
+    "a": "<b>Q:</b> Tadi malam melihat/menonton apa?<br><b>A:</b> Menonton film.",
+    "ansP": ["の", "を", "か", "を"], "ansA": "Menonton film.",
+    "qA": "Terjemahkan jawaban A!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "の", "は", "か"],
+    "jp": [
+      {"text": "<b>Q:</b> "}, {"k": "休み", "r": "やすみ"}, {"text": "の", "p": true}, {"k": "日", "r": "ひ"}, {"text": "、"}, {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"k": "スポーツ", "r": "スポーツ"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "。"}
+    ],
+    "a": "<b>Q:</b> Hari libur melakukan apa?<br><b>A:</b> Melakukan olahraga.",
+    "ansP": ["の", "を", "か", "を"], "ansA": "Melakukan olahraga.",
+    "qA": "Terjemahkan jawaban A!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>Q:</b> "}, {"k": "どんな", "r": "どんな"}, {"k": "スポーツ", "r": "スポーツ"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"k": "バドミントン", "r": "バドミントン"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "。"}
+    ],
+    "a": "<b>Q:</b> Melakukan olahraga yang bagaimana?<br><b>A:</b> Bermain bulu tangkis.",
+    "ansP": ["を", "か", "を"], "ansA": "Bermain bulu tangkis.",
+    "qA": "Terjemahkan jawaban A!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>Q:</b> "}, {"k": "週末", "r": "しゅうまつ"}, {"text": "、"}, {"k": "仕事", "r": "しごと"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"text": "いいえ、"}, {"k": "仕事", "r": "しごと", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "しません", "r": "しません", "u": true}, {"text": "。", "u": true}
+    ],
+    "a": "<b>Q:</b> Akhir minggu, apakah bekerja?<br><b>A:</b> Tidak, tidak bekerja.",
+    "ansP": ["を", "か", "を"], "ansA": "tidak bekerja.",
+    "qA": "Terjemahkan frasa jawaban A yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "の", "は", "か"],
+    "jp": [
+      {"text": "<b>Q:</b> "}, {"k": "昨日", "r": "きのう"}, {"text": "、"}, {"k": "日本語", "r": "にほんご"}, {"text": "の", "p": true}, {"k": "勉強", "r": "べんきょう"}, {"text": "を", "p": true}, {"k": "しました", "r": "しました"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"text": "はい、"}, {"k": "勉強", "r": "べんきょう"}, {"text": "を", "p": true}, {"k": "しました", "r": "しました"}, {"text": "。"}
+    ],
+    "a": "<b>Q:</b> Kemarin, apakah belajar bahasa Jepang?<br><b>A:</b> Ya, belajar.",
+    "ansP": ["の", "を", "か", "を"], "ansA": "Ya, belajar.",
+    "qA": "Terjemahkan jawaban A!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "の", "は", "か"],
+    "jp": [
+      {"text": "<b>Q:</b> "}, {"k": "何", "r": "なん"}, {"text": "の", "p": true}, {"k": "音楽", "r": "おんがく"}, {"text": "を", "p": true}, {"k": "聞きます", "r": "ききます"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"k": "クラシック", "r": "クラシック"}, {"k": "音楽", "r": "おんがく"}, {"text": "を", "p": true}, {"k": "聞きます", "r": "ききます"}, {"text": "。<br><b>Q:</b> "},
+      {"k": "毎晩", "r": "まいばん"}, {"k": "聞きます", "r": "ききます"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"text": "はい、"}, {"k": "毎晩", "r": "まいばん", "u": true}, {"k": "聞きます", "r": "ききます", "u": true}, {"text": "。", "u": true}
+    ],
+    "a": "<b>Q:</b> Mendengarkan musik apa?<br><b>A:</b> Mendengarkan musik klasik.<br><b>Q:</b> Apakah mendengarkan setiap malam?<br><b>A:</b> Ya, setiap malam mendengarkan.",
+    "ansP": ["の", "を", "か", "を", "か"], "ansA": "setiap malam mendengarkan.",
+    "qA": "Terjemahkan frasa terakhir yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>Q:</b> "}, {"k": "今朝", "r": "けさ"}, {"text": "、"}, {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "しました", "r": "しました"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"k": "皿洗い", "r": "さらあらい"}, {"text": "を", "p": true}, {"k": "しました", "r": "しました"}, {"text": "。<br><b>Q:</b> "},
+      {"text": "それから、"}, {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "しました", "r": "しました"}, {"text": "か", "p": true}, {"text": "。<br><b>A:</b> "},
+      {"k": "朝ごはん", "r": "あさごはん", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "食べました", "r": "たべました", "u": true}, {"text": "。", "u": true}
+    ],
+    "a": "<b>Q:</b> Tadi pagi melakukan apa?<br><b>A:</b> Mencuci piring.<br><b>Q:</b> Setelah itu, melakukan apa?<br><b>A:</b> Makan sarapan.",
+    "ansP": ["を", "か", "を", "を", "か", "を"], "ansA": "Makan sarapan.",
+    "qA": "Terjemahkan kalimat terakhir yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>アグス:</b> "}, {"k": "週末", "r": "しゅうまつ"}, {"text": "、"}, {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>ケン:</b> "},
+      {"k": "私", "r": "わたし"}, {"text": "は", "p": true}, {"k": "いつも", "r": "いつも"}, {"k": "サッカー", "r": "サッカー"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "。"}, {"k": "アグスさん", "r": "アグスさん"}, {"text": "は", "p": true}, {"text": "。<br><b>アグス:</b> "},
+      {"k": "バスケットボール", "r": "バスケットボール", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "します", "r": "します", "u": true}, {"text": "。", "u": true}
+    ],
+    "a": "<b>Agus:</b> Akhir minggu melakukan apa?<br><b>Ken:</b> Saya selalu bermain sepak bola. Kalau Agus?<br><b>Agus:</b> Bermain bola basket.",
+    "ansP": ["を", "か", "は", "を", "は", "を"], "ansA": "Bermain bola basket.",
+    "qA": "Terjemahkan jawaban Agus yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "も", "は", "か"],
+    "jp": [
+      {"text": "<b>デウィ:</b> もうすぐ"}, {"k": "連休", "r": "れんきゅう"}, {"text": "ですね。"}, {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>ハルカ:</b> "},
+      {"k": "海", "r": "うみ", "u": true}, {"text": "で", "p": true, "u": true}, {"k": "サーフィン", "r": "サーフィン", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "します", "r": "します", "u": true}, {"text": "。", "u": true}, {"k": "デウィさん", "r": "デウィさん"}, {"text": "も", "p": true}, {"k": "サーフィン", "r": "サーフィン"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>デウィ:</b> "},
+      {"text": "いいえ、"}, {"k": "私", "r": "わたし"}, {"text": "は", "p": true}, {"k": "ダイビング", "r": "ダイビング"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "。"}
+    ],
+    "a": "<b>Dewi:</b> Sebentar lagi libur beruntun ya. Melakukan apa?<br><b>Haruka:</b> Melakukan selancar di laut. Apakah Dewi juga berselancar?<br><b>Dewi:</b> Tidak, saya melakukan diving.",
+    "ansP": ["を", "か", "で", "を", "も", "を", "か", "は", "を"], "ansA": "Melakukan selancar di laut.",
+    "qA": "Terjemahkan kalimat Haruka yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "から", "が", "は", "か"],
+    "jp": [
+      {"text": "<b>妻:</b> "}, {"k": "今日", "r": "きょう"}, {"text": "は", "p": true}, {"k": "休み", "r": "やすみ"}, {"text": "の"}, {"k": "日", "r": "ひ"}, {"text": "ですね。"}, {"k": "皿洗い", "r": "さらあらい"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>夫:</b> "},
+      {"k": "すみません", "r": "すみません"}, {"text": "、"}, {"k": "今", "r": "いま", "u": true}, {"text": "から", "p": true, "u": true}, {"k": "テニス", "r": "テニス", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "します", "r": "します", "u": true}, {"text": "。", "u": true}, {"text": "<br><b>妻:</b> そうですか。じゃあ、"},
+      {"k": "私", "r": "わたし"}, {"text": "が", "p": true}, {"k": "皿洗い", "r": "さらあらい"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "。"}
+    ],
+    "a": "<b>Istri:</b> Hari ini hari libur ya. Apakah mau mencuci piring?<br><b>Suami:</b> Maaf, mulai sekarang (saya) akan bermain tenis.<br><b>Istri:</b> Begitu ya. Kalau begitu, saya yang akan mencuci piring.",
+    "ansP": ["は", "を", "か", "から", "を", "が", "を"], "ansA": "mulai sekarang akan bermain tenis.",
+    "qA": "Terjemahkan alasan Suami yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "の", "は", "か"],
+    "jp": [
+      {"text": "<b>ケン:</b> "}, {"k": "昨日", "r": "きのう"}, {"text": "の", "p": true}, {"k": "夜", "r": "よる"}, {"text": "、"}, {"k": "テレビ", "r": "テレビ"}, {"text": "を", "p": true}, {"k": "見ました", "r": "みました"}, {"text": "か", "p": true}, {"text": "。<br><b>リン:</b> "},
+      {"text": "はい、見ました。"}, {"k": "ボクシング", "r": "ボクシング", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "見ました", "r": "みました", "u": true}, {"text": "。", "u": true}, {"text": "<br><b>ケン:</b> 面白かったですか。<br><b>リン:</b> はい、とても面白かったです。"}
+    ],
+    "a": "<b>Ken:</b> Tadi malam, apakah menonton televisi?<br><b>Rin:</b> Ya, menonton. Menonton tinju.<br><b>Ken:</b> Apakah menarik?<br><b>Rin:</b> Ya, sangat menarik.",
+    "ansP": ["の", "を", "か", "を"], "ansA": "Menonton tinju.",
+    "qA": "Terjemahkan frasa Rin yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>マネージャー:</b> "}, {"k": "明日", "r": "あした"}, {"text": "、"}, {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>部下:</b> "},
+      {"k": "午前", "r": "ごぜん", "u": true}, {"text": "、", "u": true}, {"k": "ミーティング", "r": "ミーティング", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "します", "r": "します", "u": true}, {"text": "。", "u": true}, {"text": "それから、"}, {"k": "午後", "r": "ごご"}, {"text": "、"}, {"k": "仕事", "r": "しごと"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "。<br><b>マネージャー:</b> わかりました。"},
+      {"k": "頑張って", "r": "がんばって"}, {"text": "ください。"}
+    ],
+    "a": "<b>Manajer:</b> Besok, melakukan apa?<br><b>Bawahan:</b> Pagi hari, melakukan rapat. Setelah itu, sore hari, bekerja.<br><b>Manajer:</b> Saya mengerti. Silakan berjuang.",
+    "ansP": ["を", "か", "を", "を"], "ansA": "Pagi hari, melakukan rapat.",
+    "qA": "Terjemahkan bagian kalimat yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "から", "も", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>サクラ:</b> "}, {"k": "シンタさん", "r": "シンタさん"}, {"text": "は", "p": true}, {"text": "、"}, {"k": "毎日", "r": "まいにち"}, {"k": "運動", "r": "うんどう"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>シンタ:</b> "},
+      {"text": "はい、"}, {"k": "朝", "r": "あさ", "u": true}, {"text": "から", "p": true, "u": true}, {"k": "柔道", "r": "じゅうどう", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "します", "r": "します", "u": true}, {"text": "。", "u": true}, {"text": "<br><b>サクラ:</b> すごいですね！"},
+      {"k": "空手", "r": "からて"}, {"text": "も", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>シンタ:</b> いいえ、"},
+      {"k": "空手", "r": "からて"}, {"text": "は", "p": true}, {"k": "しません", "r": "しません"}, {"text": "。"}
+    ],
+    "a": "<b>Sakura:</b> Sinta, apakah setiap hari melakukan olahraga?<br><b>Sinta:</b> Ya, dari pagi melakukan judo.<br><b>Sakura:</b> Hebat ya! Apakah melakukan karate juga?<br><b>Sinta:</b> Tidak, tidak melakukan karate.",
+    "ansP": ["は", "を", "か", "から", "を", "も", "か", "は"], "ansA": "dari pagi melakukan judo.",
+    "qA": "Terjemahkan jawaban pertama Sinta yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>アグス:</b> "}, {"k": "昨夜", "r": "さくや"}, {"text": "、"}, {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "しました", "r": "しました"}, {"text": "か", "p": true}, {"text": "。<br><b>ケン:</b> "},
+      {"k": "友達", "r": "ともだち"}, {"text": "と", "p": true}, {"k": "食事会", "r": "しょくじかい"}, {"text": "を", "p": true}, {"k": "しました", "r": "しました"}, {"text": "。<br><b>アグス:</b> いいですね。"},
+      {"k": "何", "r": "なに"}, {"text": "を", "p": true}, {"k": "飲みました", "r": "のみました"}, {"text": "か", "p": true}, {"text": "。<br><b>ケン:</b> "},
+      {"k": "冷たい", "r": "つめたい", "u": true}, {"k": "ジュース", "r": "ジュース", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "飲みました", "r": "のみました", "u": true}, {"text": "。", "u": true}
+    ],
+    "a": "<b>Agus:</b> Tadi malam, melakukan apa?<br><b>Ken:</b> Melakukan acara makan bersama teman.<br><b>Agus:</b> Bagus ya. Minum apa?<br><b>Ken:</b> Minum jus yang dingin.",
+    "ansP": ["を", "か", "と", "を", "を", "か", "を"], "ansA": "Minum jus yang dingin.",
+    "qA": "Terjemahkan kalimat terakhir Ken yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>デウィ:</b> "}, {"k": "ハルカさん", "r": "ハルカさん"}, {"text": "は", "p": true}, {"k": "週末", "r": "しゅうまつ"}, {"text": "、"}, {"k": "卓球", "r": "たっきゅう"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "ね。<br><b>ハルカ:</b> "},
+      {"text": "いいえ、"}, {"k": "最近", "r": "さいきん", "u": true}, {"text": "は", "p": true, "u": true}, {"k": "卓球", "r": "たっきゅう", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "しません", "r": "しません", "u": true}, {"text": "。", "u": true}, {"k": "アーチェリー", "r": "アーチェリー"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "。<br><b>デウィ:</b> "},
+      {"k": "アーチェリー", "r": "アーチェリー"}, {"text": "ですか。"}, {"k": "珍しい", "r": "めずらしい"}, {"text": "ですね。"}
+    ],
+    "a": "<b>Dewi:</b> Haruka akhir minggu bermain tenis meja, ya.<br><b>Haruka:</b> Tidak, akhir-akhir ini tidak bermain tenis meja. Bermain panahan.<br><b>Dewi:</b> Panahan ya? Langka (unik) ya.",
+    "ansP": ["は", "を", "は", "を", "を"], "ansA": "akhir-akhir ini tidak bermain tenis meja.",
+    "qA": "Terjemahkan bantahan Haruka yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "の", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>リン:</b> "}, {"k": "来週", "r": "らいしゅう"}, {"text": "の", "p": true}, {"k": "日曜日", "r": "にちようび"}, {"text": "、"}, {"k": "ボウリング", "r": "ボウリング"}, {"text": "を", "p": true}, {"k": "しません", "r": "しません"}, {"text": "か", "p": true}, {"text": "。<br><b>ケン:</b> "},
+      {"k": "すみません", "r": "すみません"}, {"text": "、"}, {"k": "日曜日", "r": "にちようび"}, {"text": "は", "p": true}, {"text": "ちょっと...。"}, {"k": "ダンス", "r": "ダンス", "u": true}, {"text": "の", "p": true, "u": true}, {"k": "練習", "r": "れんしゅう", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "します", "r": "します", "u": true}, {"text": "。", "u": true}, {"text": "<br><b>リン:</b> そうですか。じゃあ、また"}, {"k": "今度", "r": "こんど"}, {"text": "。"}
+    ],
+    "a": "<b>Rin:</b> Hari Minggu minggu depan, maukah bermain bowling?<br><b>Ken:</b> Maaf, kalau hari Minggu agak (tidak bisa)... Saya melakukan latihan dansa.<br><b>Rin:</b> Begitu ya. Kalau begitu, lain kali lagi.",
+    "ansP": ["の", "を", "か", "は", "の", "を"], "ansA": "Saya melakukan latihan dansa.",
+    "qA": "Terjemahkan alasan Ken yang bergaris bawah!"
+  },
+  {
+    "isMulti": true, "opts": ["を", "に", "で", "と", "は", "か"],
+    "jp": [
+      {"text": "<b>シンタ:</b> "}, {"k": "明日", "r": "あした"}, {"text": "は", "p": true}, {"k": "雪", "r": "ゆき"}, {"text": "ですね。"}, {"k": "スキー", "r": "スキー"}, {"text": "を", "p": true}, {"k": "します", "r": "します"}, {"text": "か", "p": true}, {"text": "。<br><b>サクラ:</b> "},
+      {"text": "はい、"}, {"k": "スキー", "r": "スキー", "u": true}, {"text": "を", "p": true, "u": true}, {"k": "します", "r": "します", "u": true}, {"text": "。", "u": true}, {"text": "とても楽しみです。"}
+    ],
+    "a": "<b>Sinta:</b> Besok salju ya. Apakah akan bermain ski?<br><b>Sakura:</b> Ya, akan bermain ski. Sangat menantikannya.",
+    "ansP": ["は", "を", "か", "を"], "ansA": "akan bermain ski.",
+    "qA": "Terjemahkan jawaban persetujuan Sakura yang bergaris bawah!"
+  }
+    ],
+    kuisExtra: [
+      {
+        isMulti: true, opts: ['を', 'で', 'に', 'は', 'が', 'か'],
+        jp: [ {"text":"<b>アグス:</b> "}, {"k":"その", "r":"その"}, {"k":"公園", "r":"こうえん"}, {"text":"に", "p":true}, {"k":"誰", "r":"だれ"}, {"text":"が", "p":true}, {"text":"いますか。<br><b>ケン:</b> 元気な学生が"}, {"k":"たくさん", "r":"たくさん"}, {"text":"います。<br><b>アグス:</b> 学生はそこ"}, {"text":"で", "p":true}, {"k":"何", "r":"なに"}, {"text":"を", "p":true}, {"k":"します", "r":"します"}, {"text":"か", "p":true}, {"text":"。<br><b>ケン:</b> "}, {"k":"バレーボール", "r":"バレーボール", "u":true}, {"text":"を", "p":true, "u":true}, {"k":"します", "r":"します", "u":true}, {"text":"。", "u":true} ],
+        a: "<b>Agus:</b> Di taman itu ada siapa?<br><b>Ken:</b> Ada banyak murid yang ceria.<br><b>Agus:</b> Murid melakukan apa di sana?<br><b>Ken:</b> Bermain bola voli.", ansP: ["に", "が", "で", "を", "か", "を"], ansA: "Bermain bola voli.", qA: "Terjemahkan jawaban terakhir Ken!"
+      },
+      {
+        isMulti: true, opts: ['を', 'で', 'の', 'は', 'が', 'か'],
+        jp: [ {"text":"<b>デウィ:</b> ハルカさん、"}, {"k":"その", "r":"その"}, {"k":"本", "r":"ほん"}, {"text":"は", "p":true}, {"k":"どんな", "r":"どんな"}, {"k":"本", "r":"ほん"}, {"text":"ですか。<br><b>ハルカ:</b> これは有名な日本の小説です。<br><b>デウィ:</b> いつも"}, {"k":"どこ", "r":"どこ"}, {"text":"で", "p":true}, {"k":"小説", "r":"しょうせつ"}, {"text":"を", "p":true}, {"k":"読みます", "r":"よみます"}, {"text":"か", "p":true}, {"text":"。<br><b>ハルカ:</b> "}, {"k":"自分", "r":"じぶん", "u":true}, {"text":"の", "p":true, "u":true}, {"k":"部屋", "r":"へや", "u":true}, {"text":"で", "p":true, "u":true}, {"k":"読みます", "r":"よみます", "u":true}, {"text":"。", "u":true} ],
+        a: "<b>Dewi:</b> Haruka, buku itu buku yang bagaimana?<br><b>Haruka:</b> Ini adalah novel Jepang yang terkenal.<br><b>Dewi:</b> Selalu membaca novel di mana?<br><b>Haruka:</b> Membaca di kamar sendiri.", ansP: ["は", "で", "を", "か", "の", "で"], ansA: "Membaca di kamar sendiri.", qA: "Terjemahkan jawaban terakhir Haruka!"
+      },
+      {
+        isMulti: true, opts: ['を', 'で', 'に', 'と', 'は', 'か'],
+        jp: [ {"text":"<b>リン:</b> 連休"}, {"text":"に", "p":true}, {"k":"何", "r":"なに"}, {"text":"を", "p":true}, {"k":"します", "r":"します"}, {"text":"か", "p":true}, {"text":"。<br><b>サクラ:</b> 家族と車で山に行きます。<br><b>リン:</b> いいですね。山"}, {"text":"で", "p":true}, {"k":"何", "r":"なに"}, {"text":"を", "p":true}, {"k":"します", "r":"します"}, {"text":"か", "p":true}, {"text":"。<br><b>サクラ:</b> "}, {"k":"山", "r":"やま", "u":true}, {"text":"で", "p":true, "u":true}, {"k":"バーベキュー", "r":"バーベキュー", "u":true}, {"text":"を", "p":true, "u":true}, {"k":"します", "r":"します", "u":true}, {"text":"。", "u":true} ],
+        a: "<b>Rin:</b> Pada libur beruntun melakukan apa?<br><b>Sakura:</b> Pergi ke gunung dengan mobil bersama keluarga.<br><b>Rin:</b> Bagus ya. Di gunung melakukan apa?<br><b>Sakura:</b> Di gunung melakukan barbeku.", ansP: ["に", "を", "か", "で", "を", "か", "で", "を"], ansA: "Di gunung melakukan barbeku.", qA: "Terjemahkan jawaban terakhir Sakura!"
+      },
+      {
+        isMulti: true, opts: ['を', 'で', 'に', 'は', 'が', 'か'],
+        jp: [ {"text":"<b>ケン:</b> 昨日のゴルフはどうでしたか。<br><b>アグス:</b> 天気がよくなかったです。ですから、ゴルフ"}, {"text":"を", "p":true}, {"k":"しませんでした", "r":"しませんでした"}, {"text":"。<br><b>ケン:</b> 残念でしたね。"}, {"k":"何", "r":"なに"}, {"text":"を", "p":true}, {"k":"しました", "r":"しました"}, {"text":"か", "p":true}, {"text":"。<br><b>アグス:</b> "}, {"k":"うち", "r":"うち", "u":true}, {"text":"で", "p":true, "u":true}, {"k":"古い", "r":"ふるい", "u":true}, {"k":"映画", "r":"えいが", "u":true}, {"text":"を", "p":true, "u":true}, {"k":"見ました", "r":"みました", "u":true}, {"text":"。", "u":true} ],
+        a: "<b>Ken:</b> Bagaimana golf kemarin?<br><b>Agus:</b> Cuacanya tidak bagus. Oleh karena itu, tidak bermain golf.<br><b>Ken:</b> Sayang sekali ya. (Lalu) melakukan apa?<br><b>Agus:</b> Menonton film lama di rumah.", ansP: ["を", "を", "か", "で", "を"], ansA: "Menonton film lama di rumah.", qA: "Terjemahkan kegiatan Agus yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['を', 'で', 'に', 'と', 'は', 'か'],
+        jp: [ {"text":"<b>ハルカ:</b> 明日、会社"}, {"text":"で", "p":true}, {"k":"ミーティング", "r":"ミーティング"}, {"text":"が", "p":true}, {"text":"ありますか。<br><b>シンタ:</b> いいえ、ミーティングはありません。でも、誕生パーティーがあります。<br><b>ハルカ:</b> 誰"}, {"text":"と", "p":true}, {"k":"パーティー", "r":"パーティー"}, {"text":"を", "p":true}, {"k":"します", "r":"します"}, {"text":"か", "p":true}, {"text":"。<br><b>シンタ:</b> 会社の友達とします。"}, {"k":"美味しい", "r":"おいしい", "u":true}, {"k":"ケーキ", "r":"ケーキ", "u":true}, {"text":"を", "p":true, "u":true}, {"k":"食べます", "r":"たべます", "u":true}, {"text":"。", "u":true} ],
+        a: "<b>Haruka:</b> Besok, apakah ada rapat di kantor?<br><b>Sinta:</b> Tidak, rapat tidak ada. Tetapi, ada pesta ulang tahun.<br><b>Haruka:</b> Melakukan pesta dengan siapa?<br><b>Sinta:</b> Melakukan (berpesta) dengan teman kantor. Memakan kue yang lezat.", ansP: ["で", "が", "と", "を", "か", "を"], ansA: "Memakan kue yang lezat.", qA: "Terjemahkan frasa terakhir Sinta yang bergaris bawah!"
+      }
+    ],
+    proKuisExtra: []
+  },
+
 
 };
 
@@ -4782,6 +5041,78 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
           </div>`;
           UI.openModal('tips-modal');
       };
+    } else if (Game.currentDay === 17 && t === 'belajar') {
+      btnTips.classList.remove('hidden');
+      
+      if (i === 0 && !Game.objekTipSeen) {
+          tipsBubble.classList.remove('hidden');
+      }
+
+      btnTips.onclick = () => {
+          Game.objekTipSeen = true;
+          tipsBubble.classList.add('hidden');
+
+          tipsH2.innerHTML = "💡 OBJEK, SHIMASU & SUBJEK GHAIB";
+          tipsContent.innerHTML = `
+          <div id="slide-o17-1" class="slide-page">
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:15px;">
+                  Misi infiltrasi kali ini membawa kita ke level kalimat yang sesungguhnya. Mari berkenalan dengan partikel <b>を</b>!
+              </span>
+
+              <span style="color:var(--primary); font-weight:bold; font-size:15px;">1. Partikel を (O) si Penanda Objek</span><br>
+              <span style="color:var(--text-sub); font-size:13px; display:block; margin-bottom:15px;">
+                  Partikel ini diletakkan tepat di belakang <b>Objek</b> penderita (benda yang dikenai tindakan/aksi). Susunannya menjadi: <b>Objek + を + Kata Kerja</b>.<br><br>
+                  ✅ バッソ<b>を</b> 食べます。<br>
+                  <i>(Bakso <b>[objek]</b> dimakan / Makan bakso)</i>
+              </span>
+
+              <div style="background:rgba(234, 179, 8, 0.1); padding:10px; border-left:3px solid var(--warning); margin-bottom:15px; font-size:12px;">
+                  <b>⚠️ PERHATIAN TULISAN!</b><br>
+                  Partikel ini wajib ditulis dengan hiragana <b>を</b> (wo), bukan <b>お</b> (o). Namun, saat diucapkan, bunyinya melebur menjadi <b>"o"</b> (bukan "wo").
+              </div>
+
+              <button class="btn" style="padding:8px 12px; font-size:13px; margin:15px 0 0 0; background:var(--gold); width:100%;" onclick="document.getElementById('slide-o17-1').style.display='none'; document.getElementById('slide-o17-2').style.display='block';">Lanjut: Misteri SHIMASU ➡️</button>
+          </div>
+
+          <div id="slide-o17-2" class="slide-page" style="display:none;">
+              <span style="color:var(--success); font-weight:bold; font-size:15px;">2. Beda "Masu" dan "Shimasu"</span><br>
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:15px;">
+                  Kamu mungkin sadar ada kata kerja seperti <i>Tabe-masu</i> (makan), tapi ada juga <i>Shigoto o shi-masu</i> (melakukan pekerjaan). Kenapa beda?<br><br>
+                  Akhiran <b>~ます (~masu)</b> adalah penanda bentuk sopan untuk kata kerja asli Jepang (seperti makan, minum, melihat).<br><br>
+                  Sedangkan <b>します (Shimasu)</b> adalah kata kerja mandiri yang berarti <b>"Melakukan"</b>. Kata ini adalah "kata kerja ajaib" yang bisa menyulap <i>Kata Benda</i> (seperti olahraga, pekerjaan, acara) menjadi <i>Kata Kerja</i>!
+              </span>
+
+              <div style="background:rgba(34, 197, 94, 0.1); padding:10px; border-left:3px solid var(--success); margin-bottom:15px; font-size:12px;">
+                  <b>💡 KAPAN PAKAI SHIMASU?</b><br>
+                  Gunakan saat kamu "melakukan" suatu aktivitas benda:<br>
+                  ✅ スポーツを <b>します</b> <i>(Melakukan olahraga)</i><br>
+                  ✅ ミーティングを <b>します</b> <i>(Melakukan rapat)</i><br>
+                  ❌ パンを します <i>(Melakukan roti? Aneh kan wkwk)</i>
+              </div>
+
+              <div style="display:flex; gap:10px;">
+                  <button class="btn btn-alt" style="padding:8px 12px; font-size:13px; flex:1;" onclick="document.getElementById('slide-o17-2').style.display='none'; document.getElementById('slide-o17-1').style.display='block';">⬅️ Kembali</button>
+                  <button class="btn" style="padding:8px 12px; font-size:13px; background:var(--gold); flex:1;" onclick="document.getElementById('slide-o17-2').style.display='none'; document.getElementById('slide-o17-3').style.display='block';">Ke Mana Subjeknya? ➡️</button>
+              </div>
+          </div>
+          
+          <div id="slide-o17-3" class="slide-page" style="display:none;">
+              <span style="color:var(--danger); font-weight:bold; font-size:15px;">3. Ke Mana Perginya "Watashi wa"?</span><br>
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:15px;">
+                  Akhir-akhir ini kalimat kita jarang memakai <i>"Watashi wa"</i>. Ke mana subjeknya?<br><br>
+                  Berbeda dengan bahasa Inggris yang <b>wajib</b> memakai subjek (<i>I eat bakso</i>, tidak bisa cuma <i>Eat bakso</i>), bahasa Jepang justru <b>sangat membenci pengulangan</b>.<br><br>
+                  Jika pembicara dan lawan bicara sudah sama-sama tahu siapa yang sedang dibahas, subjeknya <b>akan dihilangkan</b> agar terdengar natural.<br><br>
+                  Menyebutkan <i>"Watashi wa"</i> terus-menerus di setiap kalimat justru akan membuatmu terdengar seperti robot. Cukup fokus pada: <b>Objek + を + Predikat!</b>
+              </span>
+
+              <div style="display:flex; gap:10px; margin-top:20px;">
+                  <button class="btn btn-alt" style="padding:8px 12px; font-size:13px; flex:1;" onclick="document.getElementById('slide-o17-3').style.display='none'; document.getElementById('slide-o17-2').style.display='block';">⬅️ Kembali</button>
+                  <button class="btn" style="padding:8px 12px; font-size:13px; background:var(--success); color:#000; flex:1;" onclick="document.getElementById('slide-o17-3').style.display='none'; document.getElementById('slide-o17-1').style.display='block'; UI.closeModal('tips-modal');">Paham Banget! ✅</button>
+              </div>
+          </div>`;
+          UI.openModal('tips-modal');
+      };
+
 
     } else { btnTips.classList.add('hidden'); }
     if (t === 'dungeon') {
@@ -4888,10 +5219,9 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
             let mataBox = `<div class="intel-box" style="margin-bottom:15px; border-color:var(--gold); color:var(--gold);"><b>Mata Kensei:</b> ${jpText}</div>`;
             document.getElementById('input-area').insertAdjacentHTML('afterbegin', mataBox);
         }
-        // ----------------------------------
+        // ----------------------------
       }
       
-      // --- SISTEM ADMIN CHEAT & BYPASS ---
       if (Game.adminMode && t !== 'dungeon') {
           let cheatAnswer = "";
 
