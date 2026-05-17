@@ -3285,11 +3285,11 @@ proKuisExtra: []
     "isMulti": true, "opts": ["に", "で", "と", "か", "は", "ね"],
     "jp": [
       {"text": "<b>サクラ:</b> "}, {"k": "来月", "r": "らいげつ"}, {"text": "、"}, {"k": "誰", "r": "だれ"}, {"text": "と", "p": true}, {"k": "日本", "r": "にほん"}, {"text": "に", "p": true}, {"k": "行きます", "r": "いきます"}, {"text": "か", "p": true}, {"text": "。<br><b>ハルカ:</b> "},
-      {"k": "友達", "r": "ともだち"}, {"text": "と", "p": true}, {"k": "飛行機", "r": "ひこうき"}, {"text": "で", "p": true}, {"k": "行きます", "r": "いきます"}, {"text": "。"}, {"k": "サクラさん", "r": "サクラさん"}, {"text": "は", "p": true}, {"k": "去年", "r": "きょねん"}, {"k": "行きました", "r": "いきました"}, {"text": "ね", "p": true}, {"text": "。<br><b>サクラ:</b> "},
+      {"k": "友達", "r": "ともだち"}, {"text": "と", "p": true}, {"k": "飛行機", "r": "ひこうき"}, {"text": "で", "p": true}, {"k": "行きます", "r": "いきます"}, {"text": "。"}, {"k": "サクラさん", "r": "サクラさん"}, {"text": "は", "p": true}, {"k": "去年", "r": "きょねん"}, {"k": "行きました", "r": "いきました"}, {"text": "ね"}, {"text": "。<br><b>サクラ:</b> "},
       {"text": "はい、"}, {"k": "家族", "r": "かぞく", "u": true}, {"text": "と", "p": true, "u": true}, {"k": "行きました", "r": "いきました", "u": true}, {"text": "。", "u": true}
     ],
     "a": "<b>Sakura:</b> Bulan depan, pergi ke Jepang bersama siapa?<br><b>Haruka:</b> Pergi dengan pesawat bersama teman. Sakura tahun lalu pergi kan ya.<br><b>Sakura:</b> Ya, pergi bersama keluarga.",
-    "ansP": ["と", "に", "か", "と", "で", "は", "ね", "と"], "ansA": "pergi bersama keluarga.",
+    "ansP": ["と", "に", "か", "と", "で", "は", "と"], "ansA": "pergi bersama keluarga.",
     "qA": "Terjemahkan frasa terakhir Sakura yang bergaris bawah!"
   }
     ],
@@ -3297,12 +3297,12 @@ proKuisExtra: []
       {
         isMulti: true, opts: ['に', 'で', 'と', 'へ', 'は', 'か'],
         jp: [ {"k":"家族", "r":"かぞく"}, {"text":"と", "p":true}, {"k":"車", "r":"くるま"}, {"text":"で", "p":true}, {"k":"病院", "r":"びょういん"}, {"text":"に", "p":true}, {"k":"行きました", "r":"いきました"}, {"text":"。"} ],
-        a: "Pergi ke rumah sakit dengan mobil bersama keluarga.", ansP: ["と", "で", "に"], ansA: "Pergi ke rumah sakit dengan mobil bersama keluarga."
+        a: "Pergi ke rumah sakit dengan mobil bersama keluarga. (lampau)", ansP: ["と", "で", "に"], ansA: "Pergi ke rumah sakit dengan mobil bersama keluarga. (lampau)"
       },
       {
         isMulti: true, opts: ['に', 'で', 'と', 'へ', 'は', 'か'],
-        jp: [ {"text":"<b>Q:</b> "}, {"k":"誰", "r":"だれ"}, {"text":"と", "p":true}, {"k":"日本", "r":"にほん"}, {"text":"に", "p":true}, {"k":"来ました", "r":"きました"}, {"text":"か。<br><b>A:</b> "}, {"k":"一人で", "r":"ひとりで"}, {"k":"来ました", "r":"きました"}, {"text":"。"} ],
-        a: "<b>Q:</b> Datang ke Jepang bersama siapa?<br><b>A:</b> Datang sendirian.", ansP: ["と", "に"], ansA: "<b>Q:</b> Datang ke Jepang bersama siapa?<br><b>A:</b> Datang sendirian."
+        jp: [ {"text":"<b>Q:</b> "}, {"k":"誰", "r":"だれ", "u":true}, {"text":"と", "p":true, "u":true}, {"k":"日本", "r":"にほん", "u":true}, {"text":"に", "p":true, "u":true}, {"k":"来ましたか", "r":"きましたか", "u":true}, {"text":"。<br><b>A:</b> "}, {"k":"一人で", "r":"ひとりで"}, {"k":"来ました", "r":"きました"}, {"text":"。"} ],
+        a: "<b>Q:</b> Datang ke Jepang bersama siapa?<br><b>A:</b> Datang sendirian.", ansP: ["と", "に"], ansA: "Datang ke Jepang bersama siapa?", qA: "Terjemahkanlah pertanyaan Q!"
       },
       {
         isMulti: true, opts: ['に', 'で', 'と', 'へ', 'は', 'か'],
@@ -4165,6 +4165,266 @@ proKuisExtra: []
     "ansP": ["に", "と", "で", "に", "と", "と", "のほうが", "より"], "ansA": "Gunung yang lebih disukai.",
     "qA": "Terjemahkan jawaban Sakura yang bergaris bawah!"
   }
+    ],
+    proKuisExtra: []
+  },
+
+  // --- HARI 19 ---
+  day19: {
+    hafalan: [
+      {k: "秋", r: "あき", a: "musim gugur"}, {k: "かいてき", r: "かいてき", a: "nyaman"},
+      {k: "たぶん", r: "たぶん", a: "mungkin"}, {k: "大変", r: "たいへん", a: "berat / repot"},
+      {k: "いろいろ", r: "いろいろ", a: "berbagai / banyak"}, {k: "すごしやすい", r: "すごしやすい", a: "mudah ditinggali / nyaman"},
+      {k: "おなじくらい", r: "おなじくらい", a: "sama-sama / kurang lebih sama"}, {k: "大切", r: "たいせつ", a: "penting"},
+      {k: "二人とも", r: "ふたりとも", a: "keduanya"}, {k: "遠い", r: "とおい", a: "jauh"},
+      {k: "近い", r: "ちかい", a: "dekat"}, {k: "歩いて", r: "あるいて", a: "berjalan kaki"},
+      {k: "広い", r: "ひろい", a: "luas"}, {k: "島", r: "しま", a: "pulau"},
+      {k: "お金", r: "おかね", a: "uang"}, {k: "大事", r: "だいじ", a: "penting"},
+      {k: "時間", r: "じかん", a: "waktu"}, {k: "頭がいい", r: "あたまがいい", a: "pintar"},
+      {k: "いつ", r: "いつ", a: "kapan"}, {k: "店", r: "みせ", a: "toko"}
+    ],
+    materi: [
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'か'],
+        jp: [
+          {text:"<b>お母さん:</b> "}, {k:"リンゴ", r:"リンゴ"}, {text:"と"}, {k:"ミカン", r:"ミカン"}, {text:"と"}, {k:"バナナ", r:"バナナ"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"どれ", r:"どれ", u:true}, {text:"が", p:true, u:true}, {k:"一番", r:"いちばん", u:true}, {k:"好き", r:"すき", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。<br><b>子供:</b> "},
+          {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"バナナ", r:"バナナ"}, {text:"が"}, {k:"一番", r:"いちばん"}, {k:"好き", r:"すき"}, {text:"です。"}, {k:"お母さん", r:"おかあさん"}, {text:"は？<br><b>お母さん:</b> "},
+          {k:"お母さん", r:"おかあさん"}, {text:"は"}, {k:"リンゴ", r:"リンゴ"}, {text:"が"}, {k:"一番", r:"いちばん"}, {k:"好き", r:"すき"}, {text:"ですよ。"}
+        ],
+        a: "<b>Ibu:</b> Antara apel, jeruk, dan pisang, mana yang paling disukai?<br><b>Anak:</b> Saya paling suka pisang. Kalau ibu?<br><b>Ibu:</b> Ibu paling suka apel lho.",
+        ansP: ["の", "で", "が", "か", "は"], ansA: "mana yang paling disukai?", qA: "Terjemahkan pertanyaan Ibu yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'か'],
+        jp: [
+          {text:"<b>ケン:</b> "}, {k:"ジャカルタ", r:"ジャカルタ"}, {text:"と"}, {k:"バンドン", r:"バンドン"}, {text:"と"}, {k:"スラバヤ", r:"スラバヤ"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"どこ", r:"どこ"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"暑い", r:"あつい"}, {text:"ですか。<br><b>アグス:</b> "},
+          {k:"スラバヤ", r:"スラバヤ", u:true}, {text:"が", p:true, u:true}, {k:"一番", r:"いちばん", u:true}, {k:"暑い", r:"あつい", u:true}, {text:"です", u:true}, {text:"。<br><b>ケン:</b> そうですか。じゃあ、"}, {k:"バンドン", r:"バンドン"}, {text:"は？<br><b>アグス:</b> "},
+          {k:"バンドン", r:"バンドン"}, {text:"は", p:true}, {k:"この", r:"この"}, {k:"中", r:"なか"}, {text:"で", p:true}, {k:"一番", r:"いちばん"}, {k:"涼しい", r:"すずしい"}, {text:"です。"}
+        ],
+        a: "<b>Ken:</b> Antara Jakarta, Bandung, dan Surabaya, di mana yang paling panas?<br><b>Agus:</b> Surabaya yang paling panas.<br><b>Ken:</b> Begitu ya. Kalau begitu, Bandung bagaimana?<br><b>Agus:</b> Bandung adalah yang paling sejuk di antara (ketiga kota) ini.",
+        ansP: ["の", "で", "が", "が", "は", "で"], ansA: "Surabaya yang paling panas.", qA: "Terjemahkan jawaban Agus yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'か'],
+        jp: [
+          {text:"<b>デウィ:</b> "}, {k:"家族", r:"かぞく"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"誰", r:"だれ"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"背が高い", r:"せがたかい"}, {text:"ですか。<br><b>ハルカ:</b> "},
+          {k:"兄", r:"あに"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"背が高い", r:"せがたかい"}, {text:"です。"}, {k:"デウィさん", r:"デウィさん"}, {text:"の"}, {k:"家族", r:"かぞく"}, {text:"は？<br><b>デウィ:</b> "},
+          {k:"私", r:"わたし", u:true}, {text:"の", p:true, u:true}, {k:"家族", r:"かぞく", u:true}, {text:"は", p:true, u:true}, {text:"、", u:true}, {k:"父", r:"ちち", u:true}, {text:"が", p:true, u:true}, {k:"一番", r:"いちばん", u:true}, {k:"背が高い", r:"せがたかい", u:true}, {text:"です", u:true}, {text:"。", u:true}
+        ],
+        a: "<b>Dewi:</b> Di dalam keluarga, siapa yang tubuhnya paling tinggi?<br><b>Haruka:</b> Kakak laki-laki yang paling tinggi. Kalau keluarga Dewi?<br><b>Dewi:</b> Di keluarga saya, ayah yang paling tinggi.",
+        ansP: ["の", "で", "が", "が", "の", "は", "が"], ansA: "Di keluarga saya, ayah yang paling tinggi.", qA: "Terjemahkan jawaban terakhir Dewi!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'か'],
+        jp: [
+          {text:"<b>シンタ:</b> 1"}, {k:"年", r:"ねん"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"いつ", r:"いつ"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"好き", r:"すき"}, {text:"ですか。<br><b>サクラ:</b> "},
+          {k:"秋", r:"あき", u:true}, {text:"が", p:true, u:true}, {k:"一番", r:"いちばん", u:true}, {k:"好き", r:"すき", u:true}, {text:"です", u:true}, {text:"。", u:true}, {text:"とても"}, {k:"かいてき", r:"かいてき"}, {text:"ですから。<br><b>シンタ:</b> "},
+          {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"春", r:"はる"}, {text:"が"}, {k:"一番", r:"いちばん"}, {k:"好き", r:"すき"}, {text:"です。"}, {k:"花", r:"はな"}, {text:"が"}, {k:"きれい", r:"きれい"}, {text:"ですから。"}
+        ],
+        a: "<b>Sinta:</b> Di dalam 1 tahun, kapan yang paling disukai?<br><b>Sakura:</b> Paling suka musim gugur. Karena sangat nyaman.<br><b>Sinta:</b> Saya paling suka musim semi. Karena bunganya indah.",
+        ansP: ["の", "で", "が", "が", "は"], ansA: "Paling suka musim gugur.", qA: "Terjemahkan frasa Sakura yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'か'],
+        jp: [
+          {text:"<b>リン:</b> "}, {k:"スポーツ", r:"スポーツ"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"何", r:"なに", u:true}, {text:"が", p:true, u:true}, {k:"一番", r:"いちばん", u:true}, {k:"面白い", r:"おもしろい", u:true}, {text:"です", u:true}, {text:"か", p:true, u:true}, {text:"。<br><b>ケン:</b> "},
+          {k:"サッカー", r:"サッカー"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"面白い", r:"おもしろい"}, {text:"です。"}, {k:"リンさん", r:"リンさん"}, {text:"は？<br><b>リン:</b> "},
+          {k:"私", r:"わたし"}, {text:"は", p:true}, {k:"テニス", r:"テニス"}, {text:"が"}, {k:"一番", r:"いちばん"}, {k:"好き", r:"すき"}, {text:"です。"}
+        ],
+        a: "<b>Rin:</b> Di antara olahraga, apa yang paling menarik?<br><b>Ken:</b> Sepak bola yang paling menarik. Kalau Rin?<br><b>Rin:</b> Saya paling suka tenis.",
+        ansP: ["の", "で", "が", "か", "が", "は"], ansA: "apa yang paling menarik?", qA: "Terjemahkan pertanyaan Rin yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'か'],
+        jp: [
+          {text:"<b>ハルカ:</b> "}, {k:"飛行機", r:"ひこうき"}, {text:"と"}, {k:"新幹線", r:"しんかんせん"}, {text:"と"}, {k:"バス", r:"バス"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"どれ", r:"どれ"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"速い", r:"はやい"}, {text:"ですか。<br><b>アグス:</b> "},
+          {k:"飛行機", r:"ひこうき", u:true}, {text:"が", p:true, u:true}, {k:"一番", r:"いちばん", u:true}, {k:"速い", r:"はやい", u:true}, {text:"です", u:true}, {text:"。<br><b>ハルカ:</b> じゃあ、どれが一番安いですか。<br><b>アグス:</b> "},
+          {k:"バス", r:"バス"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"安い", r:"やすい"}, {text:"ですよ。"}
+        ],
+        a: "<b>Haruka:</b> Antara pesawat, Shinkansen, dan bus, mana yang paling cepat?<br><b>Agus:</b> Pesawat yang paling cepat.<br><b>Haruka:</b> Kalau begitu, mana yang paling murah?<br><b>Agus:</b> Bus yang paling murah lho.",
+        ansP: ["の", "で", "が", "が", "が"], ansA: "Pesawat yang paling cepat.", qA: "Terjemahkan jawaban Agus yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'か'],
+        jp: [
+          {text:"<b>デウィ:</b> "}, {k:"インドネシア", r:"インドネシア"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"どこ", r:"どこ"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"有名", r:"ゆうめい"}, {text:"ですか。<br><b>シンタ:</b> "},
+          {k:"バリ島", r:"バリとう", u:true}, {text:"が", p:true, u:true}, {k:"一番", r:"いちばん", u:true}, {k:"有名", r:"ゆうめい", u:true}, {text:"です", u:true}, {text:"。<br><b>デウィ:</b> "}, {k:"日本", r:"にほん"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"では？<br><b>シンタ:</b> "},
+          {k:"たぶん", r:"たぶん"}, {text:"、"}, {k:"東京", r:"とうきょう"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"有名", r:"ゆうめい"}, {text:"です。"}
+        ],
+        a: "<b>Dewi:</b> Di dalam Indonesia, di mana yang paling terkenal?<br><b>Sinta:</b> Pulau Bali yang paling terkenal.<br><b>Dewi:</b> Kalau di dalam Jepang?<br><b>Sinta:</b> Mungkin, Tokyo yang paling terkenal.",
+        ansP: ["の", "で", "が", "が", "の", "が"], ansA: "Pulau Bali yang paling terkenal.", qA: "Terjemahkan jawaban Sinta yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'か'],
+        jp: [
+          {text:"<b>社長:</b> "}, {k:"この", r:"この"}, {k:"会社", r:"かいしゃ"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"誰", r:"だれ"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"忙しい", r:"いそがしい"}, {text:"ですか。<br><b>マネージャー:</b> "},
+          {k:"アグスさん", r:"アグスさん", u:true}, {text:"が", p:true, u:true}, {k:"一番", r:"いちばん", u:true}, {k:"忙しい", r:"いそがしい", u:true}, {text:"です", u:true}, {text:"。"}, {k:"毎日", r:"まいにち"}, {k:"夜", r:"よる"}, {text:"まで働きますから。<br><b>社長:</b> そうですか。"},
+          {k:"大変", r:"たいへん"}, {text:"ですね。"}
+        ],
+        a: "<b>Direktur:</b> Di dalam perusahaan ini, siapa yang paling sibuk?<br><b>Manajer:</b> Agus yang paling sibuk. Karena setiap hari bekerja sampai malam.<br><b>Direktur:</b> Begitu ya. Berat/repot ya.",
+        ansP: ["の", "で", "が", "が"], ansA: "Agus yang paling sibuk.", qA: "Terjemahkan jawaban Manajer yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'か'],
+        jp: [
+          {text:"<b>兄:</b> ここの"}, {k:"レストラン", r:"レストラン"}, {text:"の"}, {k:"メニュー", r:"メニュー"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"どれ", r:"どれ"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"おいしい", r:"おいしい"}, {text:"ですか。<br><b>弟:</b> "},
+          {k:"ナシゴレン", r:"ナシゴレン"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"おいしい", r:"おいしい"}, {text:"です。<br><b>兄:</b> そうですね。"},
+          {k:"この", r:"この", u:true}, {k:"ナシゴレン", r:"ナシゴレン", u:true}, {text:"は", p:true, u:true}, {k:"町", r:"まち", u:true}, {text:"の", p:true, u:true}, {k:"中", r:"なか", u:true}, {text:"で", p:true, u:true}, {k:"一番", r:"いちばん", u:true}, {k:"おいしい", r:"おいしい", u:true}, {text:"です", u:true}, {text:"。"}
+        ],
+        a: "<b>Kakak:</b> Di antara menu restoran di sini, mana yang paling enak?<br><b>Adik:</b> Nasi goreng yang paling enak.<br><b>Kakak:</b> Benar ya. Nasi goreng ini paling enak di dalam kota (ini).",
+        ansP: ["の", "で", "が", "が", "は", "の", "で"], ansA: "Nasi goreng ini paling enak di dalam kota (ini).", qA: "Terjemahkan kalimat terakhir Kakak yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'か'],
+        jp: [
+          {text:"<b>ケン:</b> "}, {k:"いろいろ", r:"いろいろ"}, {text:"な"}, {k:"勉強", r:"べんきょう"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"何", r:"なに"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"難しい", r:"むずかしい"}, {text:"ですか。<br><b>サクラ:</b> "},
+          {k:"日本語", r:"にほんご"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"難しい", r:"むずかしい"}, {text:"です。<br><b>ケン:</b> "}, {k:"漢字", r:"かんじ"}, {text:"はどうですか。<br><b>サクラ:</b> "},
+          {k:"漢字", r:"かんじ", u:true}, {text:"は", p:true, u:true}, {k:"日本語", r:"にほんご", u:true}, {text:"の", p:true, u:true}, {k:"中", r:"なか", u:true}, {text:"で", p:true, u:true}, {k:"一番", r:"いちばん", u:true}, {k:"難しい", r:"むずかしい", u:true}, {text:"です", u:true}, {text:"。"}
+        ],
+        a: "<b>Ken:</b> Di antara berbagai pelajaran, apa yang paling sulit?<br><b>Sakura:</b> Bahasa Jepang yang paling sulit.<br><b>Ken:</b> Kanji bagaimana?<br><b>Sakura:</b> Kanji paling sulit di dalam bahasa Jepang.",
+        ansP: ["の", "で", "が", "が", "は", "の", "で"], ansA: "Kanji paling sulit di dalam bahasa Jepang.", qA: "Terjemahkan kalimat terakhir Sakura yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'ほど', 'が', 'か'],
+        jp: [
+          {text:"<b>ハルカ:</b> "}, {k:"ジャカルタ", r:"ジャカルタ"}, {text:"は", p:true}, {k:"暑い", r:"あつい"}, {text:"ですね。"}, {k:"バンドン", r:"バンドン"}, {text:"も", p:true}, {k:"暑い", r:"あつい"}, {text:"ですか。<br><b>アグス:</b> いいえ、"},
+          {k:"バンドン", r:"バンドン", u:true}, {text:"は", p:true, u:true}, {k:"ジャカルタ", r:"ジャカルタ", u:true}, {text:"ほど", p:true, u:true}, {k:"暑くはありません", r:"あつくはありません", u:true}, {text:"。", u:true}, {text:"<br><b>ハルカ:</b> そうですか。じゃあ、"},
+          {k:"すごしやすい", r:"すごしやすい"}, {text:"ですね。"}
+        ],
+        a: "<b>Haruka:</b> Jakarta panas ya. Apakah Bandung juga panas?<br><b>Agus:</b> Tidak, Bandung tidak sepanas Jakarta.<br><b>Haruka:</b> Begitu ya. Kalau begitu, mudah ditinggali (nyaman) ya.",
+        ansP: ["は", "も", "は", "ほど"], ansA: "Bandung tidak sepanas Jakarta.", qA: "Terjemahkan jawaban Agus yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'ほど', 'が', 'か'],
+        jp: [
+          {text:"<b>子供:</b> お母さん、"}, {k:"この", r:"この"}, {k:"青い", r:"あおい"}, {k:"カバン", r:"カバン"}, {text:"が"}, {k:"欲しい", r:"ほしい"}, {text:"です。<br><b>お母さん:</b> "},
+          {k:"その", r:"その"}, {k:"赤い", r:"あかい"}, {k:"カバン", r:"カバン"}, {text:"は", p:true}, {k:"どう", r:"どう"}, {text:"ですか。<br><b>子供:</b> "},
+          {k:"赤い", r:"あかい", u:true}, {k:"カバン", r:"カバン", u:true}, {text:"は", p:true, u:true}, {k:"青い", r:"あおい", u:true}, {k:"カバン", r:"カバン", u:true}, {text:"ほど", p:true, u:true}, {k:"大きくありません", r:"おおきくありません", u:true}, {text:"。", u:true}
+        ],
+        a: "<b>Anak:</b> Ibu, (saya) ingin tas biru ini.<br><b>Ibu:</b> Tas merah itu bagaimana?<br><b>Anak:</b> Tas merah tidak sebesar tas biru.",
+        ansP: ["は", "は", "ほど"], ansA: "Tas merah tidak sebesar tas biru.", qA: "Terjemahkan alasan Anak yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'と', 'が', 'か', 'くらい'],
+        jp: [
+          {text:"<b>兄:</b> "}, {k:"英語", r:"えいご"}, {text:"と"}, {k:"日本語", r:"にほんご"}, {text:"と、どちら"}, {text:"が", p:true}, {k:"難しい", r:"むずかしい"}, {text:"ですか。<br><b>弟:</b> "},
+          {k:"日本語", r:"にほんご", u:true}, {text:"は", p:true, u:true}, {k:"英語", r:"えいご", u:true}, {text:"と", p:true, u:true}, {k:"同じ", r:"おなじ", u:true}, {text:"くらい", p:true, u:true}, {k:"難しい", r:"むずかしい", u:true}, {text:"です", u:true}, {text:"。", u:true}, {text:"<br><b>兄:</b> どちらも毎日勉強しますか。<br><b>弟:</b> はい、同じくらい"},
+          {k:"大切", r:"たいせつ"}, {text:"ですから。"}
+        ],
+        a: "<b>Kakak:</b> Antara bahasa Inggris dan bahasa Jepang, mana yang lebih sulit?<br><b>Adik:</b> Bahasa Jepang sesulit bahasa Inggris.<br><b>Kakak:</b> Apakah keduanya dipelajari setiap hari?<br><b>Adik:</b> Ya, karena sama-sama penting.",
+        ansP: ["が", "は", "と", "くらい"], ansA: "Bahasa Jepang sesulit bahasa Inggris.", qA: "Terjemahkan jawaban Adik yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'ほど', 'が', 'か'],
+        jp: [
+          {text:"<b>シンタ:</b> "}, {k:"今日", r:"きょう"}, {text:"は", p:true}, {k:"忙しい", r:"いそがしい"}, {text:"ですか。<br><b>ケン:</b> はい、少し忙しいです。でも、"},
+          {k:"昨日", r:"きのう", u:true}, {text:"ほど", p:true, u:true}, {k:"忙しくはありません", r:"いそがしくはありません", u:true}, {text:"。", u:true}, {text:"<br><b>シンタ:</b> "},
+          {k:"昨日", r:"きのう"}, {text:"は"}, {k:"とても", r:"とても"}, {k:"大変", r:"たいへん"}, {text:"でしたね。"}
+        ],
+        a: "<b>Sinta:</b> Apakah hari ini sibuk?<br><b>Ken:</b> Ya, sedikit sibuk. Tetapi, tidak sesibuk kemarin.<br><b>Sinta:</b> Kemarin sangat berat ya.",
+        ansP: ["は", "ほど"], ansA: "tidak sesibuk kemarin.", qA: "Terjemahkan jawaban Ken yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'と', 'も', 'か', 'くらい'],
+        jp: [
+          {text:"<b>リン:</b> "}, {k:"サクラさん", r:"サクラさん"}, {text:"は", p:true}, {k:"きれい", r:"きれい"}, {text:"ですね。<br><b>デウィ:</b> ええ、でも"},
+          {k:"ハルカさん", r:"ハルカさん", u:true}, {text:"も", p:true, u:true}, {k:"サクラさん", r:"サクラさん", u:true}, {text:"と", p:true, u:true}, {k:"同じ", r:"おなじ", u:true}, {text:"くらい", p:true, u:true}, {k:"きれい", r:"きれい", u:true}, {text:"ですよ", u:true}, {text:"。"}, {k:"二人とも", r:"ふたりとも"}, {k:"有名", r:"ゆうめい"}, {text:"ですね。"}
+        ],
+        a: "<b>Rin:</b> Sakura cantik ya.<br><b>Dewi:</b> Ya, tapi Haruka juga secantik Sakura lho. Keduanya terkenal ya.",
+        ansP: ["は", "も", "と", "くらい"], ansA: "Haruka juga secantik Sakura lho.", qA: "Terjemahkan kalimat Dewi yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'ほど', 'が', 'か'],
+        jp: [
+          {text:"<b>アグス:</b> "}, {k:"この", r:"この"}, {k:"日本", r:"にほん"}, {k:"料理", r:"りょうり"}, {text:"は", p:true}, {k:"どう", r:"どう"}, {text:"ですか。"}, {k:"辛い", r:"からい"}, {text:"ですか。<br><b>ケン:</b> 少し辛いです。でも、"},
+          {k:"インドネシア", r:"インドネシア", u:true}, {k:"料理", r:"りょうり", u:true}, {text:"ほど", p:true, u:true}, {k:"辛くはありません", r:"からくはありません", u:true}, {text:"。", u:true}, {text:"<br><b>アグス:</b> 私は辛い料理が好きです。"}
+        ],
+        a: "<b>Agus:</b> Masakan Jepang ini bagaimana? Apakah pedas?<br><b>Ken:</b> Sedikit pedas. Tetapi, tidak sepedas masakan Indonesia.<br><b>Agus:</b> Saya suka masakan pedas.",
+        ansP: ["は", "ほど"], ansA: "tidak sepedas masakan Indonesia.", qA: "Terjemahkan perbandingan Ken yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'と', 'が', 'か', 'くらい'],
+        jp: [
+          {text:"<b>お父さん:</b> ここから"}, {k:"駅", r:"えき"}, {text:"まで"}, {k:"遠い", r:"とおい"}, {text:"ですか。<br><b>お母さん:</b> いいえ、あまり遠くないです。"},
+          {k:"スーパー", r:"スーパー", u:true}, {text:"と", p:true, u:true}, {k:"同じ", r:"おなじ", u:true}, {text:"くらい", p:true, u:true}, {k:"近い", r:"ちかい", u:true}, {text:"です", u:true}, {text:"。<br><b>お父さん:</b> じゃあ、"}, {k:"歩いて", r:"あるいて"}, {text:"行きます。"}
+        ],
+        a: "<b>Ayah:</b> Apakah dari sini sampai stasiun jauh?<br><b>Ibu:</b> Tidak, tidak terlalu jauh. Sedekat (jarak ke) supermarket.<br><b>Ayah:</b> Kalau begitu, (saya) pergi berjalan kaki.",
+        ansP: ["と", "くらい"], ansA: "Sedekat (jarak ke) supermarket.", qA: "Terjemahkan perbandingan Ibu yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'ほど', 'が', 'か'],
+        jp: [
+          {text:"<b>サクラ:</b> "}, {k:"インドネシア", r:"インドネシア"}, {text:"は", p:true}, {k:"とても", r:"とても"}, {k:"大きい", r:"おおきい"}, {text:"ですね。<br><b>シンタ:</b> はい、"}, {k:"広い", r:"ひろい"}, {text:"です。"},
+          {k:"日本", r:"にほん", u:true}, {text:"は", p:true, u:true}, {k:"インドネシア", r:"インドネシア", u:true}, {text:"ほど", p:true, u:true}, {k:"大きくありません", r:"おおきくありません", u:true}, {text:"。", u:true}, {text:"<br><b>サクラ:</b> ええ、"}, {k:"島", r:"しま"}, {text:"がたくさんありますね。"}
+        ],
+        a: "<b>Sakura:</b> Indonesia sangat besar ya.<br><b>Sinta:</b> Ya, luas. Jepang tidak sebesar Indonesia.<br><b>Sakura:</b> Ya, ada banyak pulau ya.",
+        ansP: ["は", "は", "ほど"], ansA: "Jepang tidak sebesar Indonesia.", qA: "Terjemahkan fakta dari Sinta yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'と', 'が', 'か', 'くらい'],
+        jp: [
+          {text:"<b>先生:</b> 皆さん、"}, {k:"お金", r:"おかね"}, {text:"は", p:true}, {k:"大事", r:"だいじ"}, {text:"ですか。<br><b>生徒:</b> はい、とても大事です。<br><b>先生:</b> そうですね。でも、"},
+          {k:"時間", r:"じかん", u:true}, {text:"は", p:true, u:true}, {k:"お金", r:"おかね", u:true}, {text:"と", p:true, u:true}, {k:"同じ", r:"おなじ", u:true}, {text:"くらい", p:true, u:true}, {k:"大事", r:"だいじ", u:true}, {text:"ですよ", u:true}, {text:"。"}
+        ],
+        a: "<b>Guru:</b> Semuanya, apakah uang itu penting?<br><b>Murid:</b> Ya, sangat penting.<br><b>Guru:</b> Benar. Tetapi, waktu sepenting uang lho.",
+        ansP: ["は", "は", "と", "くらい"], ansA: "waktu sepenting uang lho.", qA: "Terjemahkan nasihat Guru yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'も', 'ほど', 'が', 'か'],
+        jp: [
+          {text:"<b>リン:</b> 弟さんは"}, {k:"頭がいい", r:"あたまがいい"}, {text:"ですね。<br><b>ハルカ:</b> ええ、でも"},
+          {k:"私", r:"わたし", u:true}, {text:"ほど", p:true, u:true}, {k:"賢くはありません", r:"かしこくはありません", u:true}, {text:"よ。ははは。<br><b>リン:</b> ハルカさんは面白いですね。"}
+        ],
+        a: "<b>Rin:</b> Adik laki-lakimu pintar (kepalanya baik) ya.<br><b>Haruka:</b> Ya, tapi tidak sepintar saya lho. Hahaha.<br><b>Rin:</b> Haruka menarik (lucu) ya.",
+        ansP: ["ほど"], ansA: "tidak sepintar saya lho.", qA: "Terjemahkan candaan Haruka yang bergaris bawah!"
+      }
+    ],
+        kuisExtra: [
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'も', 'ほど'],
+        jp: [
+          {text:"<b>アグス:</b> 1"}, {k:"年", r:"ねん"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"いつ", r:"いつ"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"寒い", r:"さむい"}, {text:"ですか。<br><b>ケン:</b> 2月が一番寒いです。<br><b>アグス:</b> 12月はどうですか。<br><b>ケン:</b> "},
+          {k:"12月", r:"じゅうにがつ", u:true}, {text:"も", p:true, u:true}, {k:"寒い", r:"さむい", u:true}, {text:"ですが、", u:true}, {k:"2月", r:"にがつ", u:true}, {text:"ほど", p:true, u:true}, {k:"寒くはありません", r:"さむくはありません", u:true}, {text:"。", u:true}
+        ],
+        a: "<b>Agus:</b> Di dalam 1 tahun, kapan yang paling dingin?<br><b>Ken:</b> Bulan Februari yang paling dingin.<br><b>Agus:</b> Bulan Desember bagaimana?<br><b>Ken:</b> Bulan Desember juga dingin, tetapi tidak sedingin bulan Februari.",
+        ansP: ["の", "で", "が", "も", "ほど"], ansA: "Bulan Desember juga dingin, tetapi tidak sedingin bulan Februari.", qA: "Terjemahkan jawaban terakhir Ken yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'と', 'くらい'],
+        jp: [
+          {text:"<b>デウィ:</b> "}, {k:"この", r:"この"}, {k:"店", r:"みせ"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、どのテレビが一番新しいですか。<br><b>シンタ:</b> あの黒いテレビが一番新しいです。そして、高いです。<br><b>デウィ:</b> あの白いテレビはどうですか。<br><b>シンタ:</b> "},
+          {k:"白い", r:"しろい", u:true}, {k:"テレビ", r:"テレビ", u:true}, {text:"は", p:true, u:true}, {k:"黒い", r:"くろい", u:true}, {k:"テレビ", r:"テレビ", u:true}, {text:"と", p:true, u:true}, {k:"同じ", r:"おなじ", u:true}, {text:"くらい", p:true, u:true}, {k:"高い", r:"たかい", u:true}, {text:"ですよ", u:true}, {text:"。"}
+        ],
+        a: "<b>Dewi:</b> Di dalam toko ini, televisi mana yang paling baru?<br><b>Sinta:</b> Televisi hitam itu yang paling baru. Dan juga, mahal.<br><b>Dewi:</b> Televisi putih itu bagaimana?<br><b>Sinta:</b> Televisi putih sama mahalnya dengan televisi hitam lho.",
+        ansP: ["の", "で", "は", "と", "くらい"], ansA: "Televisi putih sama mahalnya dengan televisi hitam lho.", qA: "Terjemahkan kalimat terakhir Sinta yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'も', 'ほど'],
+        jp: [
+          {text:"<b>先生:</b> "}, {k:"この", r:"この"}, {k:"クラス", r:"クラス"}, {text:"の", p:true}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、誰が一番テストが良かったですか。<br><b>ハルカ:</b> サクラさんが一番良かったです。<br><b>先生:</b> ハルカさんのテストはどうでしたか。<br><b>ハルカ:</b> "},
+          {k:"私", r:"わたし", u:true}, {text:"も", p:true, u:true}, {k:"良かった", r:"よかった", u:true}, {text:"ですが、", u:true}, {k:"サクラさん", r:"サクラさん", u:true}, {text:"ほど", p:true, u:true}, {k:"良くありませんでした", r:"よくありませんでした", u:true}, {text:"。", u:true}
+        ],
+        a: "<b>Guru:</b> Di dalam kelas ini, siapa yang tesnya paling bagus?<br><b>Haruka:</b> Sakura yang paling bagus.<br><b>Guru:</b> Tesnya Haruka bagaimana?<br><b>Haruka:</b> Saya juga bagus, tetapi tidak sebagus Sakura.",
+        ansP: ["の", "で", "も", "ほど"], ansA: "Saya juga bagus, tetapi tidak sebagus Sakura.", qA: "Terjemahkan jawaban terakhir Haruka yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'と', 'ほど', 'くらい'],
+        jp: [
+          {text:"<b>リン:</b> 映画の"}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、何が一番好きですか。<br><b>ケン:</b> アニメ映画が一番好きです。<br><b>リン:</b> ホラー映画はどうですか。<br><b>ケン:</b> "},
+          {k:"ホラー映画", r:"ホラーえいが", u:true}, {text:"は", p:true, u:true}, {k:"アニメ映画", r:"アニメえいが", u:true}, {text:"ほど", p:true, u:true}, {k:"好きではありません", r:"すきではありません", u:true}, {text:"。", u:true}, {k:"コメディ", r:"コメディ"}, {text:"と", p:true}, {k:"同じ", r:"おなじ"}, {text:"くらい", p:true}, {k:"好き", r:"すき"}, {text:"です。"}
+        ],
+        a: "<b>Rin:</b> Di dalam film (berbagai jenis film), apa yang paling disukai?<br><b>Ken:</b> Paling suka film anime.<br><b>Rin:</b> Film horor bagaimana?<br><b>Ken:</b> Film horor tidak sesuka film anime. (Saya menyukainya) sama sukanya dengan komedi.",
+        ansP: ["で", "は", "ほど", "と", "くらい"], ansA: "Film horor tidak sesuka film anime.", qA: "Terjemahkan perbandingan Ken yang bergaris bawah!"
+      },
+      {
+        isMulti: true, opts: ['は', 'の', 'で', 'が', 'ほど'],
+        jp: [
+          {text:"<b>お父さん:</b> 乗り物の"}, {k:"中", r:"なか"}, {text:"で", p:true}, {text:"、"}, {k:"何", r:"なに"}, {text:"が", p:true}, {k:"一番", r:"いちばん"}, {k:"安全", r:"あんぜん"}, {text:"ですか。<br><b>お母さん:</b> たぶん、電車が一番安全です。<br><b>お父さん:</b> じゃあ、電車で旅行しましょう。"},
+          {k:"車", r:"くるま", u:true}, {text:"は", p:true, u:true}, {k:"電車", r:"でんしゃ", u:true}, {text:"ほど", p:true, u:true}, {k:"安全ではありません", r:"あんぜんではありません", u:true}, {text:"から。", u:true}, {text:"<br><b>お母さん:</b> ええ、そうしましょう。"}
+        ],
+        a: "<b>Ayah:</b> Di antara kendaraan, apa yang paling aman?<br><b>Ibu:</b> Mungkin, kereta yang paling aman.<br><b>Ayah:</b> Kalau begitu, mari berwisata dengan kereta. Karena mobil tidak seaman kereta.<br><b>Ibu:</b> Ya, mari lakukan itu.",
+        ansP: ["で", "が", "は", "ほど"], ansA: "Karena mobil tidak seaman kereta.", qA: "Terjemahkan alasan Ayah yang bergaris bawah!"
+      }
     ],
     proKuisExtra: []
   },
@@ -5463,6 +5723,70 @@ if (tipsBubble) tipsBubble.classList.add('hidden');
               <div style="display:flex; gap:10px; margin-top:20px;">
                   <button class="btn btn-alt" style="padding:8px 12px; font-size:13px; flex:1;" onclick="document.getElementById('slide-b18-3').style.display='none'; document.getElementById('slide-b18-2').style.display='block';">⬅️ Kembali</button>
                   <button class="btn" style="padding:8px 12px; font-size:13px; background:var(--success); color:#000; flex:1;" onclick="document.getElementById('slide-b18-3').style.display='none'; document.getElementById('slide-b18-1').style.display='block'; UI.closeModal('tips-modal');">Paham Banget! ✅</button>
+              </div>
+          </div>`;
+          UI.openModal('tips-modal');
+      };
+
+    } else if (Game.currentDay === 19 && t === 'belajar') {
+      btnTips.classList.remove('hidden');
+
+      btnTips.onclick = () => {
+          Game.banding19TipSeen = true;
+          tipsBubble.classList.add('hidden');
+
+          tipsH2.innerHTML = "💡 PERBANDINGAN TINGKAT TINGGI";
+          tipsContent.innerHTML = `
+          <div id="slide-b19-1" class="slide-page">
+              <span style="color:var(--primary); font-weight:bold; font-size:15px;">1. Sang Juara (一番 - Ichiban)</span><br>
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:10px;">
+                  Saat memilih "yang paling..." dari 3 benda atau lebih (atau dalam sebuah grup), kita menggunakan <b>一番 (Ichiban)</b>.<br>
+                  Pola tanyanya unik karena kata tanyanya berubah tergantung apa yang dibahas!
+              </span>
+              <table style="width:100%; border-collapse: collapse; font-size: 13px; text-align:left; background:rgba(255,255,255,0.05); border-radius:8px; overflow:hidden;">
+                  <tr style="background:rgba(56, 189, 248, 0.2);">
+                      <th style="padding:8px; border:1px solid #334155;">Konteks</th>
+                      <th style="padding:8px; border:1px solid #334155;">Kata Tanya</th>
+                  </tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;">Benda pilihan</td><td style="padding:8px; border:1px solid #334155;"><b>どれ</b> (Yang mana)</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;">Tempat</td><td style="padding:8px; border:1px solid #334155;"><b>どこ</b> (Di mana)</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;">Orang</td><td style="padding:8px; border:1px solid #334155;"><b>誰</b> (Siapa)</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;">Waktu</td><td style="padding:8px; border:1px solid #334155;"><b>いつ</b> (Kapan)</td></tr>
+                  <tr><td style="padding:8px; border:1px solid #334155;">Kategori Umum</td><td style="padding:8px; border:1px solid #334155;"><b>何</b> (Apa)</td></tr>
+              </table>
+              <button class="btn" style="padding:8px 12px; font-size:13px; margin:15px 0 0 0; background:var(--gold); width:100%;" onclick="document.getElementById('slide-b19-1').style.display='none'; document.getElementById('slide-b19-2').style.display='block';">Lanjut: Aturan Emas "Hodo" ➡️</button>
+          </div>
+
+          <div id="slide-b19-2" class="slide-page" style="display:none;">
+              <span style="color:var(--danger); font-weight:bold; font-size:15px;">2. Aturan Ketat "HODO" (ほど)</span><br>
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:10px;">
+                  Untuk bilang "A <b>tidak se-</b>[sifat] B", gunakan kata <b>ほど (hodo)</b>.<br><br>
+                  ⚠️ <b>SYARAT MUTLAK:</b> Kalimat yang menggunakan "hodo" <b>WAJIB</b> diakhiri dengan kata sifat bentuk NEGATIF (-ku arimasen / -dewa arimasen).
+              </span>
+              <div style="background:rgba(239, 68, 68, 0.1); padding:10px; border-left:3px solid var(--danger); margin-bottom:15px; font-size:12px;">
+                  ❌ バンドンはジャカルタ<b>ほど暑いです</b>。<br>
+                  <i>(Salah total! Tidak bisa diakhiri positif)</i><br><br>
+                  ✅ バンドンはジャカルタ<b>ほど暑くはありません</b>。<br>
+                  <i>(Benar! Bandung tidak sepanas Jakarta)</i>
+              </div>
+              <div style="display:flex; gap:10px;">
+                  <button class="btn btn-alt" style="padding:8px 12px; font-size:13px; flex:1;" onclick="document.getElementById('slide-b19-2').style.display='none'; document.getElementById('slide-b19-1').style.display='block';">⬅️ Kembali</button>
+                  <button class="btn" style="padding:8px 12px; font-size:13px; background:var(--gold); flex:1;" onclick="document.getElementById('slide-b19-2').style.display='none'; document.getElementById('slide-b19-3').style.display='block';">Lanjut: Persamaan (Onaji) ➡️</button>
+              </div>
+          </div>
+          
+          <div id="slide-b19-3" class="slide-page" style="display:none;">
+              <span style="color:var(--success); font-weight:bold; font-size:15px;">3. Setara dengan "Onaji Kurai"</span><br>
+              <span style="color:var(--text-sub); font-size:13px; line-height:1.5; display:block; margin-bottom:15px;">
+                  Jika A dan B ada di level yang sama, kita menggunakan <b>と同じくらい (to onaji kurai)</b> yang artinya "kurang lebih sama dengan...".<br><br>
+                  ✅ 日本語 は 英語 <b>と同じくらい</b> 難しいです。<br>
+                  <i>(Bahasa Jepang <b>sama</b> sulitnya <b>dengan</b> bahasa Inggris).</i><br><br>
+                  Pola ini sangat aman karena selalu diikuti bentuk positif (desu).
+              </span>
+
+              <div style="display:flex; gap:10px; margin-top:20px;">
+                  <button class="btn btn-alt" style="padding:8px 12px; font-size:13px; flex:1;" onclick="document.getElementById('slide-b19-3').style.display='none'; document.getElementById('slide-b19-2').style.display='block';">⬅️ Kembali</button>
+                  <button class="btn" style="padding:8px 12px; font-size:13px; background:var(--success); color:#000; flex:1;" onclick="document.getElementById('slide-b19-3').style.display='none'; document.getElementById('slide-b19-1').style.display='block'; UI.closeModal('tips-modal');">Paham Sekali! ✅</button>
               </div>
           </div>`;
           UI.openModal('tips-modal');
