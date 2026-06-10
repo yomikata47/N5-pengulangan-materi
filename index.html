@@ -599,6 +599,7 @@ body.danger-mode { animation: pulseDanger 1.5s infinite; }
     <div style="font-size:11px; color:var(--text-sub); margin-bottom:10px; font-weight:bold; letter-spacing:1px; text-transform:uppercase;">📚 Referensi Buku Saku</div>
     
     <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--primary); background: rgba(56, 189, 248, 0.05); width: 100%; box-sizing: border-box; margin-bottom:10px; cursor:pointer;" onclick="window.location.href='kata sifat.html'">🪧 Kata Sifat</button>
+    <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--primary); background: rgba(56, 189, 248, 0.05); width: 100%; box-sizing: border-box; margin-bottom:10px; cursor:pointer;" onclick="window.location.href='kata kerja.html'">🏃🏻‍♂️ Kata Kerja</button>
     <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--primary); background: rgba(56, 189, 248, 0.05); width: 100%; box-sizing: border-box; margin-bottom:10px; cursor:pointer;" onclick="window.location.href='nomor.html'">🔢 Angka & Waktu</button>
     <button class="btn btn-alt" style="font-size:13px; padding:10px; border:1px solid var(--success); background: rgba(34, 197, 94, 0.05); width: 100%; box-sizing: border-box; cursor:pointer;" onclick="window.location.href='tanggal.html'">📅 Kalender & Ket. Waktu</button>
   </div>
@@ -4520,7 +4521,7 @@ proKuisExtra: []
     ],
     materi: [
       {
-        isMulti: true, opts: ['を', 'で', 'に', 'は', 'か'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> "}, {k:"昨日", r:"きのう"}, {text:"、"}, {k:"会社", r:"かいしゃ"}, {text:"を", p:true}, {k:"休みました", r:"やすみました"}, {text:"ね。<br><b>A:</b> "},
           {text:"はい、"}, {k:"風邪", r:"かぜ", u:true}, {text:"で", p:true, u:true}, {k:"休みました", r:"やすみました", u:true}, {text:"。", u:true}
@@ -4529,7 +4530,7 @@ proKuisExtra: []
         ansP: ["を", "で"], ansA: "tidak masuk karena flu.", qA: "Terjemahkan alasan A yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['で', 'に', 'は', 'が', 'か'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> "}, {k:"今朝", r:"けさ"}, {text:"、"}, {k:"遅刻", r:"ちこく"}, {text:"しましたね。<br><b>A:</b> "},
           {text:"すみません、"}, {k:"渋滞", r:"じゅうたい", u:true}, {text:"で", p:true, u:true}, {k:"遅刻", r:"ちこく", u:true}, {text:"しました", u:true}, {text:"。", u:true}
@@ -4538,7 +4539,7 @@ proKuisExtra: []
         ansP: ["で"], ansA: "terlambat masuk karena kemacetan.", qA: "Terjemahkan alasan A yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['で', 'か', 'は', 'に', 'を'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> "}, {k:"毎日", r:"まいにち"}, {k:"忙しい", r:"いそがしい"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "},
           {text:"はい、"}, {k:"仕事", r:"しごと", u:true}, {text:"で", p:true, u:true}, {text:"とても", u:true}, {k:"忙しい", r:"いそがしい", u:true}, {text:"です", u:true}, {text:"。", u:true}
@@ -4547,7 +4548,7 @@ proKuisExtra: []
         ansP: ["か", "で"], ansA: "sangat sibuk karena pekerjaan.", qA: "Terjemahkan jawaban A yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['で', 'の', 'か', 'は', 'に'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> "}, {k:"昨日", r:"きのう"}, {text:"の", p:true}, {k:"夜", r:"よる"}, {text:"、"}, {k:"停電", r:"ていでん"}, {text:"しました"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "},
           {text:"はい、"}, {k:"大雨", r:"おおあめ", u:true}, {text:"で", p:true, u:true}, {k:"停電", r:"ていでん", u:true}, {text:"しました", u:true}, {text:"。", u:true}
@@ -4556,7 +4557,7 @@ proKuisExtra: []
         ansP: ["の", "か", "で"], ansA: "mati listrik karena hujan deras.", qA: "Terjemahkan alasan A yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['に', 'か', 'の', 'で', 'は'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> "}, {k:"週末", r:"しゅうまつ"}, {text:"、"}, {k:"バリ島", r:"バリとう"}, {text:"に", p:true}, {k:"行きます", r:"いきます"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "},
           {text:"はい、"}, {k:"友達", r:"ともだち", u:true}, {text:"の", p:true, u:true}, {k:"結婚式", r:"けっこんしき", u:true}, {text:"で", p:true, u:true}, {k:"バリ島", r:"バリとう", u:true}, {text:"に", p:true, u:true}, {k:"行きます", r:"いきます", u:true}, {text:"。", u:true}
@@ -4565,7 +4566,7 @@ proKuisExtra: []
         ansP: ["に", "か", "の", "で", "に"], ansA: "pergi ke pulau Bali karena upacara pernikahan teman.", qA: "Terjemahkan jawaban A yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['から', 'まで', 'か', 'で', 'に'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> ここ"}, {text:"から", p:true}, {k:"駅", r:"えき"}, {text:"まで", p:true}, {k:"遠い", r:"とおい"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "},
           {text:"いいえ、"}, {k:"タクシー", r:"タクシー", u:true}, {text:"で", p:true, u:true}, {k:"十分", r:"じゅっぷん", u:true}, {text:"で", p:true, u:true}, {k:"着きます", r:"つきます", u:true}, {text:"。", u:true}
@@ -4574,7 +4575,7 @@ proKuisExtra: []
         ansP: ["から", "まで", "か", "で", "で"], ansA: "akan tiba dalam 10 menit dengan taksi.", qA: "Terjemahkan jawaban A yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'か', 'で', 'に', 'を'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> その"}, {k:"リンゴ", r:"リンゴ"}, {text:"は", p:true}, {k:"高い", r:"たかい"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "},
           {text:"いいえ、"}, {k:"三つ", r:"みっつ", u:true}, {text:"で", p:true, u:true}, {k:"百円", r:"ひゃくえん", u:true}, {text:"でした", u:true}, {text:"。", u:true}
@@ -4583,7 +4584,7 @@ proKuisExtra: []
         ansP: ["は", "か", "で"], ansA: "3 buah (harganya) 100 yen (lampau).", qA: "Terjemahkan jawaban A yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'か', 'で', 'に', 'を'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> その"}, {k:"本", r:"ほん"}, {text:"は", p:true}, {k:"面白い", r:"おもしろい"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "},
           {text:"はい。"}, {k:"一日", r:"いちにち", u:true}, {text:"で", p:true, u:true}, {k:"読みました", r:"よみました", u:true}, {text:"。", u:true}
@@ -4592,7 +4593,7 @@ proKuisExtra: []
         ansP: ["は", "か", "で"], ansA: "Saya membacanya (selesai) dalam 1 hari.", qA: "Terjemahkan jawaban A yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['と', 'を', 'か', 'で', 'は'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> "}, {k:"ペン", r:"ペン"}, {text:"と", p:true}, {k:"ノート", r:"ノート"}, {text:"を", p:true}, {k:"買いました", r:"かいました"}, {text:"ね。いくらでした"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "},
           {k:"全部", r:"ぜんぶ", u:true}, {text:"で", p:true, u:true}, {k:"五百円", r:"ごひゃくえん", u:true}, {text:"でした", u:true}, {text:"。", u:true}
@@ -4601,7 +4602,7 @@ proKuisExtra: []
         ansP: ["と", "を", "か", "で"], ansA: "Semuanya (total) 500 yen.", qA: "Terjemahkan jawaban A yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'まで', 'か', 'で', 'に'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> この"}, {k:"仕事", r:"しごと"}, {text:"は", p:true}, {k:"明日", r:"あした"}, {text:"まで", p:true}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "},
           {text:"いいえ、"}, {k:"今日", r:"きょう", u:true}, {k:"一時間", r:"いちじかん", u:true}, {text:"で", p:true, u:true}, {k:"仕上げます", r:"しあげます", u:true}, {text:"。", u:true}
@@ -4610,7 +4611,7 @@ proKuisExtra: []
         ansP: ["は", "まで", "か", "で"], ansA: "hari ini akan saya rampungkan dalam 1 jam.", qA: "Terjemahkan frasa jawaban A yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'で', 'か', 'まで', 'に'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>アグス:</b> ケンさん、"}, {k:"今日", r:"きょう"}, {text:"は", p:true}, {k:"忙しい", r:"いそがしい"}, {text:"です"}, {text:"か", p:true}, {text:"。<br><b>ケン:</b> はい、"},
           {k:"仕事", r:"しごと"}, {text:"で", p:true}, {text:"とても"}, {k:"忙しい", r:"いそがしい"}, {text:"です。<br><b>アグス:</b> このレポート、"},
@@ -4621,48 +4622,48 @@ proKuisExtra: []
         ansP: ["は", "か", "で", "まで", "で"], ansA: "hari ini akan saya rampungkan dalam 1 jam.", qA: "Terjemahkan tekad Ken yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'を', 'で', 'か', 'に'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>デウィ:</b> サクラさん、"}, {k:"昨日", r:"きのう"}, {text:"は", p:true}, {k:"学校", r:"がっこう"}, {text:"を", p:true}, {k:"休みました", r:"やすみました"}, {text:"ね。<br><b>サクラ:</b> はい、"},
-          {k:"風邪", r:"かぜ", u:true}, {text:"で", p:true, u:true}, {k:"休みました", r:"やすみました", u:true}, {text:"。", u:true}, {text:"<br><b>デウィ:</b> "}, {k:"大丈夫", r:"だいじょうぶ"}, {text:"ですか。<br><b>サクラ:</b> ええ、"}, {k:"今日", r:"きょう"}, {text:"は"},
+          {k:"風邪", r:"かぜ", u:true}, {text:"で", p:true, u:true}, {k:"休みました", r:"やすみました", u:true}, {text:"。", u:true}, {text:"<br><b>デウィ:</b> "}, {k:"大丈夫", r:"だいじょうぶ"}, {text:"ですか。<br><b>サクラ:</b> ええ、"}, {k:"今日", r:"きょう"}, {text:"は", p:true},
           {k:"元気", r:"げんき"}, {text:"です。"}
         ],
         a: "<b>Dewi:</b> Sakura, kemarin libur sekolah ya.<br><b>Sakura:</b> Ya, tidak masuk karena flu.<br><b>Dewi:</b> Apakah tidak apa-apa?<br><b>Sakura:</b> Ya, hari ini (saya) sehat.",
-        ansP: ["は", "を", "で"], ansA: "tidak masuk karena flu.", qA: "Terjemahkan alasan Sakura yang bergaris bawah!"
+        ansP: ["は", "を", "で", "は"], ansA: "tidak masuk karena flu.", qA: "Terjemahkan alasan Sakura yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['で', 'を', 'か', 'と', 'は'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>ハルカ:</b> "}, {k:"昨日", r:"きのう"}, {text:"、スーパー"}, {text:"で", p:true}, {k:"買い物", r:"かいもの"}, {text:"を", p:true}, {text:"しました。<br><b>リン:</b> "}, {k:"何", r:"なに"},
-          {text:"を", p:true}, {k:"買いました", r:"かいました"}, {text:"か", p:true}, {text:"。<br><b>ハルカ:</b> ミカンとバナナを"},
+          {text:"を", p:true}, {k:"買いました", r:"かいました"}, {text:"か", p:true}, {text:"。<br><b>ハルカ:</b> ミカン"}, {text: "と", p:true}, {text: "バナナ"}, {text: "を", p:true},
           {k:"買いました", r:"かいました"}, {text:"。"}, {k:"全部", r:"ぜんぶ", u:true}, {text:"で", p:true, u:true}, {k:"五百円", r:"ごひゃくえん", u:true}, {text:"でした", u:true}, {text:"。", u:true}, {text:"<br><b>リン:</b> "}, {k:"安い", r:"やすい"}, {text:"ですね！"}
         ],
         a: "<b>Haruka:</b> Kemarin, (saya) berbelanja di supermarket.<br><b>Rin:</b> Beli apa?<br><b>Haruka:</b> Membeli jeruk dan pisang. Semuanya (total) 500 yen.<br><b>Rin:</b> Murah ya!",
-        ansP: ["で", "を", "を", "か", "で"], ansA: "Semuanya (total) 500 yen.", qA: "Terjemahkan total harga yang bergaris bawah!"
+        ansP: ["で", "を", "を", "か", "と", "を", "で"], ansA: "Semuanya (total) 500 yen.", qA: "Terjemahkan total harga yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'で', 'か', 'に', 'を'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>マネージャー:</b> アグスさん、"}, {k:"今日", r:"きょう"}, {text:"は", p:true}, {k:"遅刻", r:"ちこく"}, {text:"しましたね。<br><b>アグス:</b> すみません、"},
-          {k:"渋滞", r:"じゅうたい", u:true}, {text:"で", p:true, u:true}, {k:"遅刻", r:"ちこく", u:true}, {text:"しました", u:true}, {text:"。", u:true}, {text:"<br><b>マネージャー:</b> "}, {k:"明日", r:"あした"}, {text:"は"}, {k:"電車", r:"でんしゃ"},
-          {text:"で", p:true}, {k:"来ます", r:"きます"}, {text:"か", p:true}, {text:"。<br><b>アグス:</b> はい、"}, {k:"明日", r:"あした"}, {text:"は"}, {k:"電車", r:"でんしゃ"}, {text:"で"}, {k:"来ます", r:"きます"}, {text:"。"}
+          {k:"渋滞", r:"じゅうたい", u:true}, {text:"で", p:true, u:true}, {k:"遅刻", r:"ちこく", u:true}, {text:"しました", u:true}, {text:"。", u:true}, {text:"<br><b>マネージャー:</b> "}, {k:"明日", r:"あした"}, {text:"は", p:true}, {k:"電車", r:"でんしゃ"},
+          {text:"で", p:true}, {k:"来ます", r:"きます"}, {text:"か", p:true}, {text:"。<br><b>アグス:</b> はい、"}, {k:"明日", r:"あした"}, {text:"は", p:true}, {k:"電車", r:"でんしゃ"}, {text:"で", p:true}, {k:"来ます", r:"きます"}, {text:"。"}
         ],
         a: "<b>Manajer:</b> Agus, hari ini terlambat ya.<br><b>Agus:</b> Maaf, terlambat karena kemacetan.<br><b>Manajer:</b> Besok apakah akan datang dengan kereta?<br><b>Agus:</b> Ya, besok datang dengan kereta.",
-        ansP: ["は", "で", "で", "か"], ansA: "terlambat karena kemacetan.", qA: "Terjemahkan alasan Agus yang bergaris bawah!"
+        ansP: ["は", "で", "は", "で", "か", "は", "で"], ansA: "terlambat karena kemacetan.", qA: "Terjemahkan alasan Agus yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['に', 'か', 'の', 'で', 'は'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
-          {text:"<b>ケン:</b> "}, {k:"週末", r:"しゅうまつ"}, {text:"、どこ"}, {text:"に", p:true}, {k:"行きます", r:"いきます"}, {text:"か", p:true}, {text:"。<br><b>シンタ:</b> "}, {k:"友達", r:"ともだち"}, {text:"の"},
+          {text:"<b>ケン:</b> "}, {k:"週末", r:"しゅうまつ"}, {text:"、どこ"}, {text:"に", p:true}, {k:"行きます", r:"いきます"}, {text:"か", p:true}, {text:"。<br><b>シンタ:</b> "}, {k:"友達", r:"ともだち"}, {text:"の", p:true},
           {k:"結婚式", r:"けっこんしき"}, {text:"で", p:true}, {k:"バリ島", r:"バリとう"}, {text:"に", p:true}, {k:"行きます", r:"いきます"}, {text:"。<br><b>ケン:</b> "},
           {k:"飛行機", r:"ひこうき"}, {text:"で", p:true}, {k:"行きます", r:"いきます"}, {text:"か", p:true}, {text:"。<br><b>シンタ:</b> はい、"},
           {k:"飛行機", r:"ひこうき", u:true}, {text:"で", p:true, u:true}, {k:"二時間", r:"にじかん", u:true}, {text:"で", p:true, u:true}, {k:"着きます", r:"つきます", u:true}, {text:"。", u:true}
         ],
         a: "<b>Ken:</b> Akhir pekan pergi ke mana?<br><b>Sinta:</b> Pergi ke pulau Bali karena upacara pernikahan teman.<br><b>Ken:</b> Apakah pergi dengan pesawat?<br><b>Sinta:</b> Ya, akan tiba dalam 2 jam dengan pesawat.",
-        ansP: ["に", "か", "で", "に", "で", "か", "で", "で"], ansA: "akan tiba dalam 2 jam dengan pesawat.", qA: "Terjemahkan jawaban terakhir Sinta yang bergaris bawah!"
+        ansP: ["に", "か", "の", "で", "に", "で", "か", "で", "で"], ansA: "akan tiba dalam 2 jam dengan pesawat.", qA: "Terjemahkan jawaban terakhir Sinta yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['の', 'で', 'は', 'か', 'に'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>サクラ:</b> "}, {k:"昨日", r:"きのう"}, {text:"の", p:true}, {k:"夜", r:"よる"}, {text:"、"}, {k:"停電", r:"ていでん"}, {text:"しましたね。<br><b>ハルカ:</b> はい、"},
           {k:"大雨", r:"おおあめ"}, {text:"で", p:true}, {k:"停電", r:"ていでん"}, {text:"しました。<br><b>サクラ:</b> "},
@@ -4673,7 +4674,7 @@ proKuisExtra: []
         ansP: ["の", "で", "は", "で"], ansA: "tertidur dalam 5 menit.", qA: "Terjemahkan kalimat terakhir Haruka yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'で', 'か', 'に', 'を'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>デウィ:</b> このバッソ"}, {text:"は", p:true}, {k:"美味しい", r:"おいしい"}, {text:"ですね。<br><b>ケン:</b> はい、そして"}, {k:"安い", r:"やすい"}, {text:"です。"},
           {k:"二つ", r:"ふたつ", u:true}, {text:"で", p:true, u:true}, {k:"一万五千ルピア", r:"いちまんごせんルピア", u:true}, {text:"です", u:true}, {text:"。", u:true}, {text:"<br><b>デウィ:</b> ええ！"}, {k:"本当", r:"ほんとう"}, {text:"ですか。"}
@@ -4682,7 +4683,7 @@ proKuisExtra: []
         ansP: ["は", "で"], ansA: "Dua porsi 15.000 rupiah.", qA: "Terjemahkan harga bakso yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['を', 'か', 'で', 'は', 'に'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>アグス:</b> リンさん、この"}, {k:"仕事", r:"しごと"}, {text:"を", p:true}, {text:"します"}, {text:"か", p:true}, {text:"。<br><b>リン:</b> はい、"},
           {k:"三十分", r:"さんじゅっぷん", u:true}, {text:"で", p:true, u:true}, {k:"仕上げます", r:"しあげます", u:true}, {text:"。", u:true}, {text:"<br><b>アグス:</b> すごいですね。"}, {k:"私", r:"わたし"},
@@ -4692,7 +4693,7 @@ proKuisExtra: []
         ansP: ["を", "か", "で", "は", "で"], ansA: "akan saya rampungkan dalam 30 menit.", qA: "Terjemahkan janji Rin yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['の', 'は', 'か', 'で', 'に'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>シンタ:</b> ハルカさん"}, {text:"の", p:true}, {k:"恋人", r:"こいびと"}, {text:"は", p:true}, {k:"どんな", r:"どんな"}, {k:"人", r:"ひと"}, {text:"ですか。<br><b>ハルカ:</b> まじめな"}, {k:"人", r:"ひと"}, {text:"です。"}, {k:"私", r:"わたし"},
           {text:"は", p:true}, {k:"今年", r:"ことし"}, {k:"結婚", r:"けっこん"}, {text:"したいです。<br><b>シンタ:</b> いいですね。"},
@@ -4702,61 +4703,61 @@ proKuisExtra: []
         ansP: ["の", "は", "は", "は", "で", "か"], ansA: "Upacara pernikahan dilakukan di mana?", qA: "Terjemahkan pertanyaan Sinta yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'で', 'を', 'か', 'に'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>リン:</b> "}, {k:"今日", r:"きょう"}, {text:"は", p:true}, {k:"大雨", r:"おおあめ"}, {text:"ですね。<br><b>ケン:</b> はい。"},
-          {k:"大雨", r:"おおあめ", u:true}, {text:"で", p:true, u:true}, {text:"、", u:true}, {k:"今日", r:"きょう", u:true}, {text:"の", u:true}, {k:"テニス", r:"テニス", u:true}, {text:"を", p:true, u:true}, {text:"しません", u:true}, {text:"。", u:true}, {text:"<br><b>リン:</b> "}, {k:"残念", r:"ざんねん"}, {text:"ですね。"}
+          {k:"大雨", r:"おおあめ", u:true}, {text:"で", p:true, u:true}, {text:"、", u:true}, {k:"今日", r:"きょう", u:true}, {text:"の", p:true, u:true}, {k:"テニス", r:"テニス", u:true}, {text:"を", p:true, u:true}, {text:"しません", u:true}, {text:"。", u:true}, {text:"<br><b>リン:</b> "}, {k:"残念", r:"ざんねん"}, {text:"ですね。"}
         ],
         a: "<b>Rin:</b> Hari ini hujan deras ya.<br><b>Ken:</b> Ya. Karena hujan deras, tidak melakukan tenis hari ini.<br><b>Rin:</b> Sayang sekali ya.",
-        ansP: ["は", "で", "を"], ansA: "Karena hujan deras, tidak melakukan tenis hari ini.", qA: "Terjemahkan alasan pembatalan Ken yang bergaris bawah!"
+        ansP: ["は", "で", "の", "を"], ansA: "Karena hujan deras, tidak melakukan tenis hari ini.", qA: "Terjemahkan alasan pembatalan Ken yang bergaris bawah!"
       }
     ],
     kuisExtra: [
       {
-        isMulti: true, opts: ['は', 'で', 'が', 'か', 'のほうが'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
-          {text:"<b>デウィ:</b> "}, {k:"昨日", r:"きのう"}, {text:"のテストは"}, {k:"難しかった", r:"むずかしかった"}, {text:"ですね。<br><b>アグス:</b> はい。"},
-          {k:"私", r:"わたし", u:true}, {text:"は", p:true, u:true}, {k:"風邪", r:"かぜ", u:true}, {text:"で", p:true, u:true}, {text:"、あまり", u:true}, {k:"勉強", r:"べんきょう", u:true}, {text:"しませんでした", u:true}, {text:"。", u:true}, {text:"<br><b>デウィ:</b> "}, {k:"漢字", r:"かんじ"}, {text:"と"}, {k:"文法", r:"ぶんぽう"}, {text:"と、どちら"},
+          {text:"<b>デウィ:</b> "}, {k:"昨日", r:"きのう"}, {text:"の", p:true}, {text: "テスト"}, {text: "は", p:true}, {k:"難しかった", r:"むずかしかった"}, {text:"ですね。<br><b>アグス:</b> はい。"},
+          {k:"私", r:"わたし", u:true}, {text:"は", p:true, u:true}, {k:"風邪", r:"かぜ", u:true}, {text:"で", p:true, u:true}, {text:"、あまり", u:true}, {k:"勉強", r:"べんきょう", u:true}, {text:"しませんでした", u:true}, {text:"。", u:true}, {text:"<br><b>デウィ:</b> "}, {k:"漢字", r:"かんじ"}, {text:"と", p:true}, {k:"文法", r:"ぶんぽう"}, {text:"と", p:true}, {text: "、どちら"},
           {text:"が", p:true}, {k:"難しかった", r:"むずかしかった"}, {text:"ですか。<br><b>アグス:</b> "}, {k:"漢字", r:"かんじ"},
-          {text:"のほうが", p:true}, {k:"難しかった", r:"むずかしかった"}, {text:"です。"}
+          {text:"のほうが"}, {k:"難しかった", r:"むずかしかった"}, {text:"です。"}
         ],
         a: "<b>Dewi:</b> Ujian kemarin sulit ya.<br><b>Agus:</b> Ya. Karena flu, saya tidak banyak belajar.<br><b>Dewi:</b> Antara kanji dan tata bahasa, mana yang lebih sulit?<br><b>Agus:</b> Kanji yang lebih sulit.",
-        ansP: ["は", "で", "が", "のほうが"], ansA: "Karena flu, saya tidak banyak belajar.", qA: "Terjemahkan alasan Agus yang bergaris bawah!"
+        ansP: ["の", "は", "は", "で", "と", "と", "が"], ansA: "Karena flu, saya tidak banyak belajar.", qA: "Terjemahkan alasan Agus yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['は', 'で', 'から', 'に', 'か'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>サクラ:</b> この"}, {k:"新しい", r:"あたらしい"}, {k:"図書館", r:"としょかん"}, {text:"は", p:true}, {k:"静か", r:"しずか"}, {text:"ですね。<br><b>ケン:</b> はい、そしてうち"},
-          {text:"から", p:true}, {k:"近い", r:"ちかい"}, {text:"です。<br><b>サクラ:</b> いつも"}, {k:"何", r:"なに"},
-          {text:"で", p:true}, {k:"来ます", r:"きます"}, {text:"か", p:true}, {text:"。<br><b>ケン:</b> "}, {k:"自転車", r:"じてんしゃ"}, {text:"で"}, {k:"来ます", r:"きます"}, {text:"。"},
+          {text:"から", p:true}, {k:"近い", r:"ちかい"}, {text:"です。<br><b>サクラ:</b> いつも"}, {k:"何", r:"なん"},
+          {text:"で", p:true}, {k:"来ます", r:"きます"}, {text:"か", p:true}, {text:"。<br><b>ケン:</b> "}, {k:"自転車", r:"じてんしゃ"}, {text:"で", p:true}, {k:"来ます", r:"きます"}, {text:"。"},
           {k:"五分", r:"ごふん", u:true}, {text:"で", p:true, u:true}, {k:"着きます", r:"つきます", u:true}, {text:"。", u:true}
         ],
         a: "<b>Sakura:</b> Perpustakaan baru ini tenang ya.<br><b>Ken:</b> Ya, dan dekat dari rumah.<br><b>Sakura:</b> Selalu datang dengan apa?<br><b>Ken:</b> Datang dengan sepeda. Tiba dalam 5 menit.",
-        ansP: ["は", "から", "で", "か", "で"], ansA: "Tiba dalam 5 menit.", qA: "Terjemahkan estimasi waktu Ken yang bergaris bawah!"
+        ansP: ["は", "から", "で", "か", "で", "で"], ansA: "Tiba dalam 5 menit.", qA: "Terjemahkan estimasi waktu Ken yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['と', 'を', 'で', 'は', 'ほど'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>ハルカ:</b> このカバン"}, {text:"と", p:true}, {text:"あのカバン"}, {text:"を", p:true}, {k:"買いました", r:"かいました"}, {text:"。"},
           {k:"全部", r:"ぜんぶ", u:true}, {text:"で", p:true, u:true}, {k:"五千円", r:"ごせんえん", u:true}, {text:"でした", u:true}, {text:"。", u:true}, {text:"<br><b>シンタ:</b> "}, {k:"安い", r:"やすい"}, {text:"ですね！このカバン"},
-          {text:"は", p:true}, {text:"あのカバン"}, {text:"ほど", p:true}, {k:"高くありません", r:"たかくありません"}, {text:"ね。<br><b>ハルカ:</b> はい。でも、"}, {k:"同じ", r:"おなじ"}, {text:"くらいきれいです。"}
+          {text:"は", p:true}, {text:"あのカバン"}, {text:"ほど"}, {k:"高くありません", r:"たかくありません"}, {text:"ね。<br><b>ハルカ:</b> はい。でも、"}, {k:"同じ", r:"おなじ"}, {text:"くらいきれいです。"}
         ],
         a: "<b>Haruka:</b> Saya membeli tas ini dan tas itu. Semuanya (total) 5000 yen.<br><b>Sinta:</b> Murah ya! Tas ini tidak semahal tas itu ya.<br><b>Haruka:</b> Ya. Tapi, sama cantiknya.",
-        ansP: ["と", "を", "で", "は", "ほど"], ansA: "Semuanya (total) 5000 yen.", qA: "Terjemahkan total harga yang bergaris bawah!"
+        ansP: ["と", "を", "で", "は"], ansA: "Semuanya (total) 5000 yen.", qA: "Terjemahkan total harga yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['に', 'が', 'で', 'は', 'か'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>マネージャー:</b> "}, {k:"今日", r:"きょう"}, {text:"、オフィス"}, {text:"に", p:true}, {k:"人", r:"ひと"}, {text:"が", p:true}, {k:"少ない", r:"すくない"}, {text:"ですね。<br><b>リン:</b> はい。アグスさん"},
-          {text:"は", p:true}, {k:"風邪", r:"かぜ"}, {text:"で", p:true}, {k:"休みます", r:"やすみます"}, {text:"。<br><b>マネージャー:</b> ケンさんはどこ"},
+          {text:"は", p:true}, {k:"風邪", r:"かぜ"}, {text:"で", p:true}, {k:"休みます", r:"やすみます"}, {text:"。<br><b>マネージャー:</b> ケンさん"}, {text: "は", p:true}, {text: "どこ"},
           {text:"に", p:true}, {text:"います"}, {text:"か", p:true}, {text:"。<br><b>リン:</b> "},
           {k:"ケンさん", r:"ケンさん", u:true}, {text:"は", p:true, u:true}, {k:"仕事", r:"しごと", u:true}, {text:"で", p:true, u:true}, {k:"東京", r:"とうきょう", u:true}, {text:"に", p:true, u:true}, {text:"います", u:true}, {text:"。", u:true}
         ],
         a: "<b>Manajer:</b> Hari ini, orang di kantor sedikit ya.<br><b>Rin:</b> Ya. Agus libur (tidak masuk) karena flu.<br><b>Manajer:</b> Ken ada di mana?<br><b>Rin:</b> Ken ada di Tokyo karena pekerjaan.",
-        ansP: ["に", "が", "は", "で", "に", "か", "は", "で", "に"], ansA: "Ken ada di Tokyo karena pekerjaan.", qA: "Terjemahkan posisi Ken yang bergaris bawah!"
+        ansP: ["に", "が", "は", "で", "は", "に", "か", "は", "で", "に"], ansA: "Ken ada di Tokyo karena pekerjaan.", qA: "Terjemahkan posisi Ken yang bergaris bawah!"
       },
       {
-        isMulti: true, opts: ['の', 'で', 'は', 'と', 'を', 'か'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>アグス:</b> "}, {k:"昨日", r:"きのう"}, {text:"の", p:true}, {k:"夜", r:"よる"}, {text:"、"}, {k:"大雨", r:"おおあめ"}, {text:"で", p:true}, {k:"停電", r:"ていでん"}, {text:"しましたね。<br><b>ケン:</b> はい。"}, {k:"私", r:"わたし"},
           {text:"は", p:true}, {k:"家", r:"いえ"}, {text:"で", p:true}, {text:"、"}, {k:"家族", r:"かぞく"}, {text:"と", p:true}, {k:"パン", r:"パン"}, {text:"を", p:true}, {k:"食べました", r:"たべました"}, {text:"。<br><b>アグス:</b> "}, {k:"十分", r:"じゅっぷん"},
@@ -4786,7 +4787,7 @@ proKuisExtra: []
     ],
     materi: [
       {
-        isMulti: true, opts: ['に', 'は', 'で', 'か', 'を'],
+        isMulti: true, opts: ['は', 'も', 'の', 'に', 'で', 'と', 'か', 'を', 'が', 'へ', 'から', 'より', 'まで'],
         jp: [
           {text:"<b>Q:</b> いつもどこ"}, {text:"に", p:true}, {k:"住みます", r:"すみます"}, {text:"か", p:true}, {text:"。<br><b>A:</b> "},
           {k:"東京", r:"とうきょう", u:true}, {text:"に", p:true, u:true}, {k:"住みます", r:"すみます", u:true}, {text:"。", u:true}
