@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Modul Kosakata Kanji - YOMIKATA</title>
+<style>
+  :root { 
+    --bg-main: #0b1120;
+    --card-bg: #1e293b;
+    --primary: #38bdf8; 
+    --success: #22c55e; 
+    --danger: #ef4444; 
+    --warning: #eab308;
+    --gold: #fbbf24;
+    --text-main: #f8fafc; 
+    --text-sub: #94a3b8;
+  }
+  
+  body { font-family: 'Segoe UI', sans-serif; background: var(--bg-main); color: var(--text-main); margin: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 15px 10px 15px 10px; overflow-x: hidden; }
+  .container { width: 100%; max-width: 550px; position: relative; }
+  button, input { touch-action: manipulation; font-family: inherit; }
+  .hidden { display: none !important; }
+
+  /* HEADER MINIMALIS */
+  .top-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 20px; }
+  .btn-header { background: #1e293b; color: white; border: 1px solid #334155; width: 42px; height: 42px; border-radius: 12px; font-size: 20px; cursor: pointer; display: flex; justify-content: center; align-items: center; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent; box-shadow: 0 4px 6px rgba(0,0,0,0.3); }
+  .btn-header:active { transform: scale(0.85); box-shadow: 0 2px 3px rgba(0,0,0,0.3); }
+  .btn-header.spin-anim { transform: rotate(180deg) scale(0.5); opacity: 0; }
+  .header-title { font-weight: 800; font-size: 18px; color: var(--gold); letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+
+  /* Tab Menu Utama */
+  .nav-tabs { display: flex; gap: 5px; margin-bottom: 10px; justify-content: center; background: transparent;}
+  .tab-btn { background: #1e293b; color: var(--text-sub); border: 1px solid #334155; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; flex-grow: 1; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); text-align: center; -webkit-tap-highlight-color: transparent; }
+  .tab-btn:active { transform: scale(0.95); }
+  .tab-btn.active { color: var(--gold); border: 1px solid var(--gold); background: rgba(251, 191, 36, 0.1); box-shadow: 0 4px 12px rgba(251, 191, 36, 0.15); transform: translateY(-2px); }
+
+  /* Sub Navigasi HARI */
+  .sub-nav { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 15px; scrollbar-width: none; transition: opacity 0.3s ease; }
+  .sub-nav::-webkit-scrollbar { display: none; }
+  .sub-btn { background: rgba(255,255,255,0.05); color: var(--text-sub); border: 1px solid rgba(255,255,255,0.1); padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; white-space: nowrap; transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); -webkit-tap-highlight-color: transparent; }
+  .sub-btn:active { transform: scale(0.92); }
+  .sub-btn.active { background: var(--primary); color: #000; border-color: var(--primary); box-shadow: 0 0 10px rgba(56, 189, 248, 0.4); transform: translateY(-2px); }
+
+  /* Animasi Transisi Mulus */
+  .fade-in-up { animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .fade-out-down { animation: fadeOutDown 0.25s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
+  .pop-in { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+  .slide-in-right { animation: slideInRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+  .slide-out-left { animation: slideOutLeft 0.25s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
+  .slide-in-left { animation: slideInLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+  .slide-out-right { animation: slideOutRight 0.25s cubic-bezier(0.55, 0.085, 0.68, 0.53) forwards; }
+  
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeOutDown { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(20px); } }
+  @keyframes popIn { 0% { opacity: 0; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
+  @keyframes slideInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes slideOutLeft { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-50px); } }
+  @keyframes slideInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+  @keyframes slideOutRight { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(50px); } }
+
+  /* Area Konten Umum */
+  .content-section { background: var(--card-bg); border-radius: 20px; padding: 25px 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); min-height: 400px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid rgba(255,255,255,0.05); overflow: hidden; position: relative; }
+  .progress-text { font-size: 14px; font-weight: bold; letter-spacing: 1px; margin-bottom: 15px; text-transform: uppercase; }
+
+  /* Flashcard UI */
+  .content-hafalan { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; position: relative; padding-top: 20px; }
+  .kanji-text { font-size: clamp(45px, 10vw, 65px); font-weight: bold; margin: 5px 0 15px 0; color: var(--text-main); text-shadow: 0 4px 10px rgba(0,0,0,0.5); cursor: pointer; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent; line-height: 1.2; }
+  .hira-text { font-size: clamp(16px, 5vw, 22px); color: var(--warning); margin-bottom: 5px; font-weight: bold; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+  .arti-text { font-size: clamp(18px, 5vw, 22px); color: var(--success); font-weight: bold; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); margin-bottom: 15px; }
+  
+  .blur-hide { filter: blur(8px); opacity: 0; transform: translateY(10px); pointer-events: none; }
+  .blur-show { filter: blur(0); opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .fc-revealed { animation: popKanji 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; color: var(--gold); }
+  .hira-hide { opacity: 0; transform: translateY(15px) scale(0.5); pointer-events: none; }
+  .hira-show { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+
+  .pulse-hint { animation: pulseHint 2s infinite; }
+  @keyframes pulseHint { 0%, 100% { transform: scale(1); color: var(--text-main); } 50% { transform: scale(1.05); color: var(--primary); } }
+
+  /* Floating Bubble UI */
+  .btn-bubble { position: absolute; right: 0px; top: -15px; width: 35px; height: 35px; border-radius: 50%; background: rgba(34, 197, 94, 0.2); border: 1px solid var(--success); color: white; font-size: 18px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 10; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent;}
+  .btn-bubble:hover { background: rgba(34, 197, 94, 0.4); transform: scale(1.1); }
+  .btn-bubble:active { transform: scale(0.9); }
+  
+  .bubble-popup { 
+    position: absolute; top: 40px; right: 0px; background: rgba(15, 23, 42, 0.95); 
+    border: 2px solid var(--success); padding: 15px; border-radius: 12px; width: 260px; 
+    text-align: left; font-size: 13px; color: var(--text-main); z-index: 11; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7); backdrop-filter: blur(5px); line-height: 1.5;
+    opacity: 0; visibility: hidden; transform: translateY(-15px) scale(0.9);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: top right;
+    max-height: 250px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--success) transparent;
+  }
+  .bubble-popup.show-popup { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+
+  /* Buku Tabel UI */
+  .book-container { flex-grow: 1; display: flex; flex-direction: column; width: 100%; height: 100%; text-align: left; }
+  .book-page { flex-grow: 1; overflow-y: auto; overflow-x: hidden; padding-right: 5px; scrollbar-width: thin; scrollbar-color: var(--success) transparent; }
+  .book-title { color: var(--success); font-size: 20px; font-weight: bold; margin-bottom: 10px; border-bottom: 2px dashed rgba(34, 197, 94, 0.3); padding-bottom: 8px;}
+  .book-narrative { font-size: 14px; line-height: 1.6; color: var(--text-main); margin-bottom: 15px; background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border-left: 4px solid var(--success); }
+  
+  .tabel-waktu { width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 10px; background: rgba(255,255,255,0.02); border-radius: 8px; table-layout: auto; min-width: 300px; text-align: center; }
+  .tabel-waktu th { background: rgba(34, 197, 94, 0.15); color: var(--success); padding: 6px; border-bottom: 2px solid var(--success); position: sticky; top: 0; backdrop-filter: blur(5px); z-index: 5; white-space: nowrap;}
+  .tabel-waktu td { padding: 8px 4px; border-bottom: 1px dashed rgba(255,255,255,0.05); vertical-align: middle; white-space: nowrap; }
+  .tabel-waktu tr:last-child td { border-bottom: none; }
+  
+  /* FURIGANA STYLES */
+  ruby { line-height: 1.5; white-space: nowrap; }
+  .ruby-item { font-weight: bold; color: var(--text-main); font-size: 12px; cursor: pointer; display: inline-block; padding: 4px 6px; border-radius: 8px; transition: background 0.3s, color 0.3s; -webkit-tap-highlight-color: transparent; border: 1px solid transparent; }
+  .ruby-item:active { opacity: 0.7; transform: scale(0.95); }
+  .furi-anim { opacity: 0; transform: translateY(10px) scale(0.5); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); color: var(--warning); font-size: 9px; font-weight: bold; pointer-events: none; }
+  .ruby-item.revealed { animation: popKanji 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.3); color: var(--gold); }
+  .ruby-item.revealed .furi-anim { opacity: 1; transform: translateY(0) scale(1); }
+  .show-all-furi .ruby-item { background: rgba(251, 191, 36, 0.15); border-color: rgba(251, 191, 36, 0.3); color: var(--gold); }
+  .show-all-furi .ruby-item .furi-anim { opacity: 1 !important; transform: translateY(0) scale(1) !important; }
+  
+  @keyframes popKanji { 0% { transform: scale(1); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
+  
+  .t-arti { color: var(--text-main); font-size: 11px; font-weight: bold; display: block; }
+  
+  .btn-sensor { background: #334155; color: white; border: 1px solid #475569; padding: 10px; border-radius: 8px; font-weight: bold; font-size: 13px; cursor: pointer; width: 100%; margin-bottom: 10px; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); -webkit-tap-highlight-color: transparent; }
+  .btn-sensor:active { transform: scale(0.95); }
+  .btn-sensor.active { background: rgba(56, 189, 248, 0.2); color: var(--primary); border-color: var(--primary); }
+
+  /* Info & Evaluasi */
+  .eval-box { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; margin-top: 20px; text-align: center; line-height: 1.6; border: 1px solid rgba(255,255,255,0.1); }
+  .btn-next { background: #334155; color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; font-size: 18px; cursor: pointer; width: 100%; margin-top: 20px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent; }
+  .btn-next:hover { background: #475569; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+  .btn-next:active { transform: scale(0.94) translateY(2px); box-shadow: none; }
+
+  /* Kuis UI */
+  .kuis-q { font-size: 18px; font-weight: bold; margin-bottom: 25px; line-height: 1.4; color: var(--text-main); }
+  .pg-grid { display: grid; grid-template-columns: 1fr; gap: 10px; width: 100%; }
+  .btn-opt { background: #0f172a; color: white; border: 2px solid #334155; padding: 15px; border-radius: 12px; font-size: 22px; font-weight: bold; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent; }
+  .btn-opt:not(:disabled):hover { border-color: var(--primary); transform: translateY(-2px); }
+  .btn-opt:not(:disabled):active { transform: scale(0.94) translateY(2px); }
+  .btn-opt.correct { background: rgba(34, 197, 94, 0.2); border-color: var(--success); color: var(--success); transform: scale(1.02); }
+  .btn-opt.wrong { background: rgba(239, 68, 68, 0.2); border-color: var(--danger); color: var(--danger); animation: shake 0.4s ease; }
+  @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+  .input-box { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #475569; background: #0f172a; color: white; font-size: 18px; text-align: center; margin-bottom: 15px; box-sizing: border-box; transition: all 0.3s ease; }
+  .input-box:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); transform: scale(1.02); }
+  .btn-submit { background: var(--primary); color: #000; border: none; padding: 14px; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; width: 100%; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent; }
+  .btn-submit:hover { filter: brightness(1.1); transform: translateY(-2px); }
+  .btn-submit:active { transform: scale(0.94) translateY(2px); }
+  .feedback { font-size: 18px; font-weight: bold; min-height: 25px; margin-top: 15px; opacity: 0; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  
+  <div class="top-header">
+    <button class="btn-header" onclick="window.location.href='index.html'">⬅️</button>
+    <div class="header-title">YOMIKATA</div>
+    <button class="btn-header" id="btn-toggle-view" onclick="Modul.toggleView()">📋</button>
+  </div>
+
+  <div class="nav-tabs">
+    <button class="tab-btn active" id="btn-tab-hafalan" onclick="Modul.switchTab('hafalan')">📖 Hafalan</button>
+    <button class="tab-btn" id="btn-tab-pg" onclick="Modul.switchTab('pg')">🎯 Pilgan</button>
+    <button class="tab-btn" id="btn-tab-isian" onclick="Modul.switchTab('isian')">✍️ Isian</button>
+  </div>
+
+  <div class="sub-nav fade-in-up" id="nav-hari">
+    </div>
+
+  <div id="sec-hafalan" class="content-section fade-in-up"></div>
+
+  <div id="sec-pg" class="content-section hidden fade-in-up">
+    <div class="progress-text" id="pg-progress" style="color:var(--gold);">KUIS PILGAN: 1 / 10</div>
+    <div class="content-hafalan" style="justify-content: flex-start; width: 100%; padding-top: 10px;">
+      <div id="pg-content-wrapper" style="width: 100%;">
+        <div class="kuis-q" id="pg-q">Memuat soal...</div>
+        <div class="pg-grid" id="pg-opts"></div>
+      </div>
+      <div class="feedback" id="pg-feedback"></div>
+    </div>
+  </div>
+
+  <div id="sec-isian" class="content-section hidden fade-in-up">
+    <div class="progress-text" id="isian-progress" style="color:var(--gold);">KUIS ISIAN: 1 / 10</div>
+    <div class="content-hafalan" style="justify-content: center; width: 100%; padding-top: 10px;">
+      <div id="isian-content-wrapper" style="width: 100%;">
+        <div class="kuis-q" id="isian-q">Memuat soal...</div>
+        <div style="font-size:12px; color:var(--text-sub); margin-top:-15px; margin-bottom:15px;" id="isian-hint-teks"></div>
+        <input type="text" id="isian-input" class="input-box" placeholder="Ketik jawabanmu..." autocomplete="off" onkeypress="if(event.key==='Enter') Modul.checkIsian()">
+        <button class="btn-submit" id="btn-submit-isian" onclick="Modul.checkIsian()">Kirim Jawaban</button>
+      </div>
+      <div class="feedback" id="isian-feedback"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ==========================================
+// DATABASE MATERI HARIAN
+// ==========================================
+const MasterDB = [
+  {
+    title: "Hari 1",
+    data: [
+      { k: "先生", r: "せんせい", a: "Guru" },
+      { k: "お先に", r: "おさきに", a: "Duluan" },
+      { k: "先月", r: "せんげつ", a: "Bulan lalu" },
+      { k: "生活", r: "せいかつ", a: "Kehidupan" },
+      { k: "学生", r: "がくせい", a: "Siswa/Murid" },
+      { k: "生徒", r: "せいと", a: "Murid" },
+      { k: "誕生日", r: "たんじょうび", a: "Ulang Tahun" },
+      { k: "学校", r: "がっこう", a: "Sekolah" },
+      { k: "日本人", r: "にほんじん", a: "Orang Jepang" },
+      { k: "大人", r: "おとな", a: "Dewasa" },
+      { k: "一人", r: "ひとり", a: "1 Orang" },
+      { k: "国", r: "くに", a: "Negara" },
+      { k: "外国人", r: "がいこくじん", a: "Orang asing" },
+      { k: "男の子", r: "おとこのこ", a: "Anak laki-laki" },
+      { k: "男の人", r: "おとこのひと", a: "Orang laki-laki" },
+      { k: "彼女", r: "かのじょ", a: "Dia (Perempuan)" },
+      { k: "女の子", r: "おんなのこ", a: "Anak perempuan" },
+      { k: "子供", r: "こども", a: "Anak-anak" },
+      { k: "友達", r: "ともだち", a: "Teman" },
+      { k: "お父さん", r: "おとうさん", a: "Ayah (orang lain)" },
+      { k: "父", r: "ちち", a: "Ayah (sendiri)" },
+      { k: "お母さん", r: "おかあさん", a: "Ibu (orang lain)" },
+      { k: "母", r: "はは", a: "Ibu (sendiri)" },
+      { k: "有名", r: "ゆうめい", a: "Terkenal" },
+      { k: "名前", r: "なまえ", a: "Nama" },
+      { k: "田", r: "た", a: "Sawah" },
+      { k: "田中さん", r: "たなかさん", a: "Tanaka-san" },
+      { k: "山田さん", r: "やまださん", a: "Yamada-san" },
+      { k: "富士山", r: "ふじさん", a: "Gunung Fuji" },
+      { k: "山", r: "やま", a: "Gunung" },
+      { k: "日本語", r: "にほんご", a: "Bahasa Jepang" },
+      { k: "英語", r: "えいご", a: "Bahasa Inggris" },
+      { k: "本", r: "ほん", a: "Buku" },
+      { k: "日本", r: "にほん", a: "Jepang" }
+    ]
+  },
+  {
+    title: "Hari 2",
+    data: [
+      // ⬇️ TAMBAHKAN KOSAKATA HARI KE-2 DI SINI NANTI ⬇️
+      // { k: "水", r: "みず", a: "Air" },
+      // { k: "火", r: "ひ", a: "Api" },
+    ]
+  }
+];
+
+// ==========================================
+// ENGINE MODUL
+// ==========================================
+const Modul = {
+  activeTab: 'hafalan', viewMode: 'flashcard',
+  activeDayIdx: 0, cardIdx: 0, 
+  idxPG: 0, scorePG: 0, idxIsian: 0, scoreIsian: 0,
+  activeArray: [], activePGData: [], activeIsianData: [],
+
+  init: function() { 
+      this.renderNavHari();
+      this.switchDay(0);
+  },
+
+  renderNavHari: function() {
+      const nav = document.getElementById('nav-hari');
+      let html = '';
+      MasterDB.forEach((day, index) => {
+          html += `<button class="sub-btn" id="btn-day-${index}" onclick="Modul.switchDay(${index})">${day.title}</button>`;
+      });
+      nav.innerHTML = html;
+  },
+
+  switchDay: function(index) {
+      this.activeDayIdx = index;
+      this.activeArray = MasterDB[index].data;
+      this.cardIdx = 0;
+
+      MasterDB.forEach((day, i) => {
+          const btn = document.getElementById(`btn-day-${i}`);
+          if(btn) {
+              if (i === index) btn.classList.add('active');
+              else btn.classList.remove('active');
+          }
+      });
+
+      this.switchTab(this.activeTab);
+  },
+
+  triggerAnimation: function(elementId, animClass) {
+    const el = document.getElementById(elementId);
+    if(!el) return;
+    el.classList.remove('slide-in-right', 'slide-out-left', 'slide-in-left', 'slide-out-right', 'pop-in', 'fade-in-up', 'fade-out-down');
+    void el.offsetWidth;
+    el.classList.add(animClass);
+  },
+
+  toggleView: function() {
+    const btn = document.getElementById('btn-toggle-view');
+    btn.classList.add('spin-anim'); 
+    
+    this.triggerAnimation('sec-hafalan', 'fade-out-down');
+
+    setTimeout(() => {
+        this.viewMode = (this.viewMode === 'flashcard') ? 'tabel' : 'flashcard';
+        this.cardIdx = 0;
+        btn.innerHTML = (this.viewMode === 'flashcard') ? '📋' : '🎴';
+        btn.classList.remove('spin-anim'); 
+        
+        if (this.activeTab === 'hafalan') {
+            this.renderHafalan(false); 
+            this.triggerAnimation('sec-hafalan', 'fade-in-up'); 
+        }
+    }, 250); 
+  },
+
+  switchTab: function(tab) {
+    this.activeTab = tab;
+    ['hafalan', 'pg', 'isian'].forEach(t => {
+      document.getElementById('btn-tab-'+t).classList.remove('active');
+      document.getElementById('sec-'+t).classList.add('hidden');
+    });
+    
+    document.getElementById('btn-tab-'+tab).classList.add('active');
+    document.getElementById('btn-toggle-view').style.visibility = (tab === 'hafalan') ? 'visible' : 'hidden';
+    
+    if (tab === 'hafalan') { 
+      document.getElementById('sec-hafalan').classList.remove('hidden');
+      this.triggerAnimation('sec-hafalan', 'fade-in-up');
+      this.cardIdx = 0;
+      this.renderHafalan(false);
+    } 
+    else if (tab === 'pg') { 
+      document.getElementById('sec-pg').classList.remove('hidden');
+      this.triggerAnimation('sec-pg', 'fade-in-up');
+      this.activePGData = this.generatePG();
+      this.idxPG = 0; this.scorePG = 0; this.renderPG(false); 
+    }
+    else if (tab === 'isian') { 
+      document.getElementById('sec-isian').classList.remove('hidden');
+      this.triggerAnimation('sec-isian', 'fade-in-up');
+      this.activeIsianData = this.generateIsian();
+      this.idxIsian = 0; this.scoreIsian = 0; this.renderIsian(false); 
+    }
+  },
+
+  renderHafalan: function(useSlideAnim = true) {
+    if (this.viewMode === 'flashcard') this.renderFC(useSlideAnim);
+    else this.renderBook(useSlideAnim ? 'right' : 'none');
+  },
+
+  renderFC: function(useSlideAnim = true) {
+    const sec = document.getElementById('sec-hafalan');
+    sec.style.padding = "25px 20px";
+    
+    if (this.activeArray.length === 0) {
+        sec.innerHTML = `<div class="content-hafalan"><div class="kanji-text" style="font-size:25px; cursor:default;">Materi belum tersedia 🚧</div></div>`;
+        if(useSlideAnim) this.triggerAnimation('sec-hafalan', 'slide-in-right');
+        return;
+    }
+
+    if (this.cardIdx >= this.activeArray.length) {
+      sec.innerHTML = `<div class="content-hafalan"><div class="kanji-text" style="cursor:default;">🎉 Tuntas!</div></div>
+      <button class="btn-next" onclick="Modul.cardIdx=0; Modul.renderFC(true)">Ulangi Hafalan</button>`;
+      if(useSlideAnim) this.triggerAnimation('sec-hafalan', 'slide-in-right');
+      return;
+    }
+
+    const item = this.activeArray[this.cardIdx];
+    const currentTitle = MasterDB[this.activeDayIdx].title;
+
+    let bubbleHTML = `
+        <button class="btn-bubble" onclick="document.getElementById('fc-popup-narasi').classList.toggle('show-popup')">💡</button>
+        <div id="fc-popup-narasi" class="bubble-popup"><b>💡 Tips Belajar:</b><br>Hafalkan bentuk kanji ini perlahan. Tekan kanji untuk melihat cara baca (Hiragana) dan arti bahasanya.</div>
+    `;
+    
+    sec.innerHTML = `
+      <div class="progress-text" style="color:var(--primary);">HAFALAN ${currentTitle.toUpperCase()}: ${this.cardIdx+1} / ${this.activeArray.length}</div>
+      <div id="fc-content" class="content-hafalan">
+        ${bubbleHTML}
+        <div class="hira-text hira-hide" id="fc-hira">${item.r}</div>
+        <div class="kanji-text pulse-hint" id="fc-kanji" onclick="Modul.revealCard()">${item.k}</div>
+        <div id="fc-hint" style="font-size:12px; color:var(--text-sub); margin-top:-10px; margin-bottom:10px;">(Sentuh Kanji untuk membuka detail)</div>
+        <div class="arti-text blur-hide" id="fc-arti">${item.a}</div>
+      </div>
+      <button class="btn-next" onclick="Modul.nextCard()">Selanjutnya →</button>
+    `;
+    
+    if(useSlideAnim) this.triggerAnimation('fc-content', 'slide-in-right');
+  },
+
+  revealCard: function() {
+    document.getElementById('fc-hira').classList.replace('hira-hide', 'hira-show');
+    document.getElementById('fc-arti').classList.replace('blur-hide', 'blur-show');
+    document.getElementById('fc-kanji').classList.remove('pulse-hint');
+    document.getElementById('fc-kanji').classList.add('fc-revealed');
+    document.getElementById('fc-hint').style.display = 'none';
+    
+    let popup = document.getElementById('fc-popup-narasi');
+    if(popup) popup.classList.remove('show-popup');
+  },
+
+  nextCard: function() { 
+    this.triggerAnimation('fc-content', 'slide-out-left');
+    setTimeout(() => { this.cardIdx++; this.renderFC(true); }, 250);
+  },
+
+  renderBook: function(dir = 'right') {
+    const sec = document.getElementById('sec-hafalan');
+    sec.style.padding = "15px 15px 5px 15px"; 
+    
+    if (this.activeArray.length === 0) {
+        sec.innerHTML = `<div class="content-hafalan"><div class="kanji-text" style="font-size:25px; cursor:default;">Materi belum tersedia 🚧</div></div>`;
+        if(dir !== 'none') this.triggerAnimation('sec-hafalan', 'fade-in-up');
+        return;
+    }
+
+    const currentTitle = MasterDB[this.activeDayIdx].title;
+
+    let html = `<div class="book-container" id="book-wrapper">`;
+    html += `<div class="book-page" id="book-page">`;
+    html += `<div class="book-title">Materi ${currentTitle}</div>`;
+    html += `<div class="book-narrative">Daftar keseluruhan kosakata Kanji yang perlu dihafal. Sentuh kanji di dalam tabel untuk memunculkan cara bacanya (Furigana).</div>`;
+    
+    html += `<button id="btn-sensor" class="btn-sensor" onclick="Modul.toggleFurigana()">👁️ Tampilkan Semua Furigana</button>
+             <div id="waktu-table-container" style="overflow-x:auto; padding-bottom:10px;">`;
+
+    html += `<table class="tabel-waktu">
+                <tr>
+                    <th>Kosakata Kanji</th>
+                    <th>Hiragana</th>
+                    <th>Arti</th>
+                </tr>`;
+    
+    const makeRuby = (kanji, hiragana) => {
+        if (kanji === hiragana) return `<span class="ruby-item" style="cursor:default; border:none; background:transparent;">${hiragana}</span>`;
+        return `<span class="ruby-item" onclick="this.classList.toggle('revealed')"><ruby>${kanji}<rt class="furi-anim">${hiragana}</rt></ruby></span>`;
+    };
+
+    this.activeArray.forEach(item => {
+        html += `<tr>
+            <td style="font-size:16px; font-weight:bold;">${item.k}</td>
+            <td>${makeRuby(item.k, item.r)}</td>
+            <td><span class="t-arti">${item.a}</span></td>
+        </tr>`;
+    });
+    
+    html += `</table></div></div>`;
+    sec.innerHTML = html;
+
+    if (dir === 'right') this.triggerAnimation('book-page', 'slide-in-right');
+    else if (dir === 'left') this.triggerAnimation('book-page', 'slide-in-left');
+    else if (dir !== 'none') this.triggerAnimation('book-wrapper', 'fade-in-up');
+  },
+
+  toggleFurigana: function() {
+    const container = document.getElementById('waktu-table-container');
+    const btn = document.getElementById('btn-sensor');
+    const isHidden = !container.classList.contains('show-all-furi');
+    
+    if (isHidden) {
+        container.classList.add('show-all-furi');
+        btn.innerHTML = "🙈 Sembunyikan Semua Furigana";
+        btn.classList.add('active');
+    } else {
+        container.classList.remove('show-all-furi');
+        btn.innerHTML = "👁️ Tampilkan Semua Furigana";
+        btn.classList.remove('active');
+    }
+  },
+
+  shuffleArray: function(array) {
+    let newArr = [...array];
+    for (let i = newArr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+    }
+    return newArr;
+  },
+
+  generatePG: function() {
+    let pool = this.activeArray;
+    let limit = pool.length;
+    if(limit === 0) return [];
+    
+    let shuffledPool = this.shuffleArray(pool);
+    let half = Math.ceil(limit / 2);
+    
+    let part1 = shuffledPool.slice(0, half);
+    let part2 = shuffledPool.slice(half, limit);
+    let generated = [];
+
+    // Mode 1: Kanji -> Cari Hiragana
+    part1.forEach(item => {
+        let ans = item.r; 
+        let opts = [ans]; 
+        
+        let distractors = this.shuffleArray([...pool]);
+        for(let d of distractors) {
+            let dText = d.r;
+            if(!opts.includes(dText)) opts.push(dText);
+            if(opts.length === 4) break;
+        }
+        while(opts.length < 4) { opts.push("ダミー" + opts.length); }
+        
+        generated.push({ 
+            q: `Pilih <b style='color:var(--primary);'>Cara Baca (Hiragana)</b> yang tepat untuk kanji di bawah ini:<br><br><span style="font-size:45px; color:var(--text-main);">${item.k}</span>`, 
+            opts: this.shuffleArray(opts), 
+            ans: ans 
+        });
+    });
+
+    // Mode 2: Hiragana -> Cari Kanji
+    part2.forEach(item => {
+        let ans = item.k;
+        let opts = [ans];
+        let distractors = this.shuffleArray([...pool]);
+        for(let d of distractors) {
+            let dText = d.k;
+            if(!opts.includes(dText)) opts.push(dText);
+            if(opts.length === 4) break;
+        }
+        while(opts.length < 4) { opts.push("ダミー" + opts.length); }
+
+        generated.push({
+            q: `Pilih <b style='color:var(--gold);'>Kanji</b> yang tepat untuk cara baca di bawah ini:<br><br><span style="font-size:35px; color:var(--warning);">${item.r}</span>`,
+            opts: this.shuffleArray(opts),
+            ans: ans
+        });
+    });
+
+    return this.shuffleArray(generated);
+  },
+
+  generateIsian: function() {
+    let pool = this.activeArray;
+    let limit = pool.length;
+    if(limit === 0) return [];
+    
+    let shuffledPool = this.shuffleArray(pool);
+    let half = Math.ceil(limit / 2);
+    
+    let part1 = shuffledPool.slice(0, half);
+    let part2 = shuffledPool.slice(half, limit);
+    let generated = [];
+    
+    // Mode 1: Kanji -> Ketik Hiragana
+    part1.forEach(item => {
+        let ansArray = [item.r.replace(/[\s]/g, '')];
+
+        generated.push({ 
+            q: `Ketikkan <b style='color:var(--gold);'>Hiragana</b> dari kosakata kanji ini:<br><span style="font-size:45px; color:var(--text-main);">${item.k}</span>`, 
+            ans: ansArray,
+            type: 'hiragana'
+        });
+    });
+
+    // Mode 2: Kanji -> Ketik Terjemahan/Arti
+    part2.forEach(item => {
+        let cleanA = item.a.toLowerCase();
+        let ansArray = [];
+
+        ansArray.push(cleanA.replace(/[\s-]/g, '').replace(/\([^)]*\)/g, ''));
+        
+        let parts = cleanA.split(/[/,]/);
+        parts.forEach(p => {
+            let cleanP = p.replace(/\([^)]*\)/g, '').replace(/[\s-]/g, '');
+            if(cleanP && !ansArray.includes(cleanP)) ansArray.push(cleanP);
+        });
+
+        if(item.a === "Ayah (orang lain)" || item.a === "Ayah (sendiri)") ansArray.push("ayah", "bapak");
+        if(item.a === "Ibu (orang lain)" || item.a === "Ibu (sendiri)") ansArray.push("ibu", "mama");
+        if(item.a === "Anak laki-laki") ansArray.push("anaklakilaki", "cowo", "cowok");
+        if(item.a === "Orang laki-laki") ansArray.push("oranglakilaki", "lakilaki", "pria");
+        if(item.a === "Anak perempuan") ansArray.push("anakperempuan", "cewe", "cewek");
+        if(item.a === "Dia (Perempuan)") ansArray.push("dia", "diaperempuan", "pacar", "kekasih");
+        if(item.a === "Ulang Tahun") ansArray.push("ulangtahun", "ultah", "hariulangtahun");
+
+        generated.push({ 
+            q: `Apa <b style='color:var(--primary);'>Arti</b> dari kosakata kanji ini:<br><span style="font-size:45px; color:var(--warning);">${item.k}</span>`, 
+            ans: ansArray,
+            type: 'arti'
+        });
+    });
+
+    return this.shuffleArray(generated);
+  },
+
+  getEvaluasiHTML: function(score, total) {
+    let pct = score / total;
+    if (pct === 1) return `<div class="eval-box">🌟 <b>SEMPURNA!</b><br>Pengetahuan Kanji Sensei sangat luar biasa!</div>`;
+    return `<div class="eval-box">💪 <b>TETAP SEMANGAT!</b><br>Yuk, hafalkan lagi bentuk huruf dan maknanya pelan-pelan.</div>`;
+  },
+
+  renderPG: function(useSlideAnim = true) {
+    const fb = document.getElementById('pg-feedback'); fb.innerHTML = ""; fb.style.opacity = "0";
+    const pool = this.activePGData;
+    
+    if (pool.length === 0) {
+        document.getElementById('pg-q').innerHTML = `Materi belum tersedia 🚧`;
+        document.getElementById('pg-opts').innerHTML = "";
+        if(useSlideAnim) this.triggerAnimation('pg-content-wrapper', 'slide-in-right');
+        return;
+    }
+
+    if (this.idxPG >= pool.length) {
+      document.getElementById('pg-q').innerHTML = `🎉 Kuis Selesai!<br>Skor: ${this.scorePG} / ${pool.length}`;
+      let evalHTML = this.getEvaluasiHTML(this.scorePG, pool.length);
+      document.getElementById('pg-opts').innerHTML = evalHTML + `<button class="btn-next" onclick="Modul.switchTab('pg')">Acak & Ulangi Kuis</button>`;
+      if(useSlideAnim) this.triggerAnimation('pg-content-wrapper', 'slide-in-right');
+      return;
+    }
+
+    const target = pool[this.idxPG];
+    document.getElementById('pg-progress').innerText = `KUIS PILGAN: ${this.idxPG+1} / ${pool.length}`;
+    document.getElementById('pg-q').innerHTML = target.q;
+    
+    let optsHTML = target.opts.map(o => `<button class="btn-opt" onclick="Modul.checkPG(this,'${o}','${target.ans}')">${o}</button>`).join('');
+    document.getElementById('pg-opts').innerHTML = optsHTML;
+
+    if(useSlideAnim) this.triggerAnimation('pg-content-wrapper', 'slide-in-right');
+  },
+
+  checkPG: function(btn, sel, cor) {
+    const fb = document.getElementById('pg-feedback');
+    document.querySelectorAll('.btn-opt').forEach(b => b.disabled = true);
+    fb.style.opacity = "1"; this.triggerAnimation('pg-feedback', 'pop-in');
+
+    if(sel === cor) { btn.classList.add('correct'); fb.innerHTML = "BENAR! ✅"; fb.style.color = "var(--success)"; this.scorePG++; } 
+    else { btn.classList.add('wrong'); fb.innerHTML = "SALAH! ❌"; fb.style.color = "var(--danger)"; }
+    
+    setTimeout(() => { 
+      this.triggerAnimation('pg-content-wrapper', 'slide-out-left');
+      setTimeout(() => { this.idxPG++; this.renderPG(true); }, 1200);
+    }, 1200);
+  },
+
+  renderIsian: function(useSlideAnim = true) {
+    const fb = document.getElementById('isian-feedback'); fb.innerHTML = ""; fb.style.opacity = "0";
+    const input = document.getElementById('isian-input'); input.value = ""; input.disabled = false;
+    document.getElementById('btn-submit-isian').classList.remove('hidden');
+    
+    const pool = this.activeIsianData;
+
+    if (pool.length === 0) {
+        document.getElementById('isian-q').innerHTML = `Materi belum tersedia 🚧`;
+        input.classList.add('hidden'); document.getElementById('btn-submit-isian').classList.add('hidden');
+        document.getElementById('isian-hint-teks').innerText = "";
+        if(useSlideAnim) this.triggerAnimation('isian-content-wrapper', 'slide-in-right');
+        return;
+    }
+
+    if (this.idxIsian >= pool.length) {
+      document.getElementById('isian-q').innerHTML = `🎉 Latihan Tuntas!<br>Skor: ${this.scoreIsian} / ${pool.length}`;
+      input.classList.add('hidden'); document.getElementById('btn-submit-isian').classList.add('hidden');
+      document.getElementById('isian-hint-teks').innerText = "";
+      
+      let evalHTML = this.getEvaluasiHTML(this.scoreIsian, pool.length);
+      fb.style.opacity = "1";
+      fb.innerHTML = evalHTML + `<button class="btn-next" onclick="Modul.switchTab('isian')">Acak & Ulangi Kuis</button>`;
+      
+      if(useSlideAnim) this.triggerAnimation('isian-content-wrapper', 'slide-in-right');
+      return;
+    }
+
+    const target = pool[this.idxIsian];
+    document.getElementById('isian-progress').innerText = `KUIS ISIAN: ${this.idxIsian+1} / ${pool.length}`;
+    document.getElementById('isian-q').innerHTML = target.q;
+    
+    let hintTeks = document.getElementById('isian-hint-teks');
+    if (target.type === 'arti') {
+        hintTeks.innerText = "(Ketik terjemahan artinya, contoh: guru / sekolah)";
+    } else {
+        hintTeks.innerText = "(Gunakan keyboard Jepang khusus Hiragana)";
+    }
+    
+    input.classList.remove('hidden'); input.focus();
+    if(useSlideAnim) this.triggerAnimation('isian-content-wrapper', 'slide-in-right');
+  },
+
+  checkIsian: function() {
+    const fb = document.getElementById('isian-feedback');
+    const input = document.getElementById('isian-input');
+    const answer = input.value.toLowerCase().replace(/[\s-]/g, '');
+    if(!answer) return;
+
+    input.disabled = true; document.getElementById('btn-submit-isian').classList.add('hidden');
+    
+    const target = this.activeIsianData[this.idxIsian];
+    const correctAns = target.ans.map(a => a.toLowerCase().replace(/[\s-]/g, ''));
+
+    fb.style.opacity = "1"; this.triggerAnimation('isian-feedback', 'pop-in');
+
+    if(correctAns.includes(answer)) { fb.innerHTML = "BENAR! ✅"; fb.style.color = "var(--success)"; this.scoreIsian++; } 
+    else { fb.innerHTML = `SALAH! ❌<br><span style="font-size:14px; color:var(--text-sub);">Kunci: ${target.ans[0]}</span>`; fb.style.color = "var(--danger)"; }
+    
+    setTimeout(() => { 
+      this.triggerAnimation('isian-content-wrapper', 'slide-out-left');
+      setTimeout(() => { this.idxIsian++; this.renderIsian(true); }, 1500);
+    }, 1500);
+  }
+};
+
+window.onload = () => Modul.init();
+</script>
+</body>
+</html>
